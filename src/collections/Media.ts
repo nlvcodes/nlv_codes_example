@@ -12,5 +12,18 @@ export const Media: CollectionConfig = {
       required: true,
     },
   ],
-  upload: true,
+  upload: {
+    formatOptions: {
+      format: 'webp',
+    },
+    imageSizes: [
+      {
+        name: 'small',
+        width: 1200,
+        height: 600,
+      },
+    ],
+    mimeTypes: ['image/png', 'image/webp', 'image/jpg'],
+    adminThumbnail: 'small',
+  },
 }

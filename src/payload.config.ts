@@ -1,7 +1,12 @@
 // storage-adapter-import-placeholder
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
-import { payloadCloudPlugin } from '@payloadcms/payload-cloud'
-import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import {
+  BoldFeature,
+  FixedToolbarFeature, HTMLConverterFeature,
+  ItalicFeature,
+  lexicalEditor, lexicalHTML,
+  UnderlineFeature,
+} from '@payloadcms/richtext-lexical'
 import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
@@ -9,6 +14,8 @@ import sharp from 'sharp'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
+import { Posts } from '@/collections/Posts/config'
+import { Header } from '@/globals/Header/config'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -19,9 +26,18 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
+    dateFormat: 'MM/dd/yyyy',
   },
-  collections: [Users, Media],
-  editor: lexicalEditor(),
+  cors: ['http://localhost:3000', process.env.DOMAIN_NAME || ''],
+  csrf: ['http://localhost:3000', process.env.DOMAIN_NAME || ''],
+  upload: {
+    limits: {
+      fileSize: 5000000,
+    },
+  },
+  globals: [Header],
+  collections: [Users, Media, Posts],
+  editor: lexicalEditor({}),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
@@ -31,7 +47,6 @@ export default buildConfig({
   }),
   sharp,
   plugins: [
-    payloadCloudPlugin(),
     // storage-adapter-placeholder
   ],
 })
