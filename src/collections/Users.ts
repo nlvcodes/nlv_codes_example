@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import { BoldFeature, FixedToolbarFeature, ItalicFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
+import { ContentWithMedia } from '@/blocks/ContentWithMedia'
 
 export const Users: CollectionConfig = {
   slug: 'users',
@@ -26,6 +27,15 @@ export const Users: CollectionConfig = {
       type: 'text'
     },
     {
+      name: 'postsByUser',
+      type: 'join',
+      on: 'usersArray.users',
+      collection: 'posts',
+      admin: {
+        defaultColumns: ['title', 'slug', 'plaintext']
+      }
+    },
+    {
       type: 'richText',
       name: 'test',
       editor: lexicalEditor({
@@ -34,7 +44,14 @@ export const Users: CollectionConfig = {
           FixedToolbarFeature()
         ]
       })
-    }
+    },
+    {
+      name: 'blocks',
+      type: 'blocks',
+      blocks: [
+        ContentWithMedia
+      ]
+    },
     // Email added by default
     // Add more fields as needed
   ],

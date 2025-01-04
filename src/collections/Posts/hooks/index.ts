@@ -93,7 +93,9 @@ export const afterChangeHook: CollectionAfterChangeHook = async (
     req
   }
 ) => {
-
+  const posts = await req.payload.find({
+    collection: 'posts'
+  })
 }
 
 export const beforeChangeHook: CollectionBeforeChangeHook = async (

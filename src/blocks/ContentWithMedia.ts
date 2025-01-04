@@ -1,27 +1,35 @@
-import {Block} from 'payload'
+import { Block } from 'payload'
+import { BlocksFeature, HTMLConverterFeature, lexicalEditor, lexicalHTML } from '@payloadcms/richtext-lexical'
 
 export const ContentWithMedia: Block = {
   slug: 'contentWithMedia',
+  interfaceName: 'ContentWithMedia',
   labels: {
     singular: 'Content with Media Block',
     plural: 'Content with Media Blocks',
   },
-  imageURL: 'https://google.com/path/to/image',
-  imageAltText: '',
+  // imageURL: 'https://google.com/path/to/image',
+  // imageAltText: '',
   fields: [
     {
       type: 'richText',
       name: 'content',
+      editor: lexicalEditor({
+        features: ({ defaultFeatures }) => [
+          ...defaultFeatures,
+        ],
+      }),
     },
+
     {
       type: 'upload',
       name: 'image',
-      relationTo: 'media'
+      relationTo: 'media',
     },
     {
       type: 'radio',
       name: 'textPosition',
-      options: ['Left', 'Right']
-    }
-  ]
+      options: ['Left', 'Right'],
+    },
+  ],
 }

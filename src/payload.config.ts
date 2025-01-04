@@ -17,6 +17,8 @@ import { Media } from './collections/Media'
 import { Posts } from '@/collections/Posts/config'
 import { Header } from '@/globals/Header/config'
 
+import { resendAdapter } from '@payloadcms/email-resend'
+
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
@@ -49,4 +51,12 @@ export default buildConfig({
   plugins: [
     // storage-adapter-placeholder
   ],
+  defaultDepth: 2,
+  maxDepth: 3,
+  serverURL: process.env.SERVER_URL || '',
+  email: resendAdapter({
+    defaultFromAddress: 'nick@midlowebdesign.com',
+    defaultFromName: 'Nick',
+    apiKey: process.env.RESEND_API || '',
+  }),
 })

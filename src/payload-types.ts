@@ -18,7 +18,11 @@ export interface Config {
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
-  collectionsJoins: {};
+  collectionsJoins: {
+    users: {
+      postsByUser: 'posts';
+    };
+  };
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
@@ -72,6 +76,10 @@ export interface User {
   active?: boolean | null;
   slug?: string | null;
   name?: string | null;
+  postsByUser?: {
+    docs?: (string | Post)[] | null;
+    hasNextPage?: boolean | null;
+  } | null;
   test?: {
     root: {
       type: string;
@@ -87,6 +95,7 @@ export interface User {
     };
     [k: string]: unknown;
   } | null;
+  blocks?: ContentWithMedia[] | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -97,6 +106,69 @@ export interface User {
   loginAttempts?: number | null;
   lockUntil?: string | null;
   password?: string | null;
+}
+/**
+ * This is a blog collection.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "posts".
+ */
+export interface Post {
+  id: string;
+  blockTest?: ContentWithMedia[] | null;
+  title?: string | null;
+  slug?: string | null;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  plaintext?: string | null;
+  number?: number | null;
+  usersArray?:
+    | {
+        users?: (string | null) | User;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContentWithMedia".
+ */
+export interface ContentWithMedia {
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  image?: (string | null) | Media;
+  textPosition?: ('Left' | 'Right') | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'contentWithMedia';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -126,59 +198,6 @@ export interface Media {
       filename?: string | null;
     };
   };
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "posts".
- */
-export interface Post {
-  id: string;
-  blockTest?:
-    | {
-        content?: {
-          root: {
-            type: string;
-            children: {
-              type: string;
-              version: number;
-              [k: string]: unknown;
-            }[];
-            direction: ('ltr' | 'rtl') | null;
-            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-            indent: number;
-            version: number;
-          };
-          [k: string]: unknown;
-        } | null;
-        image?: (string | null) | Media;
-        textPosition?: ('Left' | 'Right') | null;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'contentWithMedia';
-      }[]
-    | null;
-  title?: string | null;
-  slug?: string | null;
-  content?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  plaintext?: string | null;
-  number?: number | null;
-  users?: (string | null) | User;
-  updatedAt: string;
-  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -249,7 +268,13 @@ export interface UsersSelect<T extends boolean = true> {
   active?: T;
   slug?: T;
   name?: T;
+  postsByUser?: T;
   test?: T;
+  blocks?:
+    | T
+    | {
+        contentWithMedia?: T | ContentWithMediaSelect<T>;
+      };
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -259,6 +284,17 @@ export interface UsersSelect<T extends boolean = true> {
   hash?: T;
   loginAttempts?: T;
   lockUntil?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContentWithMedia_select".
+ */
+export interface ContentWithMediaSelect<T extends boolean = true> {
+  content?: T;
+  image?: T;
+  textPosition?: T;
+  id?: T;
+  blockName?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -300,22 +336,19 @@ export interface PostsSelect<T extends boolean = true> {
   blockTest?:
     | T
     | {
-        contentWithMedia?:
-          | T
-          | {
-              content?: T;
-              image?: T;
-              textPosition?: T;
-              id?: T;
-              blockName?: T;
-            };
+        contentWithMedia?: T | ContentWithMediaSelect<T>;
       };
   title?: T;
   slug?: T;
   content?: T;
   plaintext?: T;
   number?: T;
-  users?: T;
+  usersArray?:
+    | T
+    | {
+        users?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }
@@ -352,6 +385,8 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   createdAt?: T;
 }
 /**
+ * This is our header navigation.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header".
  */

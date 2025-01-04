@@ -1,5 +1,6 @@
 import { CollectionConfig } from 'payload'
 import { ContentWithMedia } from '@/blocks/ContentWithMedia'
+import { BlocksFeature, FixedToolbarFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
@@ -17,6 +18,9 @@ export const Posts: CollectionConfig = {
   labels: {
     singular: 'Blog Post',
     plural: 'Blog Posts',
+  },
+  defaultPopulate: {
+    slug: true
   },
   fields: [
     {
@@ -50,6 +54,21 @@ export const Posts: CollectionConfig = {
       type: 'textarea',
     },
     { name: 'number', type: 'number' },
-    { name: 'users', type: 'relationship', relationTo: 'users' },
+    {
+      name: 'usersArray',
+      type: 'array',
+      fields: [{name: 'users', type: 'relationship', relationTo: 'users'}]
+    },
   ],
+  // hooks: {
+  //   afterChange: [
+  //     async ({req: {payload}, collection, doc}) => {
+  //     const sendEmail = await payload.sendEmail({
+  //       to: 'nick@midlowebdesign.com',
+  //       subject: `Change made in ${collection.slug}`,
+  //       html: `<div><h2>Changes made:</h2> <p>change made to <em>${doc.title}</em> in ${collection.slug}</p></div>`
+  //     })
+  //     }
+  //   ]
+  // }
 }
