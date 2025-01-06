@@ -1,6 +1,7 @@
 import { CollectionConfig } from 'payload'
 import { ContentWithMedia } from '@/blocks/ContentWithMedia'
 import { BlocksFeature, FixedToolbarFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
+import { TableOfContents } from '@/blocks/TableOfContents/config'
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
@@ -48,6 +49,15 @@ export const Posts: CollectionConfig = {
     {
       name: 'content',
       type: 'richText',
+      editor: lexicalEditor({
+        features: ({defaultFeatures}) => [
+          ...defaultFeatures,
+          BlocksFeature({
+            blocks: [ContentWithMedia, TableOfContents],
+          }),
+          FixedToolbarFeature()
+        ]
+      })
     },
     {
       name: 'plaintext',
