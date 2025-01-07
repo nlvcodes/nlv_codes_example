@@ -115,7 +115,7 @@ export interface User {
  */
 export interface Post {
   id: string;
-  blockTest?: ContentWithMedia[] | null;
+  blockTest?: (ContentWithMedia | TableOfContents)[] | null;
   title?: string | null;
   slug?: string | null;
   content?: {
@@ -164,6 +164,7 @@ export interface ContentWithMedia {
     };
     [k: string]: unknown;
   } | null;
+  content_html?: string | null;
   image?: (string | null) | Media;
   textPosition?: ('Left' | 'Right') | null;
   id?: string | null;
@@ -198,6 +199,22 @@ export interface Media {
       filename?: string | null;
     };
   };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TableOfContents".
+ */
+export interface TableOfContents {
+  contents?:
+    | {
+        header?: string | null;
+        link?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'tableOfContents';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -291,6 +308,7 @@ export interface UsersSelect<T extends boolean = true> {
  */
 export interface ContentWithMediaSelect<T extends boolean = true> {
   content?: T;
+  content_html?: T;
   image?: T;
   textPosition?: T;
   id?: T;
@@ -337,6 +355,7 @@ export interface PostsSelect<T extends boolean = true> {
     | T
     | {
         contentWithMedia?: T | ContentWithMediaSelect<T>;
+        tableOfContents?: T | TableOfContentsSelect<T>;
       };
   title?: T;
   slug?: T;
@@ -351,6 +370,21 @@ export interface PostsSelect<T extends boolean = true> {
       };
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TableOfContents_select".
+ */
+export interface TableOfContentsSelect<T extends boolean = true> {
+  contents?:
+    | T
+    | {
+        header?: T;
+        link?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

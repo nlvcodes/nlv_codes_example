@@ -1,5 +1,5 @@
 import { CollectionConfig } from 'payload'
-import { ContentWithMedia } from '@/blocks/ContentWithMedia'
+import { ContentWithMedia } from '@/blocks/ContentWithMedia/config'
 import { BlocksFeature, FixedToolbarFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
 import { TableOfContents } from '@/blocks/TableOfContents/config'
 
@@ -31,7 +31,7 @@ export const Posts: CollectionConfig = {
         isSortable: false,
       },
       blocks: [
-        ContentWithMedia
+        ContentWithMedia, TableOfContents
       ],
       name: 'blockTest',
       label: false,

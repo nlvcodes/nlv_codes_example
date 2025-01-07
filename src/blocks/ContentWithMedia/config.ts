@@ -17,10 +17,11 @@ export const ContentWithMedia: Block = {
       editor: lexicalEditor({
         features: ({ defaultFeatures }) => [
           ...defaultFeatures,
+          HTMLConverterFeature({})
         ],
       }),
     },
-
+    lexicalHTML('content', {name: 'content_html'}),
     {
       type: 'upload',
       name: 'image',

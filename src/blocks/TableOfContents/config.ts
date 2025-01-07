@@ -2,6 +2,7 @@ import {Block} from 'payload'
 
 export const TableOfContents: Block = {
   slug: 'tableOfContents',
+  interfaceName: 'TableOfContents',
   fields: [
     {
       name: 'contents',

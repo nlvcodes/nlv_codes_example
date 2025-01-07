@@ -1,6 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import { BoldFeature, FixedToolbarFeature, ItalicFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
-import { ContentWithMedia } from '@/blocks/ContentWithMedia'
+import { ContentWithMedia } from '@/blocks/ContentWithMedia/config'
 
 export const Users: CollectionConfig = {
   slug: 'users',
