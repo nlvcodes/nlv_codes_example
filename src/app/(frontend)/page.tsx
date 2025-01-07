@@ -1,6 +1,7 @@
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import { RenderBlocks } from '@/blocks'
+import { RichText } from '@/components/RichText'
 
 export default async function Page() {
   const payload = await getPayload({ config })
@@ -17,6 +18,9 @@ export default async function Page() {
 
   const post = postQuery.docs[0]
 
-  return <RenderBlocks blocks={post.blockTest} />
+  return <>
+    <RenderBlocks blocks={post.blockTest} />
+    {post.content && <RichText data={post.content} />}
+  </>
 
 }

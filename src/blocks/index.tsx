@@ -1,11 +1,11 @@
 import { TableOfContents } from '@/blocks/TableOfContents/Component'
-import { ContentWithMediaBlock } from '@/blocks/ContentWithMedia/Component'
+import { ContentWithMedia } from '@/blocks/ContentWithMedia/Component'
 import {Post} from '@/payload-types'
 import { Fragment } from 'react'
 
 const blockComponents = {
   tableOfContents: TableOfContents,
-  contentWithMedia: ContentWithMediaBlock,
+  contentWithMedia: ContentWithMedia,
 }
 
 export const RenderBlocks: React.FC<{

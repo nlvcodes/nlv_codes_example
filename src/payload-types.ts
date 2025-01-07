@@ -164,7 +164,6 @@ export interface ContentWithMedia {
     };
     [k: string]: unknown;
   } | null;
-  content_html?: string | null;
   image?: (string | null) | Media;
   textPosition?: ('Left' | 'Right') | null;
   id?: string | null;
@@ -308,7 +307,6 @@ export interface UsersSelect<T extends boolean = true> {
  */
 export interface ContentWithMediaSelect<T extends boolean = true> {
   content?: T;
-  content_html?: T;
   image?: T;
   textPosition?: T;
   id?: T;

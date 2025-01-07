@@ -15,17 +15,17 @@
     "start": "cross-env NODE_OPTIONS=--no-deprecation next start"
   },
   "dependencies": {
-    "@payloadcms/db-mongodb": "3.14.0",
-    "@payloadcms/email-nodemailer": "3.14.0",
-    "@payloadcms/email-resend": "3.14.0",
-    "@payloadcms/next": "3.14.0",
-    "@payloadcms/richtext-lexical": "3.14.0",
-    "@payloadcms/translations": "3.14.0",
+    "@payloadcms/db-mongodb": "3.11.0",
+    "@payloadcms/email-nodemailer": "3.11.0",
+    "@payloadcms/email-resend": "3.11.0",
+    "@payloadcms/next": "3.11.0",
+    "@payloadcms/richtext-lexical": "3.11.0",
+    "@payloadcms/translations": "3.11.0",
     "cross-env": "^7.0.3",
     "escape-html": "^1.0.3",
     "graphql": "^16.8.1",
     "next": "15.1.3",
-    "payload": "3.14.0",
+    "payload": "3.11.0",
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "sharp": "0.32.6"
@@ -34,7 +34,7 @@
     "@types/node": "^22.5.4",
     "@types/react": "19.0.1",
     "@types/react-dom": "19.0.1",
-    "eslint": "^8",
+    "eslint": "^9.16.0",
     "eslint-config-next": "15.0.4",
     "typescript": "5.7.2"
   },
