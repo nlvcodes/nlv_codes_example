@@ -8,6 +8,7 @@ import { ContentWithMedia } from '@/blocks/ContentWithMedia/Component'
 import { TableOfContents } from '@/blocks/TableOfContents/Component'
 import { internalDocToHref } from '@/components/RichText/converters/internalLink'
 import { headingConverter } from '@/components/RichText/converters/headingConverter'
+import { textConverter } from '@/components/RichText/converters/textConverter'
 
 type NodeTypes = DefaultNodeTypes | SerializedBlockNode<TableOfContentsProps | ContentWithMediaProps>
 
@@ -16,6 +17,7 @@ export const jsxConverter: JSXConvertersFunction<NodeTypes> = ({defaultConverter
   ...defaultConverters,
   ...LinkJSXConverter({internalDocToHref}),
   ...headingConverter,
+  ...textConverter,
   blocks: {
     contentWithMedia: ({node}) => <ContentWithMedia {...node.fields} />,
     tableOfContents: ({node}) => <TableOfContents {...node.fields} />,
