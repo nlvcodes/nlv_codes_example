@@ -18,6 +18,7 @@ import { Posts } from '@/collections/Posts/config'
 import { Header } from '@/globals/Header/config'
 
 import { resendAdapter } from '@payloadcms/email-resend'
+import {seoPlugin} from '@payloadcms/plugin-seo'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -49,7 +50,11 @@ export default buildConfig({
   }),
   sharp,
   plugins: [
-    // storage-adapter-placeholder
+    seoPlugin({
+      generateTitle: ({doc}) => `example.com - ${doc.title}`,
+      generateDescription: ({doc}) => doc.plaintext,
+      generateURL: ({doc, collectionSlug}) => `https://example.com/${collectionSlug}/${doc?.slug}`,
+    })
   ],
   defaultDepth: 2,
   maxDepth: 3,
