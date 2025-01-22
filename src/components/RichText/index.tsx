@@ -12,5 +12,6 @@ export function RichText(props: Props) {
   return <RichTextConverter {...rest} className={className}
                             // @ts-ignore
                             converters={jsxConverter}
+                            disableContainer={true}
   />
 }

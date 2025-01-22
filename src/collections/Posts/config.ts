@@ -10,6 +10,11 @@ export const Posts: CollectionConfig = {
     useAsTitle: 'title',
     description: 'This is a blog collection.',
   },
+  versions: {
+    drafts: {
+      schedulePublish: true,
+    }
+  },
   access: {
     read: () => true,
     update: () => true,
@@ -56,8 +61,11 @@ export const Posts: CollectionConfig = {
             blocks: [ContentWithMedia, TableOfContents],
           }),
           FixedToolbarFeature()
-        ]
-      })
+        ],
+        admin: {
+          hideInsertParagraphAtEnd: true,
+        },
+      }),
     },
     {
       name: 'plaintext',
@@ -67,7 +75,13 @@ export const Posts: CollectionConfig = {
     {
       name: 'usersArray',
       type: 'array',
-      fields: [{name: 'users', type: 'relationship', relationTo: 'users'}]
+      fields: [
+        {
+          name: 'users',
+          type: 'relationship',
+          relationTo: 'users',
+        }
+      ]
     },
   ],
   // hooks: {

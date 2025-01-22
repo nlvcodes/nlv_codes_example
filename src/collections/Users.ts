@@ -33,7 +33,8 @@ export const Users: CollectionConfig = {
       collection: 'posts',
       admin: {
         defaultColumns: ['title', 'slug', 'plaintext']
-      }
+      },
+      maxDepth: 0,
     },
     {
       type: 'richText',
