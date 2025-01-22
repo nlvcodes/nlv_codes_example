@@ -1,5 +1,7 @@
-// storage-adapter-import-placeholder
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
+import {vercelBlobStorage} from '@payloadcms/storage-vercel-blob'
+import {s3Storage} from '@payloadcms/storage-s3'
+import {uploadthingStorage} from '@payloadcms/storage-uploadthing'
 import {
   BoldFeature,
   FixedToolbarFeature, HTMLConverterFeature,
@@ -16,6 +18,7 @@ import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Posts } from '@/collections/Posts/config'
 import { Header } from '@/globals/Header/config'
+import {Documents} from '@/collections/Document'
 
 import { resendAdapter } from '@payloadcms/email-resend'
 
@@ -38,7 +41,7 @@ export default buildConfig({
     },
   },
   globals: [Header],
-  collections: [Users, Media, Posts],
+  collections: [Users, Media, Posts, Documents],
   editor: lexicalEditor({}),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
@@ -49,7 +52,35 @@ export default buildConfig({
   }),
   sharp,
   plugins: [
-    // storage-adapter-placeholder
+    // vercelBlobStorage({
+    //   enabled: true,
+    //   collections: {
+    //     media: true,
+    //   },
+    //   token: process.env.BLOB_READ_WRITE_TOKEN
+    // })
+    s3Storage({
+      collections: {
+        media: true,
+      },
+      bucket: process.env.S3_BUCKET || '',
+      config: {
+        credentials: {
+          accessKeyId: process.env.S3_ACCESS_KEY_ID || '',
+          secretAccessKey: process.env.S3_SECRET || '',
+        },
+        region: 'auto',
+        endpoint: process.env.S3_ENDPOINT || '',
+      }
+    }),
+    uploadthingStorage({
+      collections: {
+        documents: true,
+      },
+      options: {
+        token: process.env.UPLOADTHING_TOKEN || '',
+      }
+    })
   ],
   defaultDepth: 2,
   maxDepth: 3,
