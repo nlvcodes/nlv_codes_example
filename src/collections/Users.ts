@@ -11,6 +11,7 @@ export const Users: CollectionConfig = {
   defaultPopulate: {
     slug: true,
     name: true,
+    email: true,
   },
   fields: [
     {
@@ -26,15 +27,15 @@ export const Users: CollectionConfig = {
       name: 'name',
       type: 'text'
     },
-    {
-      name: 'postsByUser',
-      type: 'join',
-      on: 'usersArray.users',
-      collection: 'posts',
-      admin: {
-        defaultColumns: ['title', 'slug', 'plaintext']
-      }
-    },
+    // {
+    //   name: 'postsByUser',
+    //   type: 'join',
+    //   on: 'usersArray.users',
+    //   collection: 'posts',
+    //   admin: {
+    //     defaultColumns: ['title', 'slug', 'plaintext']
+    //   }
+    // },
     {
       type: 'richText',
       name: 'test',

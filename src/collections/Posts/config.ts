@@ -26,6 +26,15 @@ export const Posts: CollectionConfig = {
   },
   fields: [
     {
+      name: 'authors',
+      type: 'relationship',
+      relationTo: 'users',
+      hasMany: true,
+      admin: {
+        position: 'sidebar',
+      }
+    },
+    {
       type: 'tabs',
       tabs: [
         {
@@ -71,11 +80,6 @@ export const Posts: CollectionConfig = {
               type: 'textarea',
             },
             { name: 'number', type: 'number' },
-            {
-              name: 'usersArray',
-              type: 'array',
-              fields: [{ name: 'users', type: 'relationship', relationTo: 'users' }],
-            },
           ],
         },
         {

@@ -4,6 +4,9 @@ import { RenderBlocks } from '@/blocks'
 import { RichText } from '@/components/RichText'
 import {generateMeta} from '@/utilities/generateMeta'
 import { Metadata } from 'next'
+import { articleSchema, imageSchema } from '@/components/Schema'
+import { Media } from '@/payload-types'
+import Script from 'next/script'
 
 type Args = { params: Promise<{slug?: string}>}
 
@@ -22,8 +25,15 @@ export default async function Post({params: paramsPromise}: Args) {
   })
 
   const post = postQuery.docs[0]
+  const schema = [
+    imageSchema(post.meta?.image as Media),
+    articleSchema(post)
+  ]
 
   return <>
+    <Script type={'application/ld+json'} strategy={'lazyOnload'}>
+      {JSON.stringify(schema)}
+    </Script>
     <RenderBlocks blocks={post.blockTest} />
     {post.content && <RichText data={post.content} />}
   </>
