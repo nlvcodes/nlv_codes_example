@@ -1,4 +1,5 @@
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
+import {seoPlugin} from '@payloadcms/plugin-seo'
 import {vercelBlobStorage} from '@payloadcms/storage-vercel-blob'
 import {s3Storage} from '@payloadcms/storage-s3'
 import {uploadthingStorage} from '@payloadcms/storage-uploadthing'
@@ -19,6 +20,7 @@ import { Media } from './collections/Media'
 import { Posts } from '@/collections/Posts/config'
 import { Header } from '@/globals/Header/config'
 import {Documents} from '@/collections/Document'
+
 
 import { resendAdapter } from '@payloadcms/email-resend'
 
@@ -52,6 +54,11 @@ export default buildConfig({
   }),
   sharp,
   plugins: [
+    seoPlugin({
+      generateTitle: ({doc}) => doc.title,
+      generateDescription: ({doc}) => doc.plaintext,
+      generateURL: ({doc, collectionSlug}) => `https://example.com/${collectionSlug}/${doc?.slug}`,
+    }),
     // vercelBlobStorage({
     //   enabled: true,
     //   collections: {

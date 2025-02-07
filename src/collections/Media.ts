@@ -11,6 +11,11 @@ export const Media: CollectionConfig = {
       type: 'text',
       required: true,
     },
+    {
+      type: 'text',
+      name: 'creditText',
+      required: true,
+    },
   ],
   upload: {
     formatOptions: {

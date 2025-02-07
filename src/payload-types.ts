@@ -20,11 +20,7 @@ export interface Config {
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
-  collectionsJoins: {
-    users: {
-      postsByUser: 'posts';
-    };
-  };
+  collectionsJoins: {};
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
@@ -86,10 +82,6 @@ export interface User {
   active?: boolean | null;
   slug?: string | null;
   name?: string | null;
-  postsByUser?: {
-    docs?: (string | Post)[] | null;
-    hasNextPage?: boolean | null;
-  } | null;
   test?: {
     root: {
       type: string;
@@ -116,44 +108,6 @@ export interface User {
   loginAttempts?: number | null;
   lockUntil?: string | null;
   password?: string | null;
-}
-/**
- * This is a blog collection.
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "posts".
- */
-export interface Post {
-  id: string;
-  blockTest?: (ContentWithMedia | TableOfContents)[] | null;
-  title?: string | null;
-  slug?: string | null;
-  content?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  plaintext?: string | null;
-  number?: number | null;
-  usersArray?:
-    | {
-        users?: (string | null) | User;
-        id?: string | null;
-      }[]
-    | null;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -188,6 +142,7 @@ export interface ContentWithMedia {
 export interface Media {
   id: string;
   alt: string;
+  creditText: string;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -209,6 +164,48 @@ export interface Media {
       filename?: string | null;
     };
   };
+}
+/**
+ * This is a blog collection.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "posts".
+ */
+export interface Post {
+  id: string;
+  authors?: (string | User)[] | null;
+  blockTest?: (ContentWithMedia | TableOfContents)[] | null;
+  title?: string | null;
+  slug?: string | null;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  plaintext?: string | null;
+  number?: number | null;
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (string | null) | Media;
+    canonicalUrl?: string | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -426,7 +423,6 @@ export interface UsersSelect<T extends boolean = true> {
   active?: T;
   slug?: T;
   name?: T;
-  postsByUser?: T;
   test?: T;
   blocks?:
     | T
@@ -460,6 +456,7 @@ export interface ContentWithMediaSelect<T extends boolean = true> {
  */
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
+  creditText?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -491,6 +488,7 @@ export interface MediaSelect<T extends boolean = true> {
  * via the `definition` "posts_select".
  */
 export interface PostsSelect<T extends boolean = true> {
+  authors?: T;
   blockTest?:
     | T
     | {
@@ -502,11 +500,13 @@ export interface PostsSelect<T extends boolean = true> {
   content?: T;
   plaintext?: T;
   number?: T;
-  usersArray?:
+  meta?:
     | T
     | {
-        users?: T;
-        id?: T;
+        title?: T;
+        description?: T;
+        image?: T;
+        canonicalUrl?: T;
       };
   updatedAt?: T;
   createdAt?: T;

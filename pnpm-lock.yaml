@@ -17,6 +17,9 @@ dependencies:
   '@payloadcms/next':
     specifier: 3.18.0
     version: 3.18.0(@types/react@19.0.1)(graphql@16.8.2)(monaco-editor@0.52.0)(next@15.1.3)(payload@3.18.0)(react-dom@19.0.0)(react@19.0.0)(typescript@5.7.2)
+  '@payloadcms/plugin-seo':
+    specifier: 3.18.0
+    version: 3.18.0(@types/react@19.0.1)(monaco-editor@0.52.0)(next@15.1.3)(payload@3.18.0)(react-dom@19.0.0)(react@19.0.0)(typescript@5.7.2)
   '@payloadcms/richtext-lexical':
     specifier: 3.18.0
     version: 3.18.0(@faceless-ui/modal@3.0.0-beta.2)(@faceless-ui/scroll-info@2.0.0-beta.0)(@lexical/headless@0.21.0)(@lexical/html@0.21.0)(@lexical/link@0.21.0)(@lexical/list@0.21.0)(@lexical/mark@0.21.0)(@lexical/react@0.21.0)(@lexical/rich-text@0.21.0)(@lexical/selection@0.21.0)(@lexical/table@0.21.0)(@lexical/utils@0.21.0)(@payloadcms/next@3.18.0)(@types/react@19.0.1)(lexical@0.21.0)(monaco-editor@0.52.0)(next@15.1.3)(payload@3.18.0)(react-dom@19.0.0)(react@19.0.0)(typescript@5.7.2)
@@ -1973,6 +1976,26 @@ packages:
       find-node-modules: 2.1.3
       payload: 3.18.0(graphql@16.8.2)(monaco-editor@0.52.0)(react-dom@19.0.0)(react@19.0.0)(typescript@5.7.2)
       range-parser: 1.2.1
+    dev: false
+
+  /@payloadcms/plugin-seo@3.18.0(@types/react@19.0.1)(monaco-editor@0.52.0)(next@15.1.3)(payload@3.18.0)(react-dom@19.0.0)(react@19.0.0)(typescript@5.7.2):
+    resolution: {integrity: sha512-l8RLBfnkpmKGRM1ktQ6WqL5zOcPxd5Cie47ThaHwuWee6j0+zC7tjgikU2wX5b6gamvDdRh35MvuWBWO5/4v6w==}
+    peerDependencies:
+      payload: 3.18.0
+      react: ^19.0.0 || ^19.0.0-rc-65a56d0e-20241020
+      react-dom: ^19.0.0 || ^19.0.0-rc-65a56d0e-20241020
+    dependencies:
+      '@payloadcms/translations': 3.18.0
+      '@payloadcms/ui': 3.18.0(@types/react@19.0.1)(monaco-editor@0.52.0)(next@15.1.3)(payload@3.18.0)(react-dom@19.0.0)(react@19.0.0)(typescript@5.7.2)
+      payload: 3.18.0(graphql@16.8.2)(monaco-editor@0.52.0)(react-dom@19.0.0)(react@19.0.0)(typescript@5.7.2)
+      react: 19.0.0
+      react-dom: 19.0.0(react@19.0.0)
+    transitivePeerDependencies:
+      - '@types/react'
+      - monaco-editor
+      - next
+      - supports-color
+      - typescript
     dev: false
 
   /@payloadcms/richtext-lexical@3.18.0(@faceless-ui/modal@3.0.0-beta.2)(@faceless-ui/scroll-info@2.0.0-beta.0)(@lexical/headless@0.21.0)(@lexical/html@0.21.0)(@lexical/link@0.21.0)(@lexical/list@0.21.0)(@lexical/mark@0.21.0)(@lexical/react@0.21.0)(@lexical/rich-text@0.21.0)(@lexical/selection@0.21.0)(@lexical/table@0.21.0)(@lexical/utils@0.21.0)(@payloadcms/next@3.18.0)(@types/react@19.0.1)(lexical@0.21.0)(monaco-editor@0.52.0)(next@15.1.3)(payload@3.18.0)(react-dom@19.0.0)(react@19.0.0)(typescript@5.7.2):

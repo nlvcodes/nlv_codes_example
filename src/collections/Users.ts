@@ -27,16 +27,6 @@ export const Users: CollectionConfig = {
       type: 'text'
     },
     {
-      name: 'postsByUser',
-      type: 'join',
-      on: 'usersArray.users',
-      collection: 'posts',
-      admin: {
-        defaultColumns: ['title', 'slug', 'plaintext']
-      },
-      maxDepth: 0,
-    },
-    {
       type: 'richText',
       name: 'test',
       editor: lexicalEditor({
