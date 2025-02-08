@@ -1,5 +1,6 @@
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import {seoPlugin} from '@payloadcms/plugin-seo'
+import {redirectsPlugin} from '@payloadcms/plugin-redirects'
 import {vercelBlobStorage} from '@payloadcms/storage-vercel-blob'
 import {s3Storage} from '@payloadcms/storage-s3'
 import {uploadthingStorage} from '@payloadcms/storage-uploadthing'
@@ -23,6 +24,7 @@ import {Documents} from '@/collections/Document'
 
 
 import { resendAdapter } from '@payloadcms/email-resend'
+import { revalidateRedirects } from '@/collections/hooks/revalidateRedirects'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -58,6 +60,22 @@ export default buildConfig({
       generateTitle: ({doc}) => doc.title,
       generateDescription: ({doc}) => doc.plaintext,
       generateURL: ({doc, collectionSlug}) => `https://example.com/${collectionSlug}/${doc?.slug}`,
+    }),
+    redirectsPlugin({
+      collections: ['posts'],
+      overrides: {
+        fields: ({defaultFields}) => {
+          return [{
+            type: 'checkbox',
+            name: 'active',
+            defaultValue: true,
+          }, ...defaultFields]
+        },
+        hooks: {
+          afterChange: [revalidateRedirects]
+        }
+      },
+      redirectTypes: ['301', '302'],
     }),
     // vercelBlobStorage({
     //   enabled: true,
