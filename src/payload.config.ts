@@ -1,9 +1,9 @@
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
-import {seoPlugin} from '@payloadcms/plugin-seo'
-import {redirectsPlugin} from '@payloadcms/plugin-redirects'
-import {vercelBlobStorage} from '@payloadcms/storage-vercel-blob'
-import {s3Storage} from '@payloadcms/storage-s3'
-import {uploadthingStorage} from '@payloadcms/storage-uploadthing'
+import { seoPlugin } from '@payloadcms/plugin-seo'
+import { redirectsPlugin } from '@payloadcms/plugin-redirects'
+import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
+import { s3Storage } from '@payloadcms/storage-s3'
+import { uploadthingStorage } from '@payloadcms/storage-uploadthing'
 import {
   BoldFeature,
   FixedToolbarFeature, HTMLConverterFeature,
@@ -20,11 +20,12 @@ import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Posts } from '@/collections/Posts/config'
 import { Header } from '@/globals/Header/config'
-import {Documents} from '@/collections/Document'
+import { Documents } from '@/collections/Document'
 
 
 import { resendAdapter } from '@payloadcms/email-resend'
 import { revalidateRedirects } from '@/collections/hooks/revalidateRedirects'
+import { Logos } from '@/globals/Logos/config'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -36,6 +37,64 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
     dateFormat: 'MM/dd/yyyy',
+    components: {
+      logout: {
+        Button: {
+          path: '/components/Admin/UI/logout.tsx',
+          exportName: 'Logout',
+        },
+      },
+      beforeNavLinks: [
+        {
+          path: '/components/Admin/UI/logout.tsx',
+          exportName: 'Logout',
+        },
+      ],
+      afterNavLinks: [
+        {
+          path: '/components/Admin/UI/logout.tsx',
+          exportName: 'Logout',
+        },
+      ],
+      beforeDashboard: [
+        {
+          path: '/components/Admin/UI/beforeDashboard.tsx',
+          exportName: 'Welcome',
+        },
+      ],
+      afterDashboard: [
+        {
+          path: '/components/Admin/UI/afterDashboard.tsx',
+          exportName: 'Outro',
+        },
+      ],
+      beforeLogin: [{
+        path: '/components/Admin/UI/beforeLogin.tsx',
+        exportName: 'LinkToHome',
+      }],
+      afterLogin: [{
+        path: '/components/Admin/UI/afterLogin.tsx',
+        exportName: 'LoginInstruction',
+      }],
+      actions: [{
+          path: '/components/Admin/UI/logout.tsx',
+          exportName: 'Logout',
+        },],
+      header: [{
+        path: '/components/Admin/UI/header.tsx',
+        exportName: 'banner',
+      }],
+      graphics: {
+        Logo: {
+          path: '/components/Admin/UI/logo.tsx',
+          exportName: 'Logo',
+        },
+        Icon: {
+          path: '/components/Admin/UI/icon.tsx',
+          exportName: 'Icon',
+        }
+      }
+    },
   },
   cors: ['http://localhost:3000', process.env.DOMAIN_NAME || ''],
   csrf: ['http://localhost:3000', process.env.DOMAIN_NAME || ''],
@@ -44,7 +103,7 @@ export default buildConfig({
       fileSize: 5000000,
     },
   },
-  globals: [Header],
+  globals: [Header, Logos],
   collections: [Users, Media, Posts, Documents],
   editor: lexicalEditor({}),
   secret: process.env.PAYLOAD_SECRET || '',
@@ -57,14 +116,14 @@ export default buildConfig({
   sharp,
   plugins: [
     seoPlugin({
-      generateTitle: ({doc}) => doc.title,
-      generateDescription: ({doc}) => doc.plaintext,
-      generateURL: ({doc, collectionSlug}) => `https://example.com/${collectionSlug}/${doc?.slug}`,
+      generateTitle: ({ doc }) => doc.title,
+      generateDescription: ({ doc }) => doc.plaintext,
+      generateURL: ({ doc, collectionSlug }) => `https://example.com/${collectionSlug}/${doc?.slug}`,
     }),
     redirectsPlugin({
       collections: ['posts'],
       overrides: {
-        fields: ({defaultFields}) => {
+        fields: ({ defaultFields }) => {
           return [{
             type: 'checkbox',
             name: 'active',
@@ -72,8 +131,8 @@ export default buildConfig({
           }, ...defaultFields]
         },
         hooks: {
-          afterChange: [revalidateRedirects]
-        }
+          afterChange: [revalidateRedirects],
+        },
       },
       redirectTypes: ['301', '302'],
     }),
@@ -96,7 +155,7 @@ export default buildConfig({
         },
         region: 'auto',
         endpoint: process.env.S3_ENDPOINT || '',
-      }
+      },
     }),
     uploadthingStorage({
       collections: {
@@ -104,8 +163,8 @@ export default buildConfig({
       },
       options: {
         token: process.env.UPLOADTHING_TOKEN || '',
-      }
-    })
+      },
+    }),
   ],
   defaultDepth: 2,
   maxDepth: 3,

@@ -1,0 +1,11 @@
+@media (prefers-color-scheme: light) {
+  .darkMode {
+    display: none;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .lightMode {
+    display: none;
+  }
+}

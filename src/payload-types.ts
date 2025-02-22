@@ -38,9 +38,11 @@ export interface Config {
   };
   globals: {
     header: Header;
+    logos: Logo;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
+    logos: LogosSelect<false> | LogosSelect<true>;
   };
   locale: null;
   user: User & {
@@ -156,16 +158,7 @@ export interface Media {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
-  sizes?: {
-    small?: {
-      url?: string | null;
-      width?: number | null;
-      height?: number | null;
-      mimeType?: string | null;
-      filesize?: number | null;
-      filename?: string | null;
-    };
-  };
+  sizes?: {};
 }
 /**
  * This is a blog collection.
@@ -494,20 +487,7 @@ export interface MediaSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
-  sizes?:
-    | T
-    | {
-        small?:
-          | T
-          | {
-              url?: T;
-              width?: T;
-              height?: T;
-              mimeType?: T;
-              filesize?: T;
-              filename?: T;
-            };
-      };
+  sizes?: T | {};
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -688,6 +668,19 @@ export interface Header {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "logos".
+ */
+export interface Logo {
+  id: string;
+  lightModeIcon?: (string | null) | Media;
+  lightModeLogo?: (string | null) | Media;
+  darkModeIcon?: (string | null) | Media;
+  darkModeLogo?: (string | null) | Media;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
@@ -698,6 +691,19 @@ export interface HeaderSelect<T extends boolean = true> {
         newTab?: T;
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "logos_select".
+ */
+export interface LogosSelect<T extends boolean = true> {
+  lightModeIcon?: T;
+  lightModeLogo?: T;
+  darkModeIcon?: T;
+  darkModeLogo?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
