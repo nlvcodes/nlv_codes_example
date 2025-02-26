@@ -19,6 +19,7 @@
     "@payloadcms/email-nodemailer": "3.18.0",
     "@payloadcms/email-resend": "3.18.0",
     "@payloadcms/next": "3.18.0",
+    "@payloadcms/plugin-redirects": "3.18.0",
     "@payloadcms/plugin-seo": "3.18.0",
     "@payloadcms/richtext-lexical": "3.18.0",
     "@payloadcms/storage-s3": "3.18.0",

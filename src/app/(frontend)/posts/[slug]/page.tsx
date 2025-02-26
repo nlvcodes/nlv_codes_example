@@ -7,6 +7,7 @@ import {generateMeta} from '@/utilities/generateMeta'
 import { articleSchema, imageSchema } from '@/components/Schema'
 import { Media } from '@/payload-types'
 import Script from 'next/script'
+import {Redirects} from '@/components/Redirects'
 
 type Args = {
   params: Promise<{slug?: string}>
@@ -14,6 +15,7 @@ type Args = {
 
 export default async function Post({params: paramsPromise}: Args) {
   const {slug} = await paramsPromise
+  const url = '/posts/' + slug
   const payload = await getPayload({ config })
 
   const postQuery = await payload.find({
@@ -27,12 +29,16 @@ export default async function Post({params: paramsPromise}: Args) {
   })
 
   const post = postQuery.docs[0]
+
+  if (!post) { return <Redirects url={url} />}
+
   const schema = [
     imageSchema(post.meta?.image as Media),
     articleSchema(post)
   ]
 
   return <>
+    <Redirects url={url} disableNotFound />
     <Script type={'application/ld+json'} strategy={'lazyOnload'}>
       {JSON.stringify(schema)}
     </Script>
