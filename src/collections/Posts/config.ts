@@ -10,6 +10,37 @@ export const Posts: CollectionConfig = {
     group: 'Posts',
     useAsTitle: 'title',
     description: 'This is a blog collection.',
+    components: {
+      beforeList: [
+        {
+          path: './collections/Posts/components/beforeList.tsx',
+          exportName: 'BeforeListContent',
+        }
+      ],
+      afterList: [
+        {
+          path: './collections/Posts/components/afterList.tsx',
+          exportName: 'AfterListContent',
+        }
+      ],
+      beforeListTable: [
+        {
+          path: './collections/Posts/components/PostsByStatus.tsx',
+          exportName: 'PostsByStatus',
+        }
+      ],
+      Description: {
+        path: './collections/Posts/components/description.tsx',
+        exportName: 'Description',
+      },
+    },
+    pagination: {
+      limits: [0, 10, 20, 50],
+      defaultLimit: 0,
+    },
+    listSearchableFields: [
+      'authors', 'title'
+    ],
   },
   versions: {
     drafts: {
