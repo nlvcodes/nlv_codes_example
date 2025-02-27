@@ -22,11 +22,14 @@ export const Media: CollectionConfig = {
       format: 'webp',
     },
     imageSizes: [
-      // {
-      //   name: 'small',
-      //   width: 1200,
-      //   height: 600,
-      // },
+      {
+        name: 'small',
+        width: 1200,
+        height: 600,
+        formatOptions: {
+          format: 'webp',
+        }
+      },
     ],
     mimeTypes: ['image/png', 'image/webp', 'image/jpg'],
     adminThumbnail: 'small',
