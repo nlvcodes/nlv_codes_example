@@ -10,20 +10,6 @@ export const Posts: CollectionConfig = {
     group: 'Posts',
     useAsTitle: 'title',
     description: 'This is a blog collection.',
-    components: {
-      beforeList: [
-        {
-          path: './collections/Posts/components/beforeList.tsx',
-          exportName: 'BeforeListContent',
-        }
-      ],
-      afterList: [
-        {
-          path: './collections/Posts/components/afterList.tsx',
-          exportName: 'AfterListContent',
-        }
-      ],
-    }
   },
   versions: {
     drafts: {
