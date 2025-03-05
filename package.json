@@ -25,7 +25,7 @@
     "@payloadcms/storage-s3": "3.18.0",
     "@payloadcms/storage-uploadthing": "3.18.0",
     "@payloadcms/storage-vercel-blob": "3.18.0",
-    "@payloadcms/ui": "^3.25.0",
+    "@payloadcms/ui": "3.18.0",
     "cross-env": "^7.0.3",
     "escape-html": "^1.0.3",
     "graphql": "^16.8.1",

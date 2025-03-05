@@ -97,6 +97,14 @@ export const Posts: CollectionConfig = {
             {
               name: 'slug',
               type: 'text',
+              admin: {
+                components: {
+                  Field: {
+                    path: 'src/components/Admin/Fields/CustomTextField.tsx',
+                    exportName: 'CustomTextField',
+                  }
+                }
+              }
             },
             {
               name: 'content',
