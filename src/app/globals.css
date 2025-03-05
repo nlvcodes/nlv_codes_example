@@ -1,1 +1,11 @@
-@import "tailwindcss";
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/preflight.css" layer(base);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+@layer theme, base, components, utilities;
+
+@layer base {
+    h1 {
+        font-size: var(--text-2xl)
+    }
+}
