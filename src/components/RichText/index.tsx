@@ -10,8 +10,6 @@ export function RichText(props: Props) {
   const {className, ...rest} = props
 
   return <RichTextConverter {...rest} className={className}
-                            // @ts-ignore
                             converters={jsxConverter}
-                            disableContainer={true}
   />
 }

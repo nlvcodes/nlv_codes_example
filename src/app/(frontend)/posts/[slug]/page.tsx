@@ -24,6 +24,9 @@ export default async function Post({params: paramsPromise}: Args) {
     where: {
       slug: {
         equals: slug
+      },
+      _status: {
+        equals: 'published'
       }
     }
   })
@@ -57,6 +60,9 @@ export async function generateMetadata({params: paramsPromise}: Args): Promise<M
     where: {
       slug: {
         equals: slug
+      },
+      _status: {
+        equals: 'published'
       }
     },
     pagination: false
