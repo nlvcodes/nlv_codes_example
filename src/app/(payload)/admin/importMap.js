@@ -21,6 +21,13 @@ import { InlineToolbarFeatureClient as InlineToolbarFeatureClient_e70f5e05f09f93
 import { SubscriptFeatureClient as SubscriptFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { SuperscriptFeatureClient as SuperscriptFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { InlineCodeFeatureClient as InlineCodeFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
+import { Author as Author_66af4cbbff960a1320072a745237c041 } from 'src/components/Admin/Fields/Author.tsx'
+import { EmailCell as EmailCell_559dfedea2e7d9fa46e53803ce1f1091 } from 'src/components/Admin/Fields/Cell.tsx'
+import { Error as Error_33c76d9df6d6c8bbe361be0d4f14d570 } from 'src/components/Admin/Fields/Error.tsx'
+import { CustomRowLabel as CustomRowLabel_1f88a3090285bda4fdea67dfe24a98d4 } from 'src/components/Admin/Fields/Label.tsx'
+import { CustomTextLabel as CustomTextLabel_1f88a3090285bda4fdea67dfe24a98d4 } from 'src/components/Admin/Fields/Label.tsx'
+import { TitleCell as TitleCell_559dfedea2e7d9fa46e53803ce1f1091 } from 'src/components/Admin/Fields/Cell.tsx'
+import { TitleDescription as TitleDescription_eef29935ff1f42fb32c31b1497f508c6 } from 'src/components/Admin/Fields/Description.tsx'
 import { CustomTextField as CustomTextField_9c0f9fef143f7f7566ee02c7bc26ad8a } from 'src/components/Admin/Fields/CustomTextField.tsx'
 import { BlocksFeatureClient as BlocksFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { MetaTitleComponent as MetaTitleComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
@@ -65,6 +72,13 @@ export const importMap = {
   "@payloadcms/richtext-lexical/client#SubscriptFeatureClient": SubscriptFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/richtext-lexical/client#SuperscriptFeatureClient": SuperscriptFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/richtext-lexical/client#InlineCodeFeatureClient": InlineCodeFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
+  "src/components/Admin/Fields/Author.tsx#Author": Author_66af4cbbff960a1320072a745237c041,
+  "src/components/Admin/Fields/Cell.tsx#EmailCell": EmailCell_559dfedea2e7d9fa46e53803ce1f1091,
+  "src/components/Admin/Fields/Error.tsx#Error": Error_33c76d9df6d6c8bbe361be0d4f14d570,
+  "src/components/Admin/Fields/Label.tsx#CustomRowLabel": CustomRowLabel_1f88a3090285bda4fdea67dfe24a98d4,
+  "src/components/Admin/Fields/Label.tsx#CustomTextLabel": CustomTextLabel_1f88a3090285bda4fdea67dfe24a98d4,
+  "src/components/Admin/Fields/Cell.tsx#TitleCell": TitleCell_559dfedea2e7d9fa46e53803ce1f1091,
+  "src/components/Admin/Fields/Description.tsx#TitleDescription": TitleDescription_eef29935ff1f42fb32c31b1497f508c6,
   "src/components/Admin/Fields/CustomTextField.tsx#CustomTextField": CustomTextField_9c0f9fef143f7f7566ee02c7bc26ad8a,
   "@payloadcms/richtext-lexical/client#BlocksFeatureClient": BlocksFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/plugin-seo/client#MetaTitleComponent": MetaTitleComponent_a8a977ebc872c5d5ea7ee689724c0860,
