@@ -26,9 +26,12 @@ export const Media: CollectionConfig = {
         name: 'small',
         width: 1200,
         height: 600,
+        formatOptions: {
+          format: 'webp',
+        }
       },
     ],
-    mimeTypes: ['image/png', 'image/webp', 'image/jpg'],
+    mimeTypes: ['image/png', 'image/webp', 'image/jpg', 'image/jpeg'],
     adminThumbnail: 'small',
   },
 }

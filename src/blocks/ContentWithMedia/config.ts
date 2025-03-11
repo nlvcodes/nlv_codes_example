@@ -4,6 +4,10 @@ import { lexicalEditor } from '@payloadcms/richtext-lexical'
 export const ContentWithMedia: Block = {
   slug: 'contentWithMedia',
   interfaceName: 'ContentWithMedia',
+  admin: {
+    group: 'Images',
+    disableBlockName: true,
+  },
   labels: {
     singular: 'Content with Media Block',
     plural: 'Content with Media Blocks',

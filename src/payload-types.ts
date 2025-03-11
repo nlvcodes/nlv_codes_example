@@ -6,10 +6,19 @@
  * and re-run `payload generate:types` to regenerate this file.
  */
 
+/**
+ * Supported timezones in IANA format.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "supportedTimezones".
+ */
+export type SupportedTimezones = 'America/Monterrey' | 'America/New_York';
+
 export interface Config {
   auth: {
     users: UserAuthOperations;
   };
+  blocks: {};
   collections: {
     users: User;
     media: Media;
@@ -38,9 +47,11 @@ export interface Config {
   };
   globals: {
     header: Header;
+    logos: Logo;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
+    logos: LogosSelect<false> | LogosSelect<true>;
   };
   locale: null;
   user: User & {
@@ -178,7 +189,15 @@ export interface Post {
   authors?: (string | User)[] | null;
   blockTest?: (ContentWithMedia | TableOfContents)[] | null;
   title?: string | null;
-  slug?: string | null;
+  array?:
+    | {
+        arrayText?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  date?: string | null;
+  date_tz?: SupportedTimezones;
+  slug?: string[] | null;
   content?: {
     root: {
       type: string;
@@ -525,6 +544,14 @@ export interface PostsSelect<T extends boolean = true> {
         tableOfContents?: T | TableOfContentsSelect<T>;
       };
   title?: T;
+  array?:
+    | T
+    | {
+        arrayText?: T;
+        id?: T;
+      };
+  date?: T;
+  date_tz?: T;
   slug?: T;
   content?: T;
   plaintext?: T;
@@ -691,6 +718,19 @@ export interface Header {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "logos".
+ */
+export interface Logo {
+  id: string;
+  lightModeIcon?: (string | null) | Media;
+  lightModeLogo?: (string | null) | Media;
+  darkModeIcon?: (string | null) | Media;
+  darkModeLogo?: (string | null) | Media;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
@@ -701,6 +741,19 @@ export interface HeaderSelect<T extends boolean = true> {
         newTab?: T;
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "logos_select".
+ */
+export interface LogosSelect<T extends boolean = true> {
+  lightModeIcon?: T;
+  lightModeLogo?: T;
+  darkModeIcon?: T;
+  darkModeLogo?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

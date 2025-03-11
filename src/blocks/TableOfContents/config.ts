@@ -3,6 +3,10 @@ import {Block} from 'payload'
 export const TableOfContents: Block = {
   slug: 'tableOfContents',
   interfaceName: 'TableOfContents',
+  admin: {
+    group: 'Content',
+    disableBlockName: true,
+  },
   fields: [
     {
       name: 'contents',

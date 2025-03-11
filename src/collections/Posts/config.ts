@@ -64,8 +64,27 @@ export const Posts: CollectionConfig = {
               type: 'text',
             },
             {
+              name: 'array',
+              type: 'array',
+              admin: {
+                readOnly: true,
+              },
+              fields: [
+                {
+                  name: 'arrayText',
+                  type: 'text'
+                }
+              ]
+            },
+            {
+              name: 'date',
+              type: 'date',
+              timezone: true,
+            },
+            {
               name: 'slug',
               type: 'text',
+              hasMany: true,
             },
             {
               name: 'content',
