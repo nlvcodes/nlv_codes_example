@@ -17,7 +17,7 @@ export const ContentWithMedia: React.FC<Props> = (block) => {
     {block.image
       && typeof block.image !== 'string'
       && <Image
-        src={block.image.thumbnailURL || ``} alt={block.image.alt || ``}
+        src={`https://pub-bd030be048334ccb85b400876a5cab94.r2.dev/test-storage/${block.image.filename}` || ``} alt={block.image.alt || ``}
         className={'col-span-12 md:col-span-9 blur-sm grayscale'}
         width={block.image.width || 640}
         height={block.image.height || 360}
