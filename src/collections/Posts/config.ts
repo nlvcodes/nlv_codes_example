@@ -7,9 +7,34 @@ import {MetaDescriptionField, MetaImageField, MetaTitleField, OverviewField, Pre
 export const Posts: CollectionConfig = {
   slug: 'posts',
   admin: {
+    listSearchableFields: ['slug', 'title', 'authors'],
+    pagination: {
+      limits: [0, 10, 20, 50],
+      defaultLimit: 0
+    },
     group: 'Posts',
     useAsTitle: 'title',
     description: 'This is a blog collection.',
+    components: {
+      beforeList: [
+        {
+          path: 'src/collections/Posts/components/beforeList.tsx#BeforeListContent'
+        }
+      ],
+      afterList: [
+        {
+          path: 'src/collections/Posts/components/afterList.tsx#AfterListContent'
+        }
+      ],
+      beforeListTable: [
+        {
+          path: 'src/collections/Posts/components/PostsByStatus.tsx#PostsByStatus'
+        }
+      ],
+      Description: {
+        path: 'src/collections/Posts/components/description.tsx#Description'
+      }
+    }
   },
   versions: {
     drafts: {
