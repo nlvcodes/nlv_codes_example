@@ -84,7 +84,6 @@ export const Posts: CollectionConfig = {
             {
               name: 'slug',
               type: 'text',
-              hasMany: true,
             },
             {
               name: 'content',

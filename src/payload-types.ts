@@ -197,7 +197,7 @@ export interface Post {
     | null;
   date?: string | null;
   date_tz?: SupportedTimezones;
-  slug?: string[] | null;
+  slug?: string | null;
   content?: {
     root: {
       type: string;
