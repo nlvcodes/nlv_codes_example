@@ -229,6 +229,7 @@ export interface Media {
 export interface Post {
   id: string;
   authors?: (string | User)[] | null;
+  image?: (string | null) | Media;
   blockTest?: (ContentWithMedia | TableOfContents)[] | null;
   title?: string | null;
   slug?: string | null;
@@ -544,6 +545,7 @@ export interface MediaSelect<T extends boolean = true> {
  */
 export interface PostsSelect<T extends boolean = true> {
   authors?: T;
+  image?: T;
   blockTest?:
     | T
     | {

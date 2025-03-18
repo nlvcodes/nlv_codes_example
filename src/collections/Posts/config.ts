@@ -45,6 +45,7 @@ export const Posts: CollectionConfig = {
         {
           label: 'Content',
           fields: [
+            {type: 'upload', name: 'image', relationTo: 'media'},
             {
               type: 'blocks',
               admin: {
@@ -102,6 +103,7 @@ export const Posts: CollectionConfig = {
             }),
             MetaImageField({
               relationTo: 'media',
+              hasGenerateFn: true,
             }),
             {
               name: 'canonicalUrl',
