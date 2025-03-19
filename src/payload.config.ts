@@ -37,64 +37,64 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
     dateFormat: 'MM/dd/yyyy',
-    components: {
-      logout: {
-        Button: {
-          path: '/components/Admin/UI/logout.tsx',
-          exportName: 'Logout',
-        },
-      },
-      beforeNavLinks: [
-        {
-          path: '/components/Admin/UI/logout.tsx',
-          exportName: 'Logout',
-        },
-      ],
-      afterNavLinks: [
-        {
-          path: '/components/Admin/UI/logout.tsx',
-          exportName: 'Logout',
-        },
-      ],
-      beforeDashboard: [
-        {
-          path: '/components/Admin/UI/beforeDashboard.tsx',
-          exportName: 'Welcome',
-        },
-      ],
-      afterDashboard: [
-        {
-          path: '/components/Admin/UI/afterDashboard.tsx',
-          exportName: 'Outro',
-        },
-      ],
-      beforeLogin: [{
-        path: '/components/Admin/UI/beforeLogin.tsx',
-        exportName: 'LinkToHome',
-      }],
-      afterLogin: [{
-        path: '/components/Admin/UI/afterLogin.tsx',
-        exportName: 'LoginInstruction',
-      }],
-      actions: [{
-          path: '/components/Admin/UI/logout.tsx',
-          exportName: 'Logout',
-        },],
-      header: [{
-        path: '/components/Admin/UI/header.tsx',
-        exportName: 'banner',
-      }],
-      graphics: {
-        Logo: {
-          path: '/components/Admin/UI/logo.tsx',
-          exportName: 'Logo',
-        },
-        Icon: {
-          path: '/components/Admin/UI/icon.tsx',
-          exportName: 'Icon',
-        }
-      }
-    },
+    // components: {
+      // logout: {
+      //   Button: {
+      //     path: '/components/Admin/UI/logout.tsx',
+      //     exportName: 'Logout',
+      //   },
+      // },
+      // beforeNavLinks: [
+      //   {
+      //     path: '/components/Admin/UI/logout.tsx',
+      //     exportName: 'Logout',
+      //   },
+      // ],
+      // afterNavLinks: [
+      //   {
+      //     path: '/components/Admin/UI/logout.tsx',
+      //     exportName: 'Logout',
+      //   },
+      // ],
+      // beforeDashboard: [
+      //   {
+      //     path: '/components/Admin/UI/beforeDashboard.tsx',
+      //     exportName: 'Welcome',
+      //   },
+      // ],
+      // afterDashboard: [
+      //   {
+      //     path: '/components/Admin/UI/afterDashboard.tsx',
+      //     exportName: 'Outro',
+      //   },
+      // ],
+      // beforeLogin: [{
+      //   path: '/components/Admin/UI/beforeLogin.tsx',
+      //   exportName: 'LinkToHome',
+      // }],
+      // afterLogin: [{
+      //   path: '/components/Admin/UI/afterLogin.tsx',
+      //   exportName: 'LoginInstruction',
+      // }],
+      // actions: [{
+      //     path: '/components/Admin/UI/logout.tsx',
+      //     exportName: 'Logout',
+      //   },],
+      // header: [{
+      //   path: '/components/Admin/UI/header.tsx',
+      //   exportName: 'banner',
+      // }],
+      // graphics: {
+      //   Logo: {
+      //     path: '/components/Admin/UI/logo.tsx',
+      //     exportName: 'Logo',
+      //   },
+      //   Icon: {
+      //     path: '/components/Admin/UI/icon.tsx',
+      //     exportName: 'Icon',
+      //   }
+      // }
+    // },
   },
   cors: ['http://localhost:3000', process.env.DOMAIN_NAME || ''],
   csrf: ['http://localhost:3000', process.env.DOMAIN_NAME || ''],
