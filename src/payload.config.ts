@@ -31,7 +31,61 @@ const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 export default buildConfig({
+  graphQL: {
+    disable: true
+  },
+  routes: {
+    admin: '/admin',
+    api: '/api',
+  },
   admin: {
+    suppressHydrationWarning: true,
+    routes: {
+      logout: '/log-me-out',
+      account: '/my-account'
+    },
+    avatar: {
+      Component:
+        {
+          path: '/components/Admin/UI/avatar.tsx',
+        },
+    },
+    meta: {
+      titleSuffix: 'NLV Codes',
+      title: 'Blank Payload Example',
+      description: 'This is an example to be used for educational purposed only.',
+      icons: [
+        {
+          url: `${process.env.S3}/Square-1 2.png`,
+          rel: 'icon',
+          type: 'image/png',
+          sizes: '16x16 32x32 64x64',
+          fetchPriority: 'high',
+        },
+        {
+          url: `${process.env.S3}/Square-1.png`,
+          rel: 'icon',
+          type: 'image/png',
+          media: '(prefers-color-scheme: dark)',
+          sizes: '16x16 32x32 64x64',
+          fetchPriority: 'high',
+        },
+      ],
+      openGraph: {
+        title: 'Blank Payload Example',
+        description: 'This is an example to be used for educational purposed only.',
+        siteName: 'Blank Payload Example',
+        images: [
+          {
+            url: '',
+          },
+        ]
+      },
+    },
+    autoLogin: process.env.NEXT_PUBLIC_ENABLE_AUTOLOGIN === 'true' ? {
+      email: 'nick+test@midlowebdesign.com',
+      password: 'test',
+    } : false,
     user: Users.slug,
     importMap: {
       baseDir: path.resolve(dirname),
@@ -42,6 +96,7 @@ export default buildConfig({
       supportedTimezones: [
         { label: '(GMT-6) Monterrey, Nuevo Leon', value: 'America/Monterrey' },
         { label: '(GMT-5) East Coast', value: 'America/New_York' },
+        { label: 'West Coast', value: 'America/Los_Angeles' },
       ],
     },
     components: {
@@ -62,42 +117,42 @@ export default buildConfig({
       ],
       beforeDashboard: [
         {
-          path: '/components/Admin/UI/beforeDashboard.tsx#Welcome'
-        }
+          path: '/components/Admin/UI/beforeDashboard.tsx#Welcome',
+        },
       ],
       afterDashboard: [
         {
-          path: '/components/Admin/UI/afterDashboard.tsx#Outro'
-        }
+          path: '/components/Admin/UI/afterDashboard.tsx#Outro',
+        },
       ],
       beforeLogin: [
         {
-          path: '/components/Admin/UI/beforeLogin.tsx#LinkToHome'
-        }
+          path: '/components/Admin/UI/beforeLogin.tsx#LinkToHome',
+        },
       ],
       afterLogin: [
         {
-          path: '/components/Admin/UI/afterLogin.tsx#LoginInstruction'
-        }
+          path: '/components/Admin/UI/afterLogin.tsx#LoginInstruction',
+        },
       ],
       actions: [
         {
           path: '/components/Admin/UI/logout.tsx#Logout',
-        }
+        },
       ],
       header: [
         {
-          path: '/components/Admin/UI/header.tsx#banner'
-        }
+          path: '/components/Admin/UI/header.tsx#banner',
+        },
       ],
       graphics: {
         Icon: {
-          path: '/components/Admin/UI/icon.tsx#Icon'
+          path: '/components/Admin/UI/icon.tsx#Icon',
         },
         Logo: {
-          path: '/components/Admin/UI/logo.tsx#Logo'
-        }
-      }
+          path: '/components/Admin/UI/logo.tsx#Logo',
+        },
+      },
     },
   },
   cors: ['http://localhost:3000', process.env.DOMAIN_NAME || ''],

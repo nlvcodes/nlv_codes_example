@@ -12,7 +12,7 @@
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "supportedTimezones".
  */
-export type SupportedTimezones = 'America/Monterrey' | 'America/New_York';
+export type SupportedTimezones = 'America/Monterrey' | 'America/New_York' | 'America/Los_Angeles';
 
 export interface Config {
   auth: {
@@ -92,6 +92,7 @@ export interface UserAuthOperations {
  */
 export interface User {
   id: string;
+  avatar?: (string | null) | Media;
   active?: boolean | null;
   slug?: string | null;
   name?: string | null;
@@ -124,32 +125,6 @@ export interface User {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ContentWithMedia".
- */
-export interface ContentWithMedia {
-  content?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  image?: (string | null) | Media;
-  textPosition?: ('Left' | 'Right') | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'contentWithMedia';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
  */
 export interface Media {
@@ -179,6 +154,32 @@ export interface Media {
   };
 }
 /**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContentWithMedia".
+ */
+export interface ContentWithMedia {
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  image?: (string | null) | Media;
+  textPosition?: ('Left' | 'Right') | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'contentWithMedia';
+}
+/**
  * This is a blog collection.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -187,17 +188,18 @@ export interface Media {
 export interface Post {
   id: string;
   authors?: (string | User)[] | null;
+  date?: string | null;
+  date_tz?: SupportedTimezones;
+  showBlocks?: boolean | null;
   blockTest?: (ContentWithMedia | TableOfContents)[] | null;
   title?: string | null;
+  slug?: string | null;
   array?:
     | {
         arrayText?: string | null;
         id?: string | null;
       }[]
     | null;
-  date?: string | null;
-  date_tz?: SupportedTimezones;
-  slug?: string | null;
   content?: {
     root: {
       type: string;
@@ -468,6 +470,7 @@ export interface PayloadMigration {
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
+  avatar?: T;
   active?: T;
   slug?: T;
   name?: T;
@@ -537,6 +540,9 @@ export interface MediaSelect<T extends boolean = true> {
  */
 export interface PostsSelect<T extends boolean = true> {
   authors?: T;
+  date?: T;
+  date_tz?: T;
+  showBlocks?: T;
   blockTest?:
     | T
     | {
@@ -544,15 +550,13 @@ export interface PostsSelect<T extends boolean = true> {
         tableOfContents?: T | TableOfContentsSelect<T>;
       };
   title?: T;
+  slug?: T;
   array?:
     | T
     | {
         arrayText?: T;
         id?: T;
       };
-  date?: T;
-  date_tz?: T;
-  slug?: T;
   content?: T;
   plaintext?: T;
   number?: T;

@@ -31,6 +31,7 @@ import { AfterListContent as AfterListContent_8a6f4a27ef3e8f41e74574e8a0925962 }
 import { BeforeListContent as BeforeListContent_ad27bbf9b31f076b30430795dbfa0b6c } from 'src/collections/Posts/components/beforeList.tsx'
 import { PostsByStatus as PostsByStatus_c35ae567a207f873a10007fa5c35a220 } from 'src/collections/Posts/components/PostsByStatus.tsx'
 import { Description as Description_35a551235dfba0e3c4138d9fa5318fbb } from 'src/collections/Posts/components/description.tsx'
+import { default as default_73e3e7e3940fa1f46ca3cd353e02b13f } from 'src/components/Admin/UI/avatar.tsx'
 import { banner as banner_0231ae58e6ca5d4c032c31bf270d9ce5 } from 'src/components/Admin/UI/header.tsx'
 import { Logout as Logout_fd8c17baee90f35276c01ab59a85a0d4 } from 'src/components/Admin/UI/logout.tsx'
 import { Icon as Icon_e20afb1619f876d82bd54cc0fb774db5 } from 'src/components/Admin/UI/icon.tsx'
@@ -76,6 +77,7 @@ export const importMap = {
   "src/collections/Posts/components/beforeList.tsx#BeforeListContent": BeforeListContent_ad27bbf9b31f076b30430795dbfa0b6c,
   "src/collections/Posts/components/PostsByStatus.tsx#PostsByStatus": PostsByStatus_c35ae567a207f873a10007fa5c35a220,
   "src/collections/Posts/components/description.tsx#Description": Description_35a551235dfba0e3c4138d9fa5318fbb,
+  "/components/Admin/UI/avatar.tsx#default": default_73e3e7e3940fa1f46ca3cd353e02b13f,
   "/components/Admin/UI/header.tsx#banner": banner_0231ae58e6ca5d4c032c31bf270d9ce5,
   "/components/Admin/UI/logout.tsx#Logout": Logout_fd8c17baee90f35276c01ab59a85a0d4,
   "/components/Admin/UI/icon.tsx#Icon": Icon_e20afb1619f876d82bd54cc0fb774db5,

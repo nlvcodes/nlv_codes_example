@@ -47,6 +47,7 @@ export default async function Post({params: paramsPromise}: Args) {
     </Script>
     <RenderBlocks blocks={post.blockTest} />
     {post.content && <RichText data={post.content} />}
+    {post.plaintext}
   </>
 
 }

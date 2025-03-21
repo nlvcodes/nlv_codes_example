@@ -10,7 +10,7 @@ import {
 export const afterReadHook: GlobalAfterReadHook = async (
   {req, doc, global, context, query, findMany}
 ) => {
-  console.log(query, findMany, doc)
+  // console.log(query, findMany, doc)
 }
 
 export const beforeReadHook: GlobalBeforeReadHook = async (

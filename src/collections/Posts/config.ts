@@ -2,39 +2,50 @@ import { CollectionConfig } from 'payload'
 import { ContentWithMedia } from '@/blocks/ContentWithMedia/config'
 import { BlocksFeature, FixedToolbarFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
 import { TableOfContents } from '@/blocks/TableOfContents/config'
-import {MetaDescriptionField, MetaImageField, MetaTitleField, OverviewField, PreviewField} from '@payloadcms/plugin-seo/fields'
+import {
+  MetaDescriptionField,
+  MetaImageField,
+  MetaTitleField,
+  OverviewField,
+  PreviewField,
+} from '@payloadcms/plugin-seo/fields'
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
   admin: {
+    meta: {
+      titleSuffix: '- titleSuffix',
+    },
     listSearchableFields: ['slug', 'title', 'authors'],
     pagination: {
       limits: [0, 10, 20, 50],
-      defaultLimit: 0
+      defaultLimit: 0,
     },
+    defaultColumns: ['title', 'slug', 'date', 'authors', 'id'],
+    hideAPIURL: process.env.NEXT_PUBLIC_ENABLE_AUTOLOGIN !== 'true',
     group: 'Posts',
     useAsTitle: 'title',
     description: 'This is a blog collection.',
     components: {
       beforeList: [
         {
-          path: 'src/collections/Posts/components/beforeList.tsx#BeforeListContent'
-        }
+          path: 'src/collections/Posts/components/beforeList.tsx#BeforeListContent',
+        },
       ],
       afterList: [
         {
-          path: 'src/collections/Posts/components/afterList.tsx#AfterListContent'
-        }
+          path: 'src/collections/Posts/components/afterList.tsx#AfterListContent',
+        },
       ],
       beforeListTable: [
         {
-          path: 'src/collections/Posts/components/PostsByStatus.tsx#PostsByStatus'
-        }
+          path: 'src/collections/Posts/components/PostsByStatus.tsx#PostsByStatus',
+        },
       ],
       Description: {
-        path: 'src/collections/Posts/components/description.tsx#Description'
-      }
-    }
+        path: 'src/collections/Posts/components/description.tsx#Description',
+      },
+    },
   },
   versions: {
     drafts: {
@@ -61,8 +72,16 @@ export const Posts: CollectionConfig = {
       relationTo: 'users',
       hasMany: true,
       admin: {
-        position: 'sidebar'
-      }
+        position: 'sidebar',
+      },
+    },
+    {
+      name: 'date',
+      type: 'date',
+      timezone: true,
+      admin: {
+        position: 'sidebar',
+      },
     },
     {
       type: 'tabs',
@@ -71,10 +90,15 @@ export const Posts: CollectionConfig = {
           label: 'Content',
           fields: [
             {
+              type: 'checkbox',
+              name: 'showBlocks',
+            },
+            {
               type: 'blocks',
               admin: {
                 initCollapsed: true,
                 isSortable: false,
+                condition: (_, { showBlocks }) => showBlocks,
               },
               blocks: [
                 ContentWithMedia, TableOfContents,
@@ -85,8 +109,24 @@ export const Posts: CollectionConfig = {
               maxRows: 20,
             },
             {
-              name: 'title',
-              type: 'text',
+              type: 'row',
+              fields: [
+                {
+                  name: 'title',
+                  type: 'text',
+                  admin: {
+                    className: 'titleLabel',
+                    width: '60%',
+                  }
+                },
+                {
+                  name: 'slug',
+                  type: 'text',
+                  admin: {
+                    width: '40%'
+                  }
+                },
+              ],
             },
             {
               name: 'array',
@@ -97,19 +137,11 @@ export const Posts: CollectionConfig = {
               fields: [
                 {
                   name: 'arrayText',
-                  type: 'text'
-                }
-              ]
+                  type: 'text',
+                },
+              ],
             },
-            {
-              name: 'date',
-              type: 'date',
-              timezone: true,
-            },
-            {
-              name: 'slug',
-              type: 'text',
-            },
+
             {
               name: 'content',
               type: 'richText',
@@ -129,6 +161,9 @@ export const Posts: CollectionConfig = {
             {
               name: 'plaintext',
               type: 'textarea',
+              admin: {
+                hidden: true
+              }
             },
             { name: 'number', type: 'number' },
           ],
@@ -152,9 +187,9 @@ export const Posts: CollectionConfig = {
               type: 'text',
               hooks: {
                 beforeChange: [
-                  async ({data, value}) => value ? value : `https://example.com/posts/${data?.slug}`
-                ]
-              }
+                  async ({ data, value }) => value ? value : `https://example.com/posts/${data?.slug}`,
+                ],
+              },
             },
             PreviewField({
               hasGenerateFn: true,
@@ -163,9 +198,9 @@ export const Posts: CollectionConfig = {
               titlePath: 'meta.title',
               descriptionPath: 'meta.description',
               imagePath: 'meta.image',
-            })
-          ]
-        }
+            }),
+          ],
+        },
       ],
     },
   ],
