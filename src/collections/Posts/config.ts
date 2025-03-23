@@ -9,6 +9,8 @@ import {
   OverviewField,
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
+import { anyone } from '@/collections/Users/access/anyone'
+import editor from '@/collections/Users/access/editor'
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
@@ -53,9 +55,10 @@ export const Posts: CollectionConfig = {
     },
   },
   access: {
-    read: () => true,
-    update: () => true,
-    create: () => true,
+    read: anyone,
+    update: editor,
+    create: editor,
+    delete: editor
   },
   defaultSort: ['-number', '-title'],
   labels: {

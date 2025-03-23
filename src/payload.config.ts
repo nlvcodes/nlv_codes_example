@@ -16,7 +16,7 @@ import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 
-import { Users } from './collections/Users'
+import { Users } from './collections/Users/config'
 import { Media } from './collections/Media'
 import { Posts } from '@/collections/Posts/config'
 import { Header } from '@/globals/Header/config'
@@ -82,9 +82,9 @@ export default buildConfig({
         ]
       },
     },
-    autoLogin: process.env.NEXT_PUBLIC_ENABLE_AUTOLOGIN === 'true' ? {
-      email: 'nick+test@midlowebdesign.com',
-      password: 'test',
+    autoLogin: process.env.NEXT_PUBLIC_ENABLE_AUTOLOGIN === 'false' ? {
+      email: 'nick+editor@midlowebdesign.com',
+      password: 'editor',
     } : false,
     user: Users.slug,
     importMap: {
