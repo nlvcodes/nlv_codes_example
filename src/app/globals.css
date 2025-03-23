@@ -9,3 +9,5 @@
         font-size: var(--text-2xl)
     }
 }
+
+@custom-variant data-dark-mode (&[data-ui~='dark-mode'])
