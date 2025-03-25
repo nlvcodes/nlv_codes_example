@@ -56,12 +56,55 @@ export const Posts: CollectionConfig = {
   },
   fields: [
     {
+      name: 'email',
+      type: 'email',
+      admin: {
+        components: {
+          Error: {
+            path: 'src/components/Admin/Fields/Error.tsx#Error'
+          },
+          Cell: {
+            path: 'src/components/Admin/Fields/Cell.tsx#EmailCell'
+          }
+        }
+      }
+    },
+    {
+      name: 'list',
+      type: 'array',
+      admin: {
+        components: {
+          RowLabel: {
+            path: 'src/components/Admin/Fields/Label.tsx#CustomRowLabel'
+          }
+        }
+      },
+      fields: [
+        {
+          type: 'text',
+          name: 'listItem'
+        }
+      ],
+      labels: {
+        singular: 'list item',
+        plural: 'list items'
+      }
+    },
+    {
       name: 'authors',
       type: 'relationship',
       relationTo: 'users',
       hasMany: true,
       admin: {
-        position: 'sidebar'
+        position: 'sidebar',
+        className: 'authors',
+        components: {
+          beforeInput: [
+            {
+              path: 'src/components/Admin/Fields/Authors.tsx#Authors'
+            }
+          ]
+        }
       }
     },
     {
@@ -87,6 +130,23 @@ export const Posts: CollectionConfig = {
             {
               name: 'title',
               type: 'text',
+              maxLength: 60,
+              admin: {
+                components: {
+                  Label: {
+                    path: 'src/components/Admin/Fields/Label.tsx#CustomTextLabel'
+                  },
+                  Description: {
+                    path: 'src/components/Admin/Fields/Description.tsx#TitleDescription',
+                    clientProps: {
+                      defaultLength: 60
+                    }
+                  },
+                  Cell: {
+                    path: 'src/components/Admin/Fields/Cell.tsx#TitleCell'
+                  }
+                }
+              }
             },
             {
               name: 'array',
@@ -104,11 +164,18 @@ export const Posts: CollectionConfig = {
             {
               name: 'date',
               type: 'date',
-              timezone: true,
+              // timezone: true,
             },
             {
               name: 'slug',
               type: 'text',
+              admin: {
+                components: {
+                  Field: {
+                    path: 'src/components/Admin/Fields/CustomTextField.tsx#CustomTextField'
+                  }
+                }
+              }
             },
             {
               name: 'content',

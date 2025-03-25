@@ -9,3 +9,16 @@
     display: none;
   }
 }
+
+.authors div {
+  display: flex;
+  gap: 1rem;
+}
+
+.authorContainer {
+  align-items: center;
+}
+
+.error {
+  color: red;
+}

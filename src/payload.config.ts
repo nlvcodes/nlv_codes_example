@@ -37,13 +37,13 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
     dateFormat: 'MM/dd/yyyy',
-    timezones: {
-      defaultTimezone: 'America/New_York',
-      supportedTimezones: [
-        { label: '(GMT-6) Monterrey, Nuevo Leon', value: 'America/Monterrey' },
-        { label: '(GMT-5) East Coast', value: 'America/New_York' },
-      ],
-    },
+    // timezones: {
+    //   defaultTimezone: 'America/New_York',
+    //   supportedTimezones: [
+    //     { label: '(GMT-6) Monterrey, Nuevo Leon', value: 'America/Monterrey' },
+    //     { label: '(GMT-5) East Coast', value: 'America/New_York' },
+    //   ],
+    // },
     components: {
       logout: {
         Button: {

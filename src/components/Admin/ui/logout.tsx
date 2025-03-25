@@ -1,4 +1,4 @@
-import {Link} from '@payloadcms/ui'
+import Link from 'next/link'
 
 export const Logout = () => {
   return <Link aria-label={'Log out'} tabIndex={0} className={'nav__log-out'} href={'/admin/logout'}><svg data-testid="geist-icon" height="16" strokeLinejoin="round" viewBox="0 0 16 16" width="16">

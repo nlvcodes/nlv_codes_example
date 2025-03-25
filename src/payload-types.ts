@@ -6,19 +6,10 @@
  * and re-run `payload generate:types` to regenerate this file.
  */
 
-/**
- * Supported timezones in IANA format.
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "supportedTimezones".
- */
-export type SupportedTimezones = 'America/Monterrey' | 'America/New_York';
-
 export interface Config {
   auth: {
     users: UserAuthOperations;
   };
-  blocks: {};
   collections: {
     users: User;
     media: Media;
@@ -186,6 +177,13 @@ export interface Media {
  */
 export interface Post {
   id: string;
+  email?: string | null;
+  list?:
+    | {
+        listItem?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   authors?: (string | User)[] | null;
   blockTest?: (ContentWithMedia | TableOfContents)[] | null;
   title?: string | null;
@@ -196,7 +194,6 @@ export interface Post {
       }[]
     | null;
   date?: string | null;
-  date_tz?: SupportedTimezones;
   slug?: string | null;
   content?: {
     root: {
@@ -536,6 +533,13 @@ export interface MediaSelect<T extends boolean = true> {
  * via the `definition` "posts_select".
  */
 export interface PostsSelect<T extends boolean = true> {
+  email?: T;
+  list?:
+    | T
+    | {
+        listItem?: T;
+        id?: T;
+      };
   authors?: T;
   blockTest?:
     | T
@@ -551,7 +555,6 @@ export interface PostsSelect<T extends boolean = true> {
         id?: T;
       };
   date?: T;
-  date_tz?: T;
   slug?: T;
   content?: T;
   plaintext?: T;
