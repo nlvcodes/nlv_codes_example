@@ -26,6 +26,7 @@ import { Documents } from '@/collections/Document'
 import { resendAdapter } from '@payloadcms/email-resend'
 import { revalidateRedirects } from '@/collections/hooks/revalidateRedirects'
 import { Logos } from '@/globals/Logos/config'
+import { Customers } from '@/collections/Customers/config'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -83,8 +84,8 @@ export default buildConfig({
       },
     },
     autoLogin: process.env.NEXT_PUBLIC_ENABLE_AUTOLOGIN === 'false' ? {
-      email: 'nick+editor@midlowebdesign.com',
-      password: 'editor',
+      email: 'nick+test@midlowebdesign.com',
+      password: 'test',
     } : false,
     user: Users.slug,
     importMap: {
@@ -163,7 +164,7 @@ export default buildConfig({
     },
   },
   globals: [Header, Logos],
-  collections: [Users, Media, Posts, Documents],
+  collections: [Users, Media, Posts, Documents, Customers],
   editor: lexicalEditor({}),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

@@ -1,4 +1,5 @@
-import "../globals.css"
+import '../globals.css'
+import { AuthProvider } from '@/app/(frontend)/(auth)/components/providers'
 
 export const metadata = {
   title: 'Next.js',
@@ -6,13 +7,15 @@ export const metadata = {
 }
 
 export default function RootLayout({
-  children,
-}: {
+                                     children,
+                                   }: {
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <AuthProvider api={'rest'}>
+      <html lang="en">
       <body>{children}</body>
-    </html>
+      </html>
+    </AuthProvider>
   )
 }
