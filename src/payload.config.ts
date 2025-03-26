@@ -31,19 +31,71 @@ const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 export default buildConfig({
+  graphQL: {
+    disable: true
+  },
+  routes: {
+    admin: '/admin',
+    api: '/api'
+  },
   admin: {
+    routes: {
+      logout: '/log-me-out',
+      account: '/my-account'
+    },
+    timezones: {
+      defaultTimezone: 'America/Los_Angeles',
+      supportedTimezones: [
+        {label: 'West Coast', value: 'America/Los_Angeles'},
+        {label: 'East Coast', value: 'America/New_York'},
+      ],
+    },
+    avatar: {
+      Component: {
+        path: '/components/Admin/ui/avatar.tsx',
+      }
+    },
+    autoLogin: process.env.NEXT_PUBLIC_ENABLE_AUTOLOGIN === 'true' ? {
+      email: 'nick+test@midlowebdesign.com',
+      password: 'test'
+    } : false,
+    meta: {
+      titleSuffix: '- NLV Codes',
+      title: 'Blank Payload Example',
+      description: 'This is an example to be used for educational purposes only.',
+      openGraph: {
+        title: 'Blank Payload Example',
+        description: 'This is an example to be used for educational purposes.',
+        siteName: 'Blank Payload Example',
+        images: [
+          {
+            url: ''
+          }
+        ]
+      },
+      icons: [
+        {
+          url: `${process.env.S3}/Square-1 2.png`,
+          rel: 'icon',
+          type: 'image/png',
+          sizes: '16x16 32x32 64x64',
+          fetchPriority: 'high'
+        },
+        {
+          url: `${process.env.S3}/Square-1.png`,
+          rel: 'icon',
+          type: 'image/png',
+          sizes: '16x16 32x32 64x64',
+          fetchPriority: 'high',
+          media: '(prefers-color-scheme: dark)'
+        },
+      ],
+    },
     user: Users.slug,
     importMap: {
       baseDir: path.resolve(dirname),
     },
     dateFormat: 'MM/dd/yyyy',
-    // timezones: {
-    //   defaultTimezone: 'America/New_York',
-    //   supportedTimezones: [
-    //     { label: '(GMT-6) Monterrey, Nuevo Leon', value: 'America/Monterrey' },
-    //     { label: '(GMT-5) East Coast', value: 'America/New_York' },
-    //   ],
-    // },
     components: {
       logout: {
         Button: {

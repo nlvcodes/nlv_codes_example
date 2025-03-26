@@ -2,6 +2,11 @@ import {GlobalConfig} from 'payload'
 
 export const Header: GlobalConfig = {
   slug: 'header',
+  graphQL: {
+    name: 'headerGraphQL',
+    disableQueries: true,
+    disableMutations: true,
+  },
   access: {
     read: () => true,
   },

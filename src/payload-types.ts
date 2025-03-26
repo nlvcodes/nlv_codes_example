@@ -12,53 +12,7 @@
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "supportedTimezones".
  */
-export type SupportedTimezones =
-  | 'Pacific/Midway'
-  | 'Pacific/Niue'
-  | 'Pacific/Honolulu'
-  | 'Pacific/Rarotonga'
-  | 'America/Anchorage'
-  | 'Pacific/Gambier'
-  | 'America/Los_Angeles'
-  | 'America/Tijuana'
-  | 'America/Denver'
-  | 'America/Phoenix'
-  | 'America/Chicago'
-  | 'America/Guatemala'
-  | 'America/New_York'
-  | 'America/Bogota'
-  | 'America/Caracas'
-  | 'America/Santiago'
-  | 'America/Buenos_Aires'
-  | 'America/Sao_Paulo'
-  | 'Atlantic/South_Georgia'
-  | 'Atlantic/Azores'
-  | 'Atlantic/Cape_Verde'
-  | 'Europe/London'
-  | 'Europe/Berlin'
-  | 'Africa/Lagos'
-  | 'Europe/Athens'
-  | 'Africa/Cairo'
-  | 'Europe/Moscow'
-  | 'Asia/Riyadh'
-  | 'Asia/Dubai'
-  | 'Asia/Baku'
-  | 'Asia/Karachi'
-  | 'Asia/Tashkent'
-  | 'Asia/Calcutta'
-  | 'Asia/Dhaka'
-  | 'Asia/Almaty'
-  | 'Asia/Jakarta'
-  | 'Asia/Bangkok'
-  | 'Asia/Shanghai'
-  | 'Asia/Singapore'
-  | 'Asia/Tokyo'
-  | 'Asia/Seoul'
-  | 'Australia/Sydney'
-  | 'Pacific/Guam'
-  | 'Pacific/Noumea'
-  | 'Pacific/Auckland'
-  | 'Pacific/Fiji';
+export type SupportedTimezones = 'America/Los_Angeles' | 'America/New_York';
 
 export interface Config {
   auth: {
@@ -138,6 +92,7 @@ export interface UserAuthOperations {
  */
 export interface User {
   id: string;
+  avatar?: (string | null) | Media;
   active?: boolean | null;
   slug?: string | null;
   name?: string | null;
@@ -170,32 +125,6 @@ export interface User {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ContentWithMedia".
- */
-export interface ContentWithMedia {
-  content?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  image?: (string | null) | Media;
-  textPosition?: ('Left' | 'Right') | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'contentWithMedia';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
  */
 export interface Media {
@@ -225,6 +154,32 @@ export interface Media {
   };
 }
 /**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContentWithMedia".
+ */
+export interface ContentWithMedia {
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  image?: (string | null) | Media;
+  textPosition?: ('Left' | 'Right') | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'contentWithMedia';
+}
+/**
  * This is a blog collection.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -232,6 +187,10 @@ export interface Media {
  */
 export interface Post {
   id: string;
+  showBlocks?: boolean | null;
+  blockTest?: (ContentWithMedia | TableOfContents)[] | null;
+  date?: string | null;
+  date_tz?: SupportedTimezones;
   email?: string | null;
   list?:
     | {
@@ -240,16 +199,14 @@ export interface Post {
       }[]
     | null;
   authors?: (string | User)[] | null;
-  blockTest?: (ContentWithMedia | TableOfContents)[] | null;
   title?: string | null;
+  slug?: string | null;
   array?:
     | {
         arrayText?: string | null;
         id?: string | null;
       }[]
     | null;
-  date?: string | null;
-  slug?: string | null;
   content?: {
     root: {
       type: string;
@@ -520,6 +477,7 @@ export interface PayloadMigration {
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
+  avatar?: T;
   active?: T;
   slug?: T;
   name?: T;
@@ -588,6 +546,15 @@ export interface MediaSelect<T extends boolean = true> {
  * via the `definition` "posts_select".
  */
 export interface PostsSelect<T extends boolean = true> {
+  showBlocks?: T;
+  blockTest?:
+    | T
+    | {
+        contentWithMedia?: T | ContentWithMediaSelect<T>;
+        tableOfContents?: T | TableOfContentsSelect<T>;
+      };
+  date?: T;
+  date_tz?: T;
   email?: T;
   list?:
     | T
@@ -596,21 +563,14 @@ export interface PostsSelect<T extends boolean = true> {
         id?: T;
       };
   authors?: T;
-  blockTest?:
-    | T
-    | {
-        contentWithMedia?: T | ContentWithMediaSelect<T>;
-        tableOfContents?: T | TableOfContentsSelect<T>;
-      };
   title?: T;
+  slug?: T;
   array?:
     | T
     | {
         arrayText?: T;
         id?: T;
       };
-  date?: T;
-  slug?: T;
   content?: T;
   plaintext?: T;
   number?: T;

@@ -25,10 +25,8 @@ import { EmailCell as EmailCell_559dfedea2e7d9fa46e53803ce1f1091 } from 'src/com
 import { Error as Error_33c76d9df6d6c8bbe361be0d4f14d570 } from 'src/components/Admin/Fields/Error.tsx'
 import { CustomRowLabel as CustomRowLabel_1f88a3090285bda4fdea67dfe24a98d4 } from 'src/components/Admin/Fields/Label.tsx'
 import { Authors as Authors_598a767212b750bcca66c928bb89bb73 } from 'src/components/Admin/Fields/Authors.tsx'
-import { CustomTextLabel as CustomTextLabel_1f88a3090285bda4fdea67dfe24a98d4 } from 'src/components/Admin/Fields/Label.tsx'
 import { TitleCell as TitleCell_559dfedea2e7d9fa46e53803ce1f1091 } from 'src/components/Admin/Fields/Cell.tsx'
 import { TitleDescription as TitleDescription_eef29935ff1f42fb32c31b1497f508c6 } from 'src/components/Admin/Fields/Description.tsx'
-import { CustomTextField as CustomTextField_9c0f9fef143f7f7566ee02c7bc26ad8a } from 'src/components/Admin/Fields/CustomTextField.tsx'
 import { BlocksFeatureClient as BlocksFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { MetaTitleComponent as MetaTitleComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
 import { MetaDescriptionComponent as MetaDescriptionComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
@@ -39,6 +37,7 @@ import { AfterListContent as AfterListContent_8a6f4a27ef3e8f41e74574e8a0925962 }
 import { BeforeListContent as BeforeListContent_ad27bbf9b31f076b30430795dbfa0b6c } from 'src/collections/Posts/components/beforeList.tsx'
 import { PostsByStatus as PostsByStatus_c35ae567a207f873a10007fa5c35a220 } from 'src/collections/Posts/components/PostsByStatus.tsx'
 import { Description as Description_35a551235dfba0e3c4138d9fa5318fbb } from 'src/collections/Posts/components/description.tsx'
+import { default as default_e503752e2ec45fc41e816ff88b056d77 } from 'src/components/Admin/ui/avatar.tsx'
 import { banner as banner_0231ae58e6ca5d4c032c31bf270d9ce5 } from 'src/components/Admin/UI/header.tsx'
 import { Logout as Logout_fd8c17baee90f35276c01ab59a85a0d4 } from 'src/components/Admin/UI/logout.tsx'
 import { Icon as Icon_e20afb1619f876d82bd54cc0fb774db5 } from 'src/components/Admin/UI/icon.tsx'
@@ -78,10 +77,8 @@ export const importMap = {
   "src/components/Admin/Fields/Error.tsx#Error": Error_33c76d9df6d6c8bbe361be0d4f14d570,
   "src/components/Admin/Fields/Label.tsx#CustomRowLabel": CustomRowLabel_1f88a3090285bda4fdea67dfe24a98d4,
   "src/components/Admin/Fields/Authors.tsx#Authors": Authors_598a767212b750bcca66c928bb89bb73,
-  "src/components/Admin/Fields/Label.tsx#CustomTextLabel": CustomTextLabel_1f88a3090285bda4fdea67dfe24a98d4,
   "src/components/Admin/Fields/Cell.tsx#TitleCell": TitleCell_559dfedea2e7d9fa46e53803ce1f1091,
   "src/components/Admin/Fields/Description.tsx#TitleDescription": TitleDescription_eef29935ff1f42fb32c31b1497f508c6,
-  "src/components/Admin/Fields/CustomTextField.tsx#CustomTextField": CustomTextField_9c0f9fef143f7f7566ee02c7bc26ad8a,
   "@payloadcms/richtext-lexical/client#BlocksFeatureClient": BlocksFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/plugin-seo/client#MetaTitleComponent": MetaTitleComponent_a8a977ebc872c5d5ea7ee689724c0860,
   "@payloadcms/plugin-seo/client#MetaDescriptionComponent": MetaDescriptionComponent_a8a977ebc872c5d5ea7ee689724c0860,
@@ -92,6 +89,7 @@ export const importMap = {
   "src/collections/Posts/components/beforeList.tsx#BeforeListContent": BeforeListContent_ad27bbf9b31f076b30430795dbfa0b6c,
   "src/collections/Posts/components/PostsByStatus.tsx#PostsByStatus": PostsByStatus_c35ae567a207f873a10007fa5c35a220,
   "src/collections/Posts/components/description.tsx#Description": Description_35a551235dfba0e3c4138d9fa5318fbb,
+  "/components/Admin/ui/avatar.tsx#default": default_e503752e2ec45fc41e816ff88b056d77,
   "/components/Admin/UI/header.tsx#banner": banner_0231ae58e6ca5d4c032c31bf270d9ce5,
   "/components/Admin/UI/logout.tsx#Logout": Logout_fd8c17baee90f35276c01ab59a85a0d4,
   "/components/Admin/UI/icon.tsx#Icon": Icon_e20afb1619f876d82bd54cc0fb774db5,

@@ -14,6 +14,11 @@ export const Users: CollectionConfig = {
   },
   fields: [
     {
+      name: 'avatar',
+      type: 'upload',
+      relationTo: 'media',
+    },
+    {
       name: 'active',
       type: 'checkbox',
       defaultValue: false,

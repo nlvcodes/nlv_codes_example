@@ -2,39 +2,50 @@ import { CollectionConfig } from 'payload'
 import { ContentWithMedia } from '@/blocks/ContentWithMedia/config'
 import { BlocksFeature, FixedToolbarFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
 import { TableOfContents } from '@/blocks/TableOfContents/config'
-import {MetaDescriptionField, MetaImageField, MetaTitleField, OverviewField, PreviewField} from '@payloadcms/plugin-seo/fields'
+import {
+  MetaDescriptionField,
+  MetaImageField,
+  MetaTitleField,
+  OverviewField,
+  PreviewField,
+} from '@payloadcms/plugin-seo/fields'
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
   admin: {
+    meta: {
+      titleSuffix: 'NLV Codes',
+    },
     listSearchableFields: ['slug', 'title', 'authors'],
     pagination: {
       limits: [0, 10, 20, 50],
-      defaultLimit: 0
+      defaultLimit: 0,
     },
+    defaultColumns: ['title', 'slug', 'date', 'authors', 'id'],
+    hideAPIURL: process.env.NEXT_PUBLIC_ENABLE_AUTOLOGIN !== 'true',
     group: 'Posts',
     useAsTitle: 'title',
     description: 'This is a blog collection.',
     components: {
       beforeList: [
         {
-          path: 'src/collections/Posts/components/beforeList.tsx#BeforeListContent'
-        }
+          path: 'src/collections/Posts/components/beforeList.tsx#BeforeListContent',
+        },
       ],
       afterList: [
         {
-          path: 'src/collections/Posts/components/afterList.tsx#AfterListContent'
-        }
+          path: 'src/collections/Posts/components/afterList.tsx#AfterListContent',
+        },
       ],
       beforeListTable: [
         {
-          path: 'src/collections/Posts/components/PostsByStatus.tsx#PostsByStatus'
-        }
+          path: 'src/collections/Posts/components/PostsByStatus.tsx#PostsByStatus',
+        },
       ],
       Description: {
-        path: 'src/collections/Posts/components/description.tsx#Description'
-      }
-    }
+        path: 'src/collections/Posts/components/description.tsx#Description',
+      },
+    },
   },
   versions: {
     drafts: {
@@ -56,18 +67,45 @@ export const Posts: CollectionConfig = {
   },
   fields: [
     {
+      type: 'checkbox',
+      name: 'showBlocks',
+    },
+    {
+      type: 'blocks',
+      admin: {
+        initCollapsed: true,
+        isSortable: false,
+        condition: (_, { showBlocks }) => showBlocks,
+      },
+      blocks: [
+        ContentWithMedia, TableOfContents,
+      ],
+      name: 'blockTest',
+      label: false,
+      minRows: 1,
+      maxRows: 20,
+    },
+    {
+      name: 'date',
+      type: 'date',
+      timezone: true,
+      admin: {
+        position: 'sidebar',
+      },
+    },
+    {
       name: 'email',
       type: 'email',
       admin: {
         components: {
           Error: {
-            path: 'src/components/Admin/Fields/Error.tsx#Error'
+            path: 'src/components/Admin/Fields/Error.tsx#Error',
           },
           Cell: {
-            path: 'src/components/Admin/Fields/Cell.tsx#EmailCell'
-          }
-        }
-      }
+            path: 'src/components/Admin/Fields/Cell.tsx#EmailCell',
+          },
+        },
+      },
     },
     {
       name: 'list',
@@ -75,20 +113,20 @@ export const Posts: CollectionConfig = {
       admin: {
         components: {
           RowLabel: {
-            path: 'src/components/Admin/Fields/Label.tsx#CustomRowLabel'
-          }
-        }
+            path: 'src/components/Admin/Fields/Label.tsx#CustomRowLabel',
+          },
+        },
       },
       fields: [
         {
           type: 'text',
-          name: 'listItem'
-        }
+          name: 'listItem',
+        },
       ],
       labels: {
         singular: 'list item',
-        plural: 'list items'
-      }
+        plural: 'list items',
+      },
     },
     {
       name: 'authors',
@@ -101,11 +139,11 @@ export const Posts: CollectionConfig = {
         components: {
           beforeInput: [
             {
-              path: 'src/components/Admin/Fields/Authors.tsx#Authors'
-            }
-          ]
-        }
-      }
+              path: 'src/components/Admin/Fields/Authors.tsx#Authors',
+            },
+          ],
+        },
+      },
     },
     {
       type: 'tabs',
@@ -114,40 +152,43 @@ export const Posts: CollectionConfig = {
           label: 'Content',
           fields: [
             {
-              type: 'blocks',
-              admin: {
-                initCollapsed: true,
-                isSortable: false,
-              },
-              blocks: [
-                ContentWithMedia, TableOfContents,
+              type: 'row',
+              fields: [
+                {
+                  name: 'title',
+                  type: 'text',
+                  maxLength: 60,
+                  admin: {
+                    width: '40%',
+                    className: 'titleLabel',
+                    components: {
+                      Description: {
+                        path: 'src/components/Admin/Fields/Description.tsx#TitleDescription',
+                        clientProps: {
+                          defaultLength: 60,
+                        },
+                      },
+                      Cell: {
+                        path: 'src/components/Admin/Fields/Cell.tsx#TitleCell',
+                      },
+                    },
+                  },
+                },
+                {
+                  name: 'slug',
+                  type: 'text',
+                  admin: {
+                    width: '60%',
+                    // components: {
+                    //   Field: {
+                    //     path: 'src/components/Admin/Fields/CustomTextField.tsx#CustomTextField',
+                    //   },
+                    // },
+                  },
+                },
               ],
-              name: 'blockTest',
-              label: false,
-              minRows: 1,
-              maxRows: 20,
             },
-            {
-              name: 'title',
-              type: 'text',
-              maxLength: 60,
-              admin: {
-                components: {
-                  Label: {
-                    path: 'src/components/Admin/Fields/Label.tsx#CustomTextLabel'
-                  },
-                  Description: {
-                    path: 'src/components/Admin/Fields/Description.tsx#TitleDescription',
-                    clientProps: {
-                      defaultLength: 60
-                    }
-                  },
-                  Cell: {
-                    path: 'src/components/Admin/Fields/Cell.tsx#TitleCell'
-                  }
-                }
-              }
-            },
+
             {
               name: 'array',
               type: 'array',
@@ -157,26 +198,12 @@ export const Posts: CollectionConfig = {
               fields: [
                 {
                   name: 'arrayText',
-                  type: 'text'
-                }
-              ]
+                  type: 'text',
+                },
+              ],
             },
-            {
-              name: 'date',
-              type: 'date',
-              // timezone: true,
-            },
-            {
-              name: 'slug',
-              type: 'text',
-              admin: {
-                components: {
-                  Field: {
-                    path: 'src/components/Admin/Fields/CustomTextField.tsx#CustomTextField'
-                  }
-                }
-              }
-            },
+
+
             {
               name: 'content',
               type: 'richText',
@@ -196,6 +223,9 @@ export const Posts: CollectionConfig = {
             {
               name: 'plaintext',
               type: 'textarea',
+              admin: {
+                hidden: true
+              }
             },
             { name: 'number', type: 'number' },
           ],
@@ -219,9 +249,9 @@ export const Posts: CollectionConfig = {
               type: 'text',
               hooks: {
                 beforeChange: [
-                  async ({data, value}) => value ? value : `https://example.com/posts/${data?.slug}`
-                ]
-              }
+                  async ({ data, value }) => value ? value : `https://example.com/posts/${data?.slug}`,
+                ],
+              },
             },
             PreviewField({
               hasGenerateFn: true,
@@ -230,9 +260,9 @@ export const Posts: CollectionConfig = {
               titlePath: 'meta.title',
               descriptionPath: 'meta.description',
               imagePath: 'meta.image',
-            })
-          ]
-        }
+            }),
+          ],
+        },
       ],
     },
   ],
