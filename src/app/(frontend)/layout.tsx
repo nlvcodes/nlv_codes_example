@@ -12,10 +12,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <AuthProvider api={'rest'}>
-      <html lang="en">
-      <body>{children}</body>
-      </html>
-    </AuthProvider>
+    <html lang="en" className={`text-emerald-950 bg-emerald-50/30`}>
+    <body>{children}</body>
+    </html>
   )
 }

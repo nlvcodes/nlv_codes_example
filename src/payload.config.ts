@@ -83,7 +83,7 @@ export default buildConfig({
         ]
       },
     },
-    autoLogin: process.env.NEXT_PUBLIC_ENABLE_AUTOLOGIN === 'false' ? {
+    autoLogin: process.env.NEXT_PUBLIC_ENABLE_AUTOLOGIN === 'true' ? {
       email: 'nick+test@midlowebdesign.com',
       password: 'test',
     } : false,

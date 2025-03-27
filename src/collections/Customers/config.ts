@@ -6,6 +6,7 @@ import admin from '@/collections/Users/access/admin'
 
 export const Customers: CollectionConfig = {
   slug: 'customers',
+  // auth: true,
   auth: {
     tokenExpiration: 12 * 60 * 60,
     verify: false,
@@ -25,10 +26,6 @@ export const Customers: CollectionConfig = {
   },
   access: {
     create: () => true,
-    read: () => true,
-    update: () => true,
-    delete: () => true,
-    admin: () => true
   },
   fields: [
     {
@@ -53,6 +50,7 @@ export const Customers: CollectionConfig = {
         'Pro',
         'Enterprise',
       ],
+      defaultValue: 'Free',
     },
   ],
 }
