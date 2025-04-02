@@ -13,6 +13,11 @@
  * via the `definition` "supportedTimezones".
  */
 export type SupportedTimezones = 'America/Monterrey' | 'America/New_York' | 'America/Los_Angeles';
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tierProps".
+ */
+export type TierProps = ('Free' | 'Basic' | 'Pro' | 'Enterprise') | null;
 
 export interface Config {
   auth: {
@@ -323,7 +328,7 @@ export interface Customer {
   id: string;
   firstName?: string | null;
   lastName?: string | null;
-  tier?: ('Free' | 'Basic' | 'Pro' | 'Enterprise') | null;
+  tier?: TierProps;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -332,6 +337,8 @@ export interface Customer {
   resetPasswordExpiration?: string | null;
   salt?: string | null;
   hash?: string | null;
+  _verified?: boolean | null;
+  _verificationToken?: string | null;
   loginAttempts?: number | null;
   lockUntil?: string | null;
   password?: string | null;
@@ -711,6 +718,8 @@ export interface CustomersSelect<T extends boolean = true> {
   resetPasswordExpiration?: T;
   salt?: T;
   hash?: T;
+  _verified?: T;
+  _verificationToken?: T;
   loginAttempts?: T;
   lockUntil?: T;
 }

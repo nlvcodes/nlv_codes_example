@@ -1,5 +1,4 @@
 import '../globals.css'
-import { AuthProvider } from '@/app/(frontend)/(auth)/components/providers'
 
 export const metadata = {
   title: 'Next.js',

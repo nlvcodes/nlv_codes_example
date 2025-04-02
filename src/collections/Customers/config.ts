@@ -1,15 +1,26 @@
 import type { CollectionConfig } from 'payload'
-import { anyone } from '@/collections/Users/access/anyone'
-import user from '@/collections/Users/access/user'
-import { checkRole } from '../Users/access/checkRole'
-import admin from '@/collections/Users/access/admin'
+import { getServerSideURL } from '@/utilities/getURL'
 
 export const Customers: CollectionConfig = {
   slug: 'customers',
-  // auth: true,
   auth: {
     tokenExpiration: 12 * 60 * 60,
-    verify: false,
+    verify: {
+      generateEmailSubject: (args) => {
+        return `Hey ${args?.user?.firstName ? args?.user.firstName : args?.user.email}, verify your email address!`
+      },
+      generateEmailHTML: (args) => {
+        return `<div><h1>Hey ${args.user?.firstName ? args.user.firstName : args.user.email}!</h1><br /><p>Verify your email address by going to ${getServerSideURL()}/verify?token=${args.token}</p></div>`
+      },
+    },
+    forgotPassword: {
+      generateEmailSubject: (args) => {
+        return `Hey ${args?.user?.firstName ? args?.user.firstName : args?.user.email}! Reset your password.`
+      },
+      generateEmailHTML: (args) => {
+        return `<div><h1>Hey ${args?.user?.firstName ? args?.user.firstName : args?.user.email}!</h1><br /><p>You (or someone else) requested to reset your password. If this wasn't you, you can safely ignore this email. Otherwise, reset your password by going to ${getServerSideURL()}/password-reset?token=${args?.token}</p></div>`
+      }
+    },
     loginWithUsername: {
       allowEmailLogin: true,
       requireEmail: true,
@@ -26,6 +37,7 @@ export const Customers: CollectionConfig = {
   },
   access: {
     create: () => true,
+    admin: () => false,
   },
   fields: [
     {
@@ -44,6 +56,7 @@ export const Customers: CollectionConfig = {
     {
       name: 'tier',
       type: 'radio',
+      interfaceName: 'tierProps',
       options: [
         'Free',
         'Basic',

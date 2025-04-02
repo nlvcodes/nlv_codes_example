@@ -1,18 +1,20 @@
 import { redirect } from 'next/navigation'
 import React, { ReactNode } from 'react'
 import {getUser} from './actions/getUser'
+import { LogoutButton } from './components/LogoutButton'
 
-interface Props {
-  children: ReactNode
-}
-
-const Template: React.FC<Props> = async ({children}) => {
+const Template: React.FC<{ children: ReactNode }> = async ({children}) => {
   const user = await getUser()
   if (!user) {
     redirect('/login')
-    return null
   }
-  return <>{children}</>
+
+  return <>
+    <div className={`bg-emerald-500 p-4`}>
+      <LogoutButton />
+  </div>
+    {children}
+  </>
 }
 
 export default Template
