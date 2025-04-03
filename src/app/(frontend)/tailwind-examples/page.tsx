@@ -40,9 +40,18 @@ export default function Page() {
       </div>
       <div className={`@md:font-bold text-white`}><p>
         This should only be bold after 40 rem relative to the container size. This is defined in globals.css.
-      </p></div>
+      </p>
+      </div>
       <p className={`@min-[700px]:text-white`}>This is an arbitrary value that applies white text after 700px</p>
-      {/*Container query units*/}
+    </div>
+    {/*Container query units*/}
+    <div className={`@container w-full bg-emerald-500`}>
+      <p className={`bg-emerald-950 text-emerald-50 w-[50cqw]`}>We can set container query units using arbitrary
+        values</p>
+      <p className={`bg-amber-950 text-amber-50 w-[75cqw]`}>1 container query unit is essentially 1% of the
+        container</p>
+      <p className={`bg-amber-950 text-amber-50 w-[25cqw]`}>25%</p>
+      <p className={`bg-amber-950 text-amber-50 w-[33cqw]`}>33%</p>
     </div>
   </main>
 }
