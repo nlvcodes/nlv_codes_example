@@ -9,3 +9,17 @@
         font-size: var(--text-2xl)
     }
 }
+
+@theme {
+    /* custom breakpoint example */
+    /*--breakpoint-lg: 70rem;*/
+
+    /*removing breakpoints*/
+    /*--breakpoint-*: initial;*/
+    /*--breakpoint-tablet: 40rem;*/
+    /*--breakpoint-laptop: 64rem;*/
+    /*--breakpoint-desktop: 80rem;*/
+
+    /*custom container size*/
+    /*--container-md: 40rem;*/
+}
