@@ -56,8 +56,8 @@ export default buildConfig({
       }
     },
     autoLogin: process.env.NEXT_PUBLIC_ENABLE_AUTOLOGIN === 'true' ? {
-      email: 'nick+test@midlowebdesign.com',
-      password: 'test'
+      email: 'nick+editor@midlowebdesign.com',
+      password: 'editor'
     } : false,
     meta: {
       titleSuffix: '- NLV Codes',

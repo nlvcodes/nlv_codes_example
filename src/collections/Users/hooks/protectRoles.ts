@@ -5,10 +5,13 @@ export const protectRoles: FieldHook<{id: string} & User> = ({req, data}) => {
   const isAdmin = req.user?.roles?.includes('admin')
 
   if (!isAdmin) {
-    return ['user']
+    // NOTE: The code in the video doesn't include this line. This is added because whenever the editor profile got updated,
+    // 'editor' was removed
+    if (!data?.roles?.includes('editor')) {
+      return ['user']
+    }
   }
 
-  // NOTE: this removes all permissions for our editor user when their profile is updated
 
   const userRoles = new Set(data?.roles || [])
   userRoles.add('user')
