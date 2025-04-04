@@ -16,7 +16,7 @@ import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 
-import { Users } from './collections/Users'
+import { Users } from './collections/Users/config'
 import { Media } from './collections/Media'
 import { Posts } from '@/collections/Posts/config'
 import { Header } from '@/globals/Header/config'
