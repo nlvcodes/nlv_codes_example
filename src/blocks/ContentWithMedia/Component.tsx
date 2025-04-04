@@ -12,7 +12,22 @@ export const ContentWithMedia: React.FC<Props> = (block) => {
   const firstLetter = `first-letter:float-left first-letter:mr-3 first-letter:text-7xl first-letter:font-bold first-letter:text-gray-900`
 
     return <div className={`print:hidden`}>
-      <div className={`flex justify-center p-4`}>
+
+      <div className={`w-75 mx-auto my-2`}>
+        <details className={`p-4 border border-transparent rounded-2xl open:border-emerald-950/10 open:bg-emerald-100`} open>
+          <summary className={`text-sm font-semibold text-gray-900 select-none`}>
+            This is a summary box
+          </summary>
+          <div className={`mt-3 text-sm text-gray-600`}>
+            <p>
+              It can open and close and change styles accordingly
+            </p>
+          </div>
+        </details>
+        <input inert className={`mx-auto border border-emerald-950 placeholder:text-emerald-950 placeholder:p-2 rounded-lg inert:bg-emerald-200/30 inert:placeholder:text-emerald-950/30`} placeholder={'email'} type={'email'} />
+      </div>
+
+      <div dir={'rtl'} data-ui={'light-mode'} className={`rtl:text-white rtl:bg-purple-400 flex justify-center p-4`}>
         <ul role={"list"} className={`sm:grid sm:grid-cols-2 md:grid-cols-4 md-gap-3 list-disc marker:text-emerald-400`}>
           <li>Get groceries</li>
           <li>Make dinner</li>
