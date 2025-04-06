@@ -2,10 +2,11 @@
 
 import React, { ReactElement, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import SubmitButton from '@/components/FormFields/SubmitButton'
-import {Input} from '@/components/FormFields/Input'
+import SubmitButton from '@/components/CustomerForm/SubmitButton'
+import {Input} from '@/components/CustomerForm/Input'
 import { update, UpdateResponse } from '../actions/update'
 import type { Customer } from '@/payload-types'
+import { FormContainer } from '@/components/CustomerForm/FormContainer'
 
 export default function UpdateForm({ user, tiers }: { user: Customer, tiers: Customer['tier'][] }): ReactElement {
   const [isLoading, setIsLoading] = useState(false)
@@ -35,31 +36,33 @@ export default function UpdateForm({ user, tiers }: { user: Customer, tiers: Cus
     }
   }
 
-  return <div className={`flex gap-8 min-h-full flex-col justify-center items-center`}>
-    <div>
-      <h1>Your Account</h1>
+  return <FormContainer heading={'Your Account'}>
+    <div className={`flex gap-8 min-h-full flex-col justify-center items-center`}>
+      <div>
+        <h1>Your Account</h1>
+      </div>
+      <div>
+        <form className={`flex flex-col gap-4`} onSubmit={handleSubmit}>
+          <div className={`flex flex-row flex-1/2 gap-2`}>
+            <Input label={'First Name'} name={'firstName'} type={'text'} defaultValue={user.firstName || ``} />
+            <Input label={'Last Name'} name={'lastName'} type={'text'} defaultValue={user.lastName || ``} />
+          </div>
+          <Input label={'Email'} name={'email'} type={'email'} defaultValue={user.email} />
+          <fieldset className={`flex flex-wrap gap-4 justify-around items-center`}>
+            <legend>Your tier:</legend>
+            {tiers.map((tier, index) => (
+              <div className={`text-emerald-950/30`} key={index}>
+                <input className={`inert:opacity-60`} inert id={tier!} readOnly type={'radio'}
+                       checked={tier === user.tier} />
+                <label className={`ms-2`} htmlFor={tier!}>{tier}</label>
+              </div>
+            ))}
+          </fieldset>
+          {error && <div className={`text-red-400`}>{error}</div>}
+          <SubmitButton loading={isLoading} text={`Update account`} />
+        </form>
+      </div>
     </div>
-    <div>
-      <form className={`flex flex-col gap-4`} onSubmit={handleSubmit}>
-        <div className={`flex flex-row flex-1/2 gap-2`}>
-          <Input label={'First Name'} name={'firstName'} type={'text'} defaultValue={user.firstName || ``} />
-          <Input label={'Last Name'} name={'lastName'} type={'text'} defaultValue={user.lastName || ``} />
-        </div>
-        <Input label={'Email'} name={'email'} type={'email'} defaultValue={user.email} />
-        <fieldset className={`flex flex-wrap gap-4 justify-around items-center`}>
-          <legend>Your tier:</legend>
-          {tiers.map((tier, index) => (
-            <div className={`text-emerald-950/30`} key={index}>
-              <input className={`inert:opacity-60`} inert id={tier!} readOnly type={'radio'}
-                     checked={tier === user.tier} />
-              <label className={`ms-2`} htmlFor={tier!}>{tier}</label>
-            </div>
-          ))}
-        </fieldset>
-        {error && <div className={`text-red-400`}>{error}</div>}
-        <SubmitButton loading={isLoading} text={`Update account`} />
-      </form>
-    </div>
-  </div>
+  </FormContainer>
 
 }

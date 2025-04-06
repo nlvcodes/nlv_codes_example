@@ -6,7 +6,10 @@ import { ResetPasswordButton } from '@/app/(frontend)/(auth)/components/ResetPas
 
 export default async function Page() {
   const user = await getUser() as Customer
-  const tiers = Customers.fields.filter(field => field.type === 'radio').filter(field => field.name === 'tier')[0].options
+  const tiers = Customers.fields
+    .filter(field => field.type === 'radio')
+    .filter(field => field.name === 'tier')[0]
+    .options
   return <main className={`w-full mx-auto sm:max-w-sm my-8`}>
     <div className={`my-8`}>
       <h1>Hello, {user?.firstName === '' ? user?.email : user?.firstName}!</h1>

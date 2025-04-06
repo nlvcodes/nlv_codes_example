@@ -9,8 +9,7 @@ export default async function Page(): Promise<React.ReactElement> {
   if (user) {
     redirect('/dashboard')
   }
-  return <div className={`h-[100vh]`}
-  >
+  return <div className={`h-[100vh]`}>
     <CreateForm />
   </div>
 }

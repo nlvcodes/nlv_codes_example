@@ -2,12 +2,13 @@
 
 import React, { ReactElement, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import SubmitButton from '@/components/FormFields/SubmitButton'
-import { Input } from '@/components/FormFields/Input'
+import SubmitButton from '@/components/CustomerForm/SubmitButton'
+import { Input } from '@/components/CustomerForm/Input'
 import {
   ForgotPassword,
   ForgotPasswordResponse,
 } from '../actions/forgotPassword'
+import { FormContainer } from '@/components/CustomerForm/FormContainer'
 
 export default function ForgotForm(): ReactElement {
   const [isLoading, setIsLoading] = useState(false)
@@ -36,17 +37,12 @@ export default function ForgotForm(): ReactElement {
 
   }
 
-  return <div className={`flex gap-8 min-h-full flex-col justify-center items-center`}>
-    <div>
-      <h1>Forgot password?</h1>
-    </div>
-    <div className={`w-full mx-auto sm:max-w-sm`}>
+  return <FormContainer heading={'Forgot Password?'}>
       <form className={`flex flex-col gap-4`} onSubmit={handleSubmit}>
         <Input label={'Email'} name={'email'} type={'email'} />
         {error && <div className={`text-red-400`}>{error}</div>}
         <SubmitButton loading={isLoading} text={`Reset password`} />
       </form>
-    </div>
-  </div>
+  </FormContainer>
 
 }
