@@ -15,23 +15,20 @@ export const Page = async ({ searchParams }: { searchParams: SearchParams }) => 
   if (!token) {
     redirect(`/login?message=${encodeURIComponent('No verification token found')}`)
   } else {
-    try {
-      const result = await payload.verifyEmail({
-        collection: 'customers',
-        token: token,
-      })
+    const result = await payload.verifyEmail({
+      collection: 'customers',
+      token: token,
+    })
 
-      if (result) {
-        redirect(`/login?message=${encodeURIComponent('Successfully verified')}`)
-      }
-    } catch (error) {
+    if (result) {
+      redirect(`/login?message=${encodeURIComponent('Successfully verified')}`)
+    } else {
       return <div
         className={`flex flex-col items-center justify-center min-h-full h-[calc(100vh)] w-full mx-auto sm:max-w-sm`}>
         <h1>There was a problem</h1>
         <p>Please contact an administrator.</p>
       </div>
     }
-
   }
 }
 
