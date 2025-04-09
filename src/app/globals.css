@@ -11,15 +11,15 @@
 }
 
 @theme {
-    /* custom breakpoint example */
+    /* !*custom breakpoint example *!*/
     /*--breakpoint-lg: 70rem;*/
 
-    /*removing breakpoints*/
+    /*!*removing breakpoints*!*/
     /*--breakpoint-*: initial;*/
     /*--breakpoint-tablet: 40rem;*/
     /*--breakpoint-laptop: 64rem;*/
     /*--breakpoint-desktop: 80rem;*/
 
-    /*custom container size*/
+    /*!*custom container size*!*/
     /*--container-md: 40rem;*/
 }
