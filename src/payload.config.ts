@@ -27,6 +27,7 @@ import { resendAdapter } from '@payloadcms/email-resend'
 import { revalidateRedirects } from '@/collections/hooks/revalidateRedirects'
 import { Logos } from '@/globals/Logos/config'
 import { Customers } from '@/collections/Customers/config'
+import { Pages } from '@/collections/Pages/config'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -60,6 +61,24 @@ export default buildConfig({
       email: 'nick+editor@midlowebdesign.com',
       password: 'editor'
     } : false,
+    livePreview: {
+      collections: ['pages'],
+      breakpoints: [
+        {
+          label: 'Desktop',
+          name: 'desktop',
+          width: 1440,
+          height: 1080,
+        },
+        {
+          label: 'Mobile',
+          name: 'mobile',
+          width: 375,
+          height: 667,
+        },
+      ],
+      url: ({ collectionConfig, data }) => `/${collectionConfig?.slug === 'pages' ? data.slug !== 'home' ? data.slug : '' : '' }`,
+    },
     meta: {
       titleSuffix: '- NLV Codes',
       title: 'Blank Payload Example',
@@ -161,7 +180,7 @@ export default buildConfig({
     },
   },
   globals: [Header, Logos],
-  collections: [Users, Media, Posts, Documents, Customers],
+  collections: [Users, Media, Posts, Documents, Customers, Pages],
   editor: lexicalEditor({}),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
@@ -237,4 +256,11 @@ export default buildConfig({
     defaultFromName: 'Nick',
     apiKey: process.env.RESEND_API || '',
   }),
+  // onInit: async (payload) => {
+  //   await payload.update({
+  //     collection: 'pages',
+  //     where: {},
+  //     data: {_status: 'published'}
+  //   })
+  // }
 })

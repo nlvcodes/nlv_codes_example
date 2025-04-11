@@ -1,4 +1,4 @@
-
+import canUseDOM from './canUseDOM'
 
 export const getServerSideURL = () => {
 
@@ -14,4 +14,18 @@ export const getServerSideURL = () => {
 
   return url
 
+}
+
+export const getClientSideURL = () => {
+  if (canUseDOM) {
+    const {protocol, hostname, port} = window.location
+
+    return `${protocol}//${hostname}${port ? `:${port}` : ''}`
+  }
+
+  if (process.env.VERCEL_PROJECT_PRODUCTION_URL) {
+    return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+  }
+
+  return process.env.NEXT_PUBLIC_SERVER_URL || ''
 }
