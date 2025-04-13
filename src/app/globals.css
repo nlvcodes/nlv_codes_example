@@ -10,4 +10,5 @@
     }
 }
 
-@custom-variant data-dark-mode (&[data-ui~="dark-mode"])
+/*@custom-variant data-dark-mode (&[data-ui~="dark-mode"])*/
+@custom-variant dark (&:where(.dark, .dark *));
