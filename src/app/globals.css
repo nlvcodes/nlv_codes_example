@@ -10,4 +10,11 @@
     }
 }
 
-@custom-variant data-dark-mode (&[data-ui~="dark-mode"])
+@theme {
+    /*--breakpoint-*: initial;*/
+    /*--breakpoint-tablet: 40rem;*/
+    /*--breakpoint-laptop: 64rem;*/
+    /*--breakpoint-desktop: 80rem;*/
+
+    --container-md: 40rem;
+}
