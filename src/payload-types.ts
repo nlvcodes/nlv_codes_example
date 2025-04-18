@@ -31,6 +31,7 @@ export interface Config {
     posts: Post;
     documents: Document;
     customers: Customer;
+    pages: Page;
     redirects: Redirect;
     'payload-jobs': PayloadJob;
     'payload-locked-documents': PayloadLockedDocument;
@@ -44,6 +45,7 @@ export interface Config {
     posts: PostsSelect<false> | PostsSelect<true>;
     documents: DocumentsSelect<false> | DocumentsSelect<true>;
     customers: CustomersSelect<false> | CustomersSelect<true>;
+    pages: PagesSelect<false> | PagesSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     'payload-jobs': PayloadJobsSelect<false> | PayloadJobsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -339,6 +341,19 @@ export interface Customer {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages".
+ */
+export interface Page {
+  id: string;
+  slug?: string | null;
+  title?: string | null;
+  content?: (ContentWithMedia | TableOfContents)[] | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -478,6 +493,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'customers';
         value: string | Customer;
+      } | null)
+    | ({
+        relationTo: 'pages';
+        value: string | Page;
       } | null)
     | ({
         relationTo: 'redirects';
@@ -722,6 +741,23 @@ export interface CustomersSelect<T extends boolean = true> {
   _verificationToken?: T;
   loginAttempts?: T;
   lockUntil?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages_select".
+ */
+export interface PagesSelect<T extends boolean = true> {
+  slug?: T;
+  title?: T;
+  content?:
+    | T
+    | {
+        contentWithMedia?: T | ContentWithMediaSelect<T>;
+        tableOfContents?: T | TableOfContentsSelect<T>;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

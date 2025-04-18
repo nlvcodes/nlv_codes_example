@@ -1,4 +1,4 @@
-
+import canUseDOM from './canUseDOM'
 
 export const getServerSideURL = () => {
 
@@ -13,5 +13,14 @@ export const getServerSideURL = () => {
   }
 
   return url
+
+}
+
+export const getClientSideURL = () => {
+  if (canUseDOM) {
+    const { protocol, hostname, port } = window.location
+
+    return `${protocol}//${hostname}${port ? `:${port}` : ''}`
+  }
 
 }
