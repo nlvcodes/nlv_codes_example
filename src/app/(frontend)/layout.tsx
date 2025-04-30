@@ -1,4 +1,5 @@
-import "../globals.css"
+import '../globals.css'
+import Script from 'next/script'
 
 export const metadata = {
   title: 'Next.js',
@@ -6,13 +7,18 @@ export const metadata = {
 }
 
 export default function RootLayout({
-  children,
-}: {
+                                     children,
+                                   }: {
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <>
+      {/*Start of HubSpot Embed Code*/}
+      <Script type="text/javascript" id="hs-script-loader" async defer src={`//js.hs-scripts.com/${process.env.HS_PORTAL_ID}.js`} />
+      {/*End of HubSpot Embed Code*/}
+      <html lang="en">
       <body>{children}</body>
-    </html>
+      </html>
+    </>
   )
 }

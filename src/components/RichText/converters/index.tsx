@@ -21,5 +21,6 @@ export const jsxConverter: JSXConvertersFunction<NodeTypes> = ({defaultConverter
   blocks: {
     contentWithMedia: ({node}) => <ContentWithMedia {...node.fields} />,
     tableOfContents: ({node}) => <TableOfContents {...node.fields} />,
+
   }
 })
