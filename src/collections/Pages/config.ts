@@ -2,7 +2,7 @@ import { CollectionConfig } from 'payload'
 import { ContentWithMedia } from '@/blocks/ContentWithMedia/config'
 import { TableOfContents } from '@/blocks/TableOfContents/config'
 import editor from '@/collections/Users/access/editor'
-import admin from '@/collections/Users/access/admin'
+import { Section } from '@/blocks/Section/config'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -40,6 +40,6 @@ export const Pages: CollectionConfig = {
   fields: [
     { name: 'slug', type: 'text' },
     { name: 'title', type: 'text' },
-    { name: 'content', type: 'blocks', blocks: [ContentWithMedia, TableOfContents] },
+    { name: 'content', type: 'blocks', blocks: [ContentWithMedia, TableOfContents, Section] },
   ],
 }

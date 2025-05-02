@@ -28,11 +28,18 @@ import { revalidateRedirects } from '@/collections/hooks/revalidateRedirects'
 import { Logos } from '@/globals/Logos/config'
 import { Customers } from '@/collections/Customers/config'
 import { Pages } from '@/collections/Pages/config'
+import { Video } from '@/blocks/Video/config'
+import { Text } from '@/blocks/Text/config'
+import { Image } from '@/blocks/Image/config'
+import { Column } from '@/blocks/Column/config'
+import { Row } from '@/blocks/Row/config'
+import { Section } from '@/blocks/Section/config'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 export default buildConfig({
+  blocks: [Text, Image, Video, Column, Row, Section],
   graphQL: {
     disable: true
   },
