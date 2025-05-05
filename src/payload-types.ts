@@ -195,6 +195,7 @@ export interface Media {
  */
 export interface Video {
   videoLink: string;
+  name: string;
   /**
    * Description for search engines
    */
@@ -212,7 +213,7 @@ export interface Video {
  */
 export interface Column {
   content?: (Text | Image | Video)[] | null;
-  columnWidth?: ('none' | '4/5' | '3/4' | '2/3' | '1/2' | '1/3' | '1/4' | '1/5') | null;
+  columnWidth: 'auto' | '4/5' | '3/4' | '2/3' | '1/2' | '1/3' | '1/4' | '1/5';
   id?: string | null;
   blockName?: string | null;
   blockType: 'column';

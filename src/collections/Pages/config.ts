@@ -40,6 +40,6 @@ export const Pages: CollectionConfig = {
   fields: [
     { name: 'slug', type: 'text' },
     { name: 'title', type: 'text' },
-    { name: 'content', type: 'blocks', blocks: [ContentWithMedia, TableOfContents, Section] },
+    { name: 'content', type: 'blocks', blocks: [ContentWithMedia, TableOfContents, Section] }, // only need to add Section here, Section will contain everything else
   ],
 }

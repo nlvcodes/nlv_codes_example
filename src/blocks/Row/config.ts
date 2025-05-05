@@ -1,57 +1,40 @@
-import { Block } from 'payload'
-import { Column } from '@/payload-types'
+import { Block } from 'payload' // import the Block type from 'payload'
 
-export const Row: Block = {
-  slug: 'row',
-  fields: [
+export const Row: Block = { // export a constant called Row with the Block type assigned to it
+  slug: 'row', // our row block will have the slug 'row'
+  fields: [ // and will have two fields
     {
-      type: 'text',
-      name: 'totalWidth',
-      defaultValue: 'Auto',
-      virtual: true,
-      admin: {
-        readOnly: true,
-        components: {
-          Error: {
-            path: 'src/components/Admin/Fields/Error.tsx#Error',
-            clientProps: {
-              message: 'Value must equal 100% or Auto',
-            },
-          },
-        },
-      },
-      validate: (value: any) => {
-        if (value === '100%' || value === 'Auto') {
-          return true
+      type: 'text', // the first will be a text field
+      name: 'totalWidth', // called totalWidth
+      validate: (value: any) => { // and will validate that the value is equal to 100%
+        if (value === '100%') {
+          return true // this will make sure the form submits correctly if value is 100%
         } else {
-          return 'Value must equal 100% or Auto'
+          return 'Value must equal 100%' // otherwise, this error will be returned in the API response
         }
       },
-      hooks: {
-        beforeValidate: [
-          ({ blockData }) => {
-            const columns = blockData?.columns.map((column: Column) => column.columnWidth)
-            if (columns.includes('none')) {
-              return 'Auto'
-            } else {
-              const columnsAsNumbers = columns.map((column: string) => {
-                const splitFraction = column.split('/')
-                return Number(splitFraction[0]) / Number(splitFraction[1]) * 100
-              })
-
-              return `${Math.ceil(columnsAsNumbers.reduce((acc: number, column: number) => acc + column, 0))}%`
-            }
+      admin: { // we'll use the admin property to make the field read-only and to override the default Field component
+        readOnly: true, // set readOnly to true
+        components: { // we'll come back to this
+          Field: { // then to wrap everything up, we can import our ColumnWidth component here
+            path: 'src/collections/fields/ColumnWidth.tsx',
           },
-        ],
-      },
+          Error: { // we can pull in our custom error component we edited earlier
+            path: 'src/components/Admin/Fields/Error.tsx#Error',
+            clientProps: { // and using the clientProps prop
+              message: 'Value must equal 100%',  // we can pass in this error message
+            },
+          },
+        }
+      }
     },
     {
-      type: 'blocks',
-      name: 'columns',
-      label: 'Columns',
-      blocks: [],
-      blockReferences: ['column'],
-      maxRows: 4,
+      type: 'blocks', // we'll then need a blocks field
+      name: 'columns', // called columns
+      label: 'Columns', // with the label Columns
+      blocks: [], // and we'll pass in an empty array for our blocks
+      blockReferences: ['column'], // and reference the column block using its slug
+      maxRows: 4, // we'll set this to have a max of 4 rows so we only have 4 possible columns
     },
   ],
 }

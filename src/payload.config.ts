@@ -39,6 +39,7 @@ const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 export default buildConfig({
+  // we need to add all our block configs here to use in blockReferences, make sure they import correctly
   blocks: [Text, Image, Video, Column, Row, Section],
   graphQL: {
     disable: true
