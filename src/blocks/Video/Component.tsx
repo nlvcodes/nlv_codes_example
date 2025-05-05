@@ -1,5 +1,5 @@
-import type { Video as VideoProps } from '@/payload-types'
 // we need to import our Video types as VideoProps so we can name our exported constant Video
+import type { Video as VideoProps } from '@/payload-types'
 
 export const Video = (props: VideoProps) => {
   // export a constant called Video with the VideoProps type assigned to it
