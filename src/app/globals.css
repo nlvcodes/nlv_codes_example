@@ -6,7 +6,12 @@
 
 @layer base {
     h1 {
-        font-size: var(--text-2xl)
+        font-size: var(--text-3xl);
+        font-weight: bolder;
+    }
+    h2 {
+        font-size: var(--text-2xl);
+        font-weight: bold;
     }
 }
 

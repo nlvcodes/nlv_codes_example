@@ -28,9 +28,21 @@ import { revalidateRedirects } from '@/collections/hooks/revalidateRedirects'
 import { Logos } from '@/globals/Logos/config'
 import { Customers } from '@/collections/Customers/config'
 import { Pages } from '@/collections/Pages/config'
+import { formBuilderPlugin, fields } from '@payloadcms/plugin-form-builder'
+import { BeforeEmail } from '@payloadcms/plugin-form-builder/types'
+import { FormSubmission } from '@/payload-types'
+import editor from '@/collections/Users/access/editor'
+import { defaultValue, hidden, label, name, placeholder, required, width } from '@/blocks/Form/fieldConfig'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
+
+const beforeEmail: BeforeEmail<FormSubmission> = (emails, beforeChangeParams) => {
+  return emails.map((email) => ({
+    ...email,
+    html: `<div><style>h1 {font-size: 3rem} p {font-size: 1rem; font-weight: bold; padding: 1rem; border: 1px solid darkgreen; border-radius: 0.5rem}</style><div>${email.html}</div></div>`,
+  }))
+}
 
 export default buildConfig({
   graphQL: {
@@ -191,6 +203,176 @@ export default buildConfig({
   }),
   sharp,
   plugins: [
+    formBuilderPlugin({
+      fields: {
+        phone: {
+          fields: [
+            {type: 'row', fields: [name, label]},
+            {type: 'row', fields: [placeholder, defaultValue]},
+            {type: 'row', fields: [width]},
+            {type: 'row', fields: [required, hidden]},
+          ],
+          // @ts-ignore
+          slug: 'phone',
+          labels: {
+            singular: 'Phone Number',
+            plural: 'Phone Numbers',
+          }
+        },
+        text: {
+          labels: {
+            singular: 'Single-line Text', plural: 'Single-line Text',
+          },
+          fields: [
+            {type: 'row', fields: [name, label]},
+            {type: 'row', fields: [placeholder, defaultValue]},
+            {type: 'row', fields: [width]},
+            {type: 'row', fields: [required, hidden]},
+          ],
+        },
+        textarea: {
+          fields: [
+            {type: 'row', fields: [name, label]},
+            {type: 'row', fields: [placeholder]},
+            {type: 'row', fields: [required, hidden]},
+          ],
+        },
+        email: {
+          fields: [
+            {type: 'row', fields: [name, label]},
+            {type: 'row', fields: [placeholder, width]},
+            {type: 'row', fields: [required, hidden]},
+          ],
+        },
+        number: true,
+        checkbox: {
+          fields: [
+            {type: 'row', fields: [name, label]},
+            {type: 'row', fields: [width]},
+            {type: 'row', fields: [required, hidden]},
+          ],
+        },
+        message: true,
+        state: false,
+        select: false,
+        country: false,
+        payment: false,
+      },
+      redirectRelationships: ['pages'],
+      beforeEmail,
+      defaultToEmail: 'nick@midlowebdesign.com',
+      formOverrides: {
+        slug: 'forms',
+        admin: {
+          group: 'Forms'
+        },
+        access: {
+          update: editor
+        },
+        fields: ({defaultFields}) => [
+          ...defaultFields.map((field) => {
+            if (field.type === 'radio' && field.name === 'confirmationType') {
+              return {
+                ...field,
+                hidden: true,
+              }
+            }
+            return field
+          }),
+          {
+            name: 'hubspotID',
+            type: 'text',
+            label: 'HubSpot ID',
+            admin: {
+              position: 'sidebar'
+            }
+          },
+          {
+            type: 'checkbox',
+            name: 'requireRecaptcha',
+            label: 'Require reCAPTCHA?',
+            admin: {
+              position: 'sidebar'
+            }
+          }
+        ]
+      },
+      formSubmissionOverrides: {
+        slug: 'form-submissions',
+        admin: {
+          group: 'Forms'
+        },
+        hooks: {
+          afterChange: [
+            async ({doc, req}) => {
+            req.payload.logger.info('Form Submission Received')
+              const body = req.json ? await req.json() : {}
+              const sendSubmissionToHubSpot = async (): Promise<void> => {
+              const { form, submissionData} = doc
+                const portalID = process.env.HS_PORTAL_ID
+                const data = {
+                context: {
+                  ...('hubspotCookie' in body && {
+                    hutk: body?.hubspotCookie
+                  }),
+                  pageName: 'pageName' in body ? body?.pageName : '',
+                  pageUri: 'pageUri' in body ? body?.pageUri : '',
+                },
+                fields: submissionData.map((key: any) => ({
+                  name: key.field,
+                  value: key.value,
+                })),
+                }
+                try {
+                await fetch(`https://api.hsforms.com/submissions/v3/integration/submit/${portalID}/${form.hubspotID}`, {
+                  body: JSON.stringify(data),
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                  method: 'POST',
+                })
+                } catch (e: unknown) {
+                req.payload.logger.error({e, msg: 'Form submission not sent to HubSpot.'})
+                }
+              }
+              await sendSubmissionToHubSpot()
+            }
+          ]
+        },
+        fields: ({defaultFields}) => [
+          ...defaultFields,
+          {
+            name: 'recaptcha',
+            type: 'text',
+            validate: async(value: any, {req, siblingData}: any) => {
+              const form = await req.payload.findByID({
+                id: siblingData?.form,
+                collection: 'forms',
+              })
+
+              if (!form.requireRecaptcha) {
+                return true
+              }
+
+              if (!value) {
+                return 'Please complete the reCAPTCHA'
+              }
+
+              const res = await fetch(`https://www.google.com/recaptcha/api/siteverify?secret=${process.env.NEXT_PRIVATE_RECAPTCHA_SECRET_KEY}&response=${value}`, {
+                method: 'POST',
+              })
+              const data = await res.json()
+              if (!data.success) {
+                return 'Invalid captcha'
+              } else {
+                return true
+              }
+            }
+          }
+        ]
+      }
+
+    }),
     seoPlugin({
       generateTitle: ({ doc }) => doc.title,
       generateDescription: ({ doc }) => doc.plaintext,
