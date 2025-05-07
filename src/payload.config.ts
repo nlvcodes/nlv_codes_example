@@ -70,8 +70,8 @@ export default buildConfig({
       }
     },
     autoLogin: process.env.NEXT_PUBLIC_ENABLE_AUTOLOGIN === 'true' ? {
-      email: 'nick+editor@midlowebdesign.com',
-      password: 'editor'
+      email: 'nick+test@midlowebdesign.com',
+      password: 'test'
     } : false,
     livePreview: {
       collections: ['pages'],
@@ -95,6 +95,11 @@ export default buildConfig({
       titleSuffix: '- NLV Codes',
       title: 'Blank Payload Example',
       description: 'This is an example to be used for educational purposes only.',
+      alternates: {
+        canonical: ''
+      },
+      authors: [],
+      robots: '',
       openGraph: {
         title: 'Blank Payload Example',
         description: 'This is an example to be used for educational purposes.',
@@ -257,6 +262,7 @@ export default buildConfig({
         select: false,
         country: false,
         payment: false,
+        radio: true,
       },
       redirectRelationships: ['pages'],
       beforeEmail,
@@ -344,7 +350,8 @@ export default buildConfig({
           {
             name: 'recaptcha',
             type: 'text',
-            validate: async(value: any, {req, siblingData}: any) => {
+            validate: async(value: any, {req, siblingData, path}: any) => {
+              console.log(path)
               const form = await req.payload.findByID({
                 id: siblingData?.form,
                 collection: 'forms',

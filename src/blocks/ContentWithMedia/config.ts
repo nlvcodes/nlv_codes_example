@@ -1,5 +1,6 @@
 import type { Block } from 'payload'
-import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { FixedToolbarFeature, lexicalEditor, LinkFeature } from '@payloadcms/richtext-lexical'
+
 
 export const ContentWithMedia: Block = {
   slug: 'contentWithMedia',
@@ -19,6 +20,10 @@ export const ContentWithMedia: Block = {
       editor: lexicalEditor({
         features: ({ defaultFeatures }) => [
           ...defaultFeatures,
+          // this is the default
+          // LinkFeature({disableAutoLinks: undefined}),
+          LinkFeature({disableAutoLinks: true}),
+          FixedToolbarFeature(),
         ],
       }),
     },
@@ -30,7 +35,10 @@ export const ContentWithMedia: Block = {
     {
       type: 'radio',
       name: 'textPosition',
-      options: ['Left', 'Right'],
+      options: [
+        { value: 'Left', label: 'Left' },
+        { value: 'Right', label: 'Right' },
+      ],
     },
   ],
 }

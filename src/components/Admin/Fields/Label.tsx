@@ -1,6 +1,7 @@
 'use client'
-import type {TextFieldLabelClientComponent} from 'payload'
+import type { RadioFieldLabelServerComponent, TextFieldLabelClientComponent } from 'payload'
 import {useRowLabel} from '@payloadcms/ui'
+import { ArrowLeft } from 'lucide-react'
 
 export const CustomRowLabel = () => {
   const {data, rowNumber} = useRowLabel<{listItem?: string}>()

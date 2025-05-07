@@ -13,4 +13,5 @@ const nextConfig = {
   },
 }
 
-export default withPayload(nextConfig)
+export default withPayload(nextConfig, {devBundleServerPackages: false})
+// may cause issues with some projects, but in most cases will speed up compilation

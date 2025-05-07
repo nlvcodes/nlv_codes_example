@@ -12,6 +12,8 @@ import {
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
+  enableQueryPresets: true,
+  orderable: true,
   admin: {
     meta: {
       titleSuffix: 'NLV Codes',
@@ -27,6 +29,11 @@ export const Posts: CollectionConfig = {
     useAsTitle: 'title',
     description: 'This is a blog collection.',
     components: {
+      edit: {
+        beforeDocumentControls: [
+          {path: '/components/Admin/UI/logout.tsx#Logout'}
+        ]
+      },
       beforeList: [
         {
           path: 'src/collections/Posts/components/beforeList.tsx#BeforeListContent',
@@ -56,6 +63,7 @@ export const Posts: CollectionConfig = {
     read: () => true,
     update: () => true,
     create: () => true,
+    readVersions: () => true,
   },
   defaultSort: ['-number', '-title'],
   labels: {
@@ -110,6 +118,8 @@ export const Posts: CollectionConfig = {
     {
       name: 'list',
       type: 'array',
+      minRows: 1,
+      required: true,
       admin: {
         components: {
           RowLabel: {
@@ -134,6 +144,7 @@ export const Posts: CollectionConfig = {
       relationTo: 'users',
       hasMany: true,
       admin: {
+        appearance: 'drawer',
         position: 'sidebar',
         className: 'authors',
         components: {
@@ -146,8 +157,20 @@ export const Posts: CollectionConfig = {
       },
     },
     {
+      type: 'checkbox',
+      name: 'showTab',
+    },
+    {
       type: 'tabs',
       tabs: [
+        {
+          label: 'Show This Tab',
+          name: 'shownTab',
+          admin: {
+            condition: (_, { showTab }) => Boolean(showTab)
+          },
+          fields: []
+        },
         {
           label: 'Content',
           fields: [
