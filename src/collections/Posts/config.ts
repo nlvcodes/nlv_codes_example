@@ -1,6 +1,12 @@
 import { CollectionConfig } from 'payload'
-import { ContentWithMedia } from '@/blocks/ContentWithMedia/config'
-import { BlocksFeature, FixedToolbarFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
+import { ContentWithMedia } from '@/blocks/ContentWithMedia/config' // previously imported
+import {
+  BlocksFeature, // imported previously
+  FixedToolbarFeature,
+  lexicalEditor, // imported previously
+  type DefaultNodeTypes, // our types for all the default nodes
+  lexicalHTMLField, // the field that will convert and store our lexical content
+} from '@payloadcms/richtext-lexical'
 import { TableOfContents } from '@/blocks/TableOfContents/config'
 import {
   MetaDescriptionField,
@@ -9,6 +15,9 @@ import {
   OverviewField,
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
+
+import { type HTMLConvertersFunction, convertLexicalToHTML } from '@payloadcms/richtext-lexical/html' // this will be how you cast your new lexicalHTMLField to stay type safe
+import type { ContentWithMedia as ContentWithMediaProps, Media } from '@/payload-types'
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
@@ -220,12 +229,26 @@ export const Posts: CollectionConfig = {
                 },
               }),
             },
+            // we'll need to include the field that will store our converted lexical content
+            lexicalHTMLField({
+              htmlFieldName: 'content_html', // this is what you want to name your new field
+              lexicalFieldName: 'content', // the name of the field we're converting
+              hidden: false, // if you want the field to be hidden in the admin UI, false by default
+              storeInDB: false, // you can choose whether you want the HTML stored in your database, this is false by default
+
+              // you'll need to provide your block converters, just like we did before.
+
+              //@ts-expect-error
+              converters: (({ defaultConverters }) => ({
+                ...defaultConverters,
+              })) as HTMLConvertersFunction<DefaultNodeTypes>,
+            }),
             {
               name: 'plaintext',
               type: 'textarea',
               admin: {
-                hidden: true
-              }
+                hidden: true,
+              },
             },
             { name: 'number', type: 'number' },
           ],

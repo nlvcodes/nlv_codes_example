@@ -8,6 +8,8 @@ import { articleSchema, imageSchema } from '@/components/Schema'
 import { Media } from '@/payload-types'
 import Script from 'next/script'
 import {Redirects} from '@/components/Redirects'
+import { RenderHTML } from '@/components/RenderHTML'
+import { GenerateHTML } from '@/components/GenerateHTML'
 
 type Args = {
   params: Promise<{slug?: string}>
@@ -42,12 +44,19 @@ export default async function Post({params: paramsPromise}: Args) {
 
   return <>
     <Redirects url={url} disableNotFound />
-    <Script type={'application/ld+json'} strategy={'lazyOnload'}>
+    <Script id={'schema'} type={'application/ld+json'} strategy={'lazyOnload'}>
       {JSON.stringify(schema)}
     </Script>
-    <RenderBlocks blocks={post.blockTest} />
-    {post.content && <RichText data={post.content} />}
-    {post.plaintext}
+    {/*<RenderBlocks blocks={post.blockTest} />*/}
+    {post.content &&
+      // <RenderHTML data={post.content} />
+      // <RichText data={post.content} />
+      <GenerateHTML data={post.content} />
+    }
+    {/*{post.content_html &&*/}
+    {/*  <div dangerouslySetInnerHTML={{ __html: post.content_html}} />*/}
+    {/*}*/}
+    {/*{post.plaintext}*/}
   </>
 
 }
