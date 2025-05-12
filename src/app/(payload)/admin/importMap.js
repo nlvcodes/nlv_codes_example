@@ -1,5 +1,6 @@
 import { RscEntryLexicalCell as RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e } from '@payloadcms/richtext-lexical/rsc'
 import { RscEntryLexicalField as RscEntryLexicalField_44fe37237e0ebf4470c9990d8cb7b07e } from '@payloadcms/richtext-lexical/rsc'
+import { LexicalDiffComponent as LexicalDiffComponent_44fe37237e0ebf4470c9990d8cb7b07e } from '@payloadcms/richtext-lexical/rsc'
 import { FixedToolbarFeatureClient as FixedToolbarFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { BoldFeatureClient as BoldFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { ItalicFeatureClient as ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
@@ -37,21 +38,27 @@ import { AfterListContent as AfterListContent_8a6f4a27ef3e8f41e74574e8a0925962 }
 import { BeforeListContent as BeforeListContent_ad27bbf9b31f076b30430795dbfa0b6c } from 'src/collections/Posts/components/beforeList.tsx'
 import { PostsByStatus as PostsByStatus_c35ae567a207f873a10007fa5c35a220 } from 'src/collections/Posts/components/PostsByStatus.tsx'
 import { Description as Description_35a551235dfba0e3c4138d9fa5318fbb } from 'src/collections/Posts/components/description.tsx'
-import { default as default_e503752e2ec45fc41e816ff88b056d77 } from 'src/components/Admin/ui/avatar.tsx'
-import { banner as banner_0231ae58e6ca5d4c032c31bf270d9ce5 } from 'src/components/Admin/UI/header.tsx'
-import { Logout as Logout_fd8c17baee90f35276c01ab59a85a0d4 } from 'src/components/Admin/UI/logout.tsx'
-import { Icon as Icon_e20afb1619f876d82bd54cc0fb774db5 } from 'src/components/Admin/UI/icon.tsx'
-import { Logo as Logo_c8d086d2c9e9c13fa3e3e20117a55637 } from 'src/components/Admin/UI/logo.tsx'
-import { Outro as Outro_9c3d7d3c29c00074c36ae718e37d194c } from 'src/components/Admin/UI/afterDashboard.tsx'
-import { LoginInstruction as LoginInstruction_7ebba917fcd24b26e7bd66cc3b43022b } from 'src/components/Admin/UI/afterLogin.tsx'
-import { Welcome as Welcome_21625725f2fa2a03abba99acf3c0d1c2 } from 'src/components/Admin/UI/beforeDashboard.tsx'
-import { LinkToHome as LinkToHome_bd946e26f23bf880470376843f7aa84d } from 'src/components/Admin/UI/beforeLogin.tsx'
+import { Logout as Logout_fd8c17baee90f35276c01ab59a85a0d4 } from '../../../components/Admin/UI/logout.tsx'
+import { QueryPresetsAccessCell as QueryPresetsAccessCell_3817bf644402e67bfe6577f60ef982de } from '@payloadcms/ui'
+import { QueryPresetsWhereCell as QueryPresetsWhereCell_3817bf644402e67bfe6577f60ef982de } from '@payloadcms/ui'
+import { QueryPresetsWhereField as QueryPresetsWhereField_3817bf644402e67bfe6577f60ef982de } from '@payloadcms/ui'
+import { QueryPresetsColumnsCell as QueryPresetsColumnsCell_3817bf644402e67bfe6577f60ef982de } from '@payloadcms/ui'
+import { QueryPresetsColumnField as QueryPresetsColumnField_3817bf644402e67bfe6577f60ef982de } from '@payloadcms/ui'
+import { default as default_e503752e2ec45fc41e816ff88b056d77 } from '../../../components/Admin/ui/avatar.tsx'
+import { banner as banner_0231ae58e6ca5d4c032c31bf270d9ce5 } from '../../../components/Admin/UI/header.tsx'
+import { Icon as Icon_e20afb1619f876d82bd54cc0fb774db5 } from '../../../components/Admin/UI/icon.tsx'
+import { Logo as Logo_c8d086d2c9e9c13fa3e3e20117a55637 } from '../../../components/Admin/UI/logo.tsx'
+import { Outro as Outro_9c3d7d3c29c00074c36ae718e37d194c } from '../../../components/Admin/UI/afterDashboard.tsx'
+import { LoginInstruction as LoginInstruction_7ebba917fcd24b26e7bd66cc3b43022b } from '../../../components/Admin/UI/afterLogin.tsx'
+import { Welcome as Welcome_21625725f2fa2a03abba99acf3c0d1c2 } from '../../../components/Admin/UI/beforeDashboard.tsx'
+import { LinkToHome as LinkToHome_bd946e26f23bf880470376843f7aa84d } from '../../../components/Admin/UI/beforeLogin.tsx'
 import { S3ClientUploadHandler as S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24 } from '@payloadcms/storage-s3/client'
 import { UploadthingClientUploadHandler as UploadthingClientUploadHandler_749dcaa11bb61b873d113cb6c609bc10 } from '@payloadcms/storage-uploadthing/client'
 
 export const importMap = {
   "@payloadcms/richtext-lexical/rsc#RscEntryLexicalCell": RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e,
   "@payloadcms/richtext-lexical/rsc#RscEntryLexicalField": RscEntryLexicalField_44fe37237e0ebf4470c9990d8cb7b07e,
+  "@payloadcms/richtext-lexical/rsc#LexicalDiffComponent": LexicalDiffComponent_44fe37237e0ebf4470c9990d8cb7b07e,
   "@payloadcms/richtext-lexical/client#FixedToolbarFeatureClient": FixedToolbarFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/richtext-lexical/client#BoldFeatureClient": BoldFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/richtext-lexical/client#ItalicFeatureClient": ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
@@ -89,9 +96,14 @@ export const importMap = {
   "src/collections/Posts/components/beforeList.tsx#BeforeListContent": BeforeListContent_ad27bbf9b31f076b30430795dbfa0b6c,
   "src/collections/Posts/components/PostsByStatus.tsx#PostsByStatus": PostsByStatus_c35ae567a207f873a10007fa5c35a220,
   "src/collections/Posts/components/description.tsx#Description": Description_35a551235dfba0e3c4138d9fa5318fbb,
+  "/components/Admin/UI/logout.tsx#Logout": Logout_fd8c17baee90f35276c01ab59a85a0d4,
+  "@payloadcms/ui#QueryPresetsAccessCell": QueryPresetsAccessCell_3817bf644402e67bfe6577f60ef982de,
+  "@payloadcms/ui#QueryPresetsWhereCell": QueryPresetsWhereCell_3817bf644402e67bfe6577f60ef982de,
+  "@payloadcms/ui#QueryPresetsWhereField": QueryPresetsWhereField_3817bf644402e67bfe6577f60ef982de,
+  "@payloadcms/ui#QueryPresetsColumnsCell": QueryPresetsColumnsCell_3817bf644402e67bfe6577f60ef982de,
+  "@payloadcms/ui#QueryPresetsColumnField": QueryPresetsColumnField_3817bf644402e67bfe6577f60ef982de,
   "/components/Admin/ui/avatar.tsx#default": default_e503752e2ec45fc41e816ff88b056d77,
   "/components/Admin/UI/header.tsx#banner": banner_0231ae58e6ca5d4c032c31bf270d9ce5,
-  "/components/Admin/UI/logout.tsx#Logout": Logout_fd8c17baee90f35276c01ab59a85a0d4,
   "/components/Admin/UI/icon.tsx#Icon": Icon_e20afb1619f876d82bd54cc0fb774db5,
   "/components/Admin/UI/logo.tsx#Logo": Logo_c8d086d2c9e9c13fa3e3e20117a55637,
   "/components/Admin/UI/afterDashboard.tsx#Outro": Outro_9c3d7d3c29c00074c36ae718e37d194c,

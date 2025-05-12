@@ -95,6 +95,11 @@ export default buildConfig({
       titleSuffix: '- NLV Codes',
       title: 'Blank Payload Example',
       description: 'This is an example to be used for educational purposes only.',
+      alternates: {
+        canonical: '',
+      },
+      authors: [],
+      robots: '',
       openGraph: {
         title: 'Blank Payload Example',
         description: 'This is an example to be used for educational purposes.',
@@ -205,6 +210,7 @@ export default buildConfig({
   plugins: [
     formBuilderPlugin({
       fields: {
+        radio: true,
         phone: {
           fields: [
             {type: 'row', fields: [name, label]},
