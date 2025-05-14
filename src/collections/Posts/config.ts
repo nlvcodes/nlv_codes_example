@@ -249,7 +249,7 @@ export const Posts: CollectionConfig = {
               converters: ({ defaultConverters }) => ({
                 ...defaultConverters,
                 blocks: {
-                  contentWithMedia: ({ node }) => {
+                  contentWithMedia: ({ node }: {node: any}) => {
                     const richText = node.fields.content && convertLexicalToHTML({ data: node.fields.content })
                     const image = node.fields.image as Media
 
