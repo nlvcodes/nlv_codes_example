@@ -356,6 +356,7 @@ export interface Post {
     };
     [k: string]: unknown;
   } | null;
+  content_html?: string | null;
   plaintext?: string | null;
   number?: number | null;
   meta?: {
@@ -1045,6 +1046,7 @@ export interface PostsSelect<T extends boolean = true> {
         id?: T;
       };
   content?: T;
+  content_html?: T;
   plaintext?: T;
   number?: T;
   meta?:

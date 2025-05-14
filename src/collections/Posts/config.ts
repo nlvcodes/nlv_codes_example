@@ -1,6 +1,6 @@
 import { CollectionConfig } from 'payload'
 import { ContentWithMedia } from '@/blocks/ContentWithMedia/config'
-import { BlocksFeature, FixedToolbarFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
+import { BlocksFeature, FixedToolbarFeature, lexicalEditor, lexicalHTMLField } from '@payloadcms/richtext-lexical'
 import { TableOfContents } from '@/blocks/TableOfContents/config'
 import {
   MetaDescriptionField,
@@ -9,6 +9,8 @@ import {
   OverviewField,
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
+import { convertLexicalToHTML } from '@payloadcms/richtext-lexical/html'
+import type { Media } from '@/payload-types'
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
@@ -31,8 +33,8 @@ export const Posts: CollectionConfig = {
     components: {
       edit: {
         beforeDocumentControls: [
-          {path: '/components/Admin/UI/logout.tsx#Logout'}
-        ]
+          { path: '/components/Admin/UI/logout.tsx#Logout' },
+        ],
       },
       beforeList: [
         {
@@ -165,7 +167,7 @@ export const Posts: CollectionConfig = {
           label: 'Show This Tab',
           name: 'shownTab',
           admin: {
-            condition: (_, {showTab}) => Boolean(showTab)
+            condition: (_, { showTab }) => Boolean(showTab),
           },
           fields: [],
         },
@@ -223,8 +225,6 @@ export const Posts: CollectionConfig = {
                 },
               ],
             },
-
-
             {
               name: 'content',
               type: 'richText',
@@ -241,12 +241,31 @@ export const Posts: CollectionConfig = {
                 },
               }),
             },
+            lexicalHTMLField({
+              htmlFieldName: 'content_html',
+              lexicalFieldName: 'content',
+              hidden: false,
+              storeInDB: false,
+              converters: ({ defaultConverters }) => ({
+                ...defaultConverters,
+                blocks: {
+                  contentWithMedia: ({ node }) => {
+                    const richText = node.fields.content && convertLexicalToHTML({ data: node.fields.content })
+                    const image = node.fields.image as Media
+
+                    return `<div class="flex flex-wrap p-4 mx-4"><div class="${node.fields.textPosition === 'Right' ? 'order-last' : 'order-first'} w-1/2">${richText}</div>
+<img class="w-1/2 rounded-md" alt="${image.alt}" src="${process.env.NEXT_PUBLIC_S3}/${image.filename}" />
+</div>`
+                  },
+                },
+              }),
+            }),
             {
               name: 'plaintext',
               type: 'textarea',
               admin: {
-                hidden: true
-              }
+                hidden: true,
+              },
             },
             { name: 'number', type: 'number' },
           ],
