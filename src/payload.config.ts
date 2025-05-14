@@ -33,6 +33,12 @@ import { BeforeEmail } from '@payloadcms/plugin-form-builder/types'
 import { FormSubmission } from '@/payload-types'
 import editor from '@/collections/Users/access/editor'
 import { defaultValue, hidden, label, name, placeholder, required, width } from '@/blocks/Form/fieldConfig'
+import { Text } from '@/blocks/Text/config'
+import { Video } from '@/blocks/Video/config'
+import { Img } from '@/blocks/Image/config'
+import { Column } from '@/blocks/Column/config'
+import { Row } from '@/blocks/Row/config'
+import { Section } from '@/blocks/Section/config'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -45,6 +51,7 @@ const beforeEmail: BeforeEmail<FormSubmission> = (emails, beforeChangeParams) =>
 }
 
 export default buildConfig({
+  blocks: [Text, Video, Img, Column, Row, Section],
   graphQL: {
     disable: true
   },

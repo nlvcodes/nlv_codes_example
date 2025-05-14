@@ -1,17 +1,37 @@
 import { TableOfContents } from '@/blocks/TableOfContents/Component'
 import { ContentWithMedia } from '@/blocks/ContentWithMedia/Component'
 import {FormBlock} from '@/blocks/Form'
-import {Post, Page} from '@/payload-types'
+import {
+  Post, Page,
+  Section as SectionProps,
+  Row as RowProps,
+  Column as ColumnProps,
+  Text as TextProps,
+  Image as ImgProps,
+  Video as VideoProps,
+} from '@/payload-types'
 import { Fragment } from 'react'
+import {Section} from '@/blocks/Section/Component'
+import {Row} from '@/blocks/Row/Component'
+import {Column} from '@/blocks/Column/Component'
+import {Text} from '@/blocks/Text/Component'
+import {Img} from '@/blocks/Image/Component'
+import {Video} from '@/blocks/Video/Component'
 
 const blockComponents = {
   tableOfContents: TableOfContents,
   contentWithMedia: ContentWithMedia,
   formBlock: FormBlock,
+  section: Section,
+  row: Row,
+  column: Column,
+  text: Text,
+  image: Img,
+  video: Video,
 }
 
 export const RenderBlocks: React.FC<{
-  blocks: Post['blockTest'] | Page['content']
+  blocks: Post['blockTest'] | Page['content'] | SectionProps['row'] | RowProps['columns'] | TextProps['blockType'] | ImgProps['blockType'] | VideoProps['blockType'] | ColumnProps['content']
 }> = (props) => {
   const {blocks} = props
 
@@ -26,10 +46,8 @@ export const RenderBlocks: React.FC<{
           const Block = blockComponents[blockType]
 
           if (Block) {
-            return <div key={index}>
-              {/*@ts-expect-error*/}
-              <Block {...block} />
-            </div>
+            // @ts-expect-error
+            return <Block key={index} {...block} />
           }
           return null
         }

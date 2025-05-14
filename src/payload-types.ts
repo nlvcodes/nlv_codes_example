@@ -24,7 +24,14 @@ export interface Config {
     users: UserAuthOperations;
     customers: CustomerAuthOperations;
   };
-  blocks: {};
+  blocks: {
+    text: Text;
+    video: Video;
+    image: Image;
+    column: Column;
+    row: Row;
+    section: Section;
+  };
   collections: {
     users: User;
     media: Media;
@@ -126,6 +133,121 @@ export interface CustomerAuthOperations {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "text".
+ */
+export interface Text {
+  text: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'text';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "video".
+ */
+export interface Video {
+  videoLink: string;
+  name: string;
+  /**
+   * Description for search engines.
+   */
+  description?: string | null;
+  hours: number;
+  minutes: number;
+  seconds: number;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'video';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "image".
+ */
+export interface Image {
+  image: string | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'image';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media".
+ */
+export interface Media {
+  id: string;
+  alt: string;
+  creditText: string;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+  sizes?: {
+    small?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+  };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "column".
+ */
+export interface Column {
+  content?: (Text | Image | Video)[] | null;
+  columnWidth: 'auto' | '4/5' | '3/4' | '2/3' | '1/2' | '1/3' | '1/4' | '1/5';
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'column';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "row".
+ */
+export interface Row {
+  totalWidth?: string | null;
+  columns?: Column[] | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'row';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "section".
+ */
+export interface Section {
+  row?: Row[] | null;
+  bg?: ('bg-primary' | 'bg-secondary' | 'bg-black' | 'bg-white') | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'section';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
@@ -161,36 +283,6 @@ export interface User {
   loginAttempts?: number | null;
   lockUntil?: string | null;
   password?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media".
- */
-export interface Media {
-  id: string;
-  alt: string;
-  creditText: string;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
-  sizes?: {
-    small?: {
-      url?: string | null;
-      width?: number | null;
-      height?: number | null;
-      mimeType?: string | null;
-      filesize?: number | null;
-      filename?: string | null;
-    };
-  };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -381,6 +473,13 @@ export interface Page {
             id?: string | null;
             blockName?: string | null;
             blockType: 'formBlock';
+          }
+        | {
+            row?: Row[] | null;
+            bg?: ('bg-primary' | 'bg-secondary' | 'bg-black' | 'bg-white') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'section';
           }
       )[]
     | null;
@@ -1047,6 +1146,14 @@ export interface PagesSelect<T extends boolean = true> {
               form?: T;
               enableCompanionText?: T;
               companionText?: T;
+              id?: T;
+              blockName?: T;
+            };
+        section?:
+          | T
+          | {
+              row?: T | {};
+              bg?: T;
               id?: T;
               blockName?: T;
             };

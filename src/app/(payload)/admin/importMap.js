@@ -44,6 +44,7 @@ import { QueryPresetsWhereCell as QueryPresetsWhereCell_3817bf644402e67bfe6577f6
 import { QueryPresetsWhereField as QueryPresetsWhereField_3817bf644402e67bfe6577f60ef982de } from '@payloadcms/ui'
 import { QueryPresetsColumnsCell as QueryPresetsColumnsCell_3817bf644402e67bfe6577f60ef982de } from '@payloadcms/ui'
 import { QueryPresetsColumnField as QueryPresetsColumnField_3817bf644402e67bfe6577f60ef982de } from '@payloadcms/ui'
+import { default as default_a5bcb2677d9b6ea4efc01e1370828e82 } from 'src/collections/fields/ColumnWidth.tsx'
 import { default as default_e503752e2ec45fc41e816ff88b056d77 } from '../../../components/Admin/ui/avatar.tsx'
 import { banner as banner_0231ae58e6ca5d4c032c31bf270d9ce5 } from '../../../components/Admin/UI/header.tsx'
 import { Icon as Icon_e20afb1619f876d82bd54cc0fb774db5 } from '../../../components/Admin/UI/icon.tsx'
@@ -102,6 +103,7 @@ export const importMap = {
   "@payloadcms/ui#QueryPresetsWhereField": QueryPresetsWhereField_3817bf644402e67bfe6577f60ef982de,
   "@payloadcms/ui#QueryPresetsColumnsCell": QueryPresetsColumnsCell_3817bf644402e67bfe6577f60ef982de,
   "@payloadcms/ui#QueryPresetsColumnField": QueryPresetsColumnField_3817bf644402e67bfe6577f60ef982de,
+  "src/collections/fields/ColumnWidth.tsx#default": default_a5bcb2677d9b6ea4efc01e1370828e82,
   "/components/Admin/ui/avatar.tsx#default": default_e503752e2ec45fc41e816ff88b056d77,
   "/components/Admin/UI/header.tsx#banner": banner_0231ae58e6ca5d4c032c31bf270d9ce5,
   "/components/Admin/UI/icon.tsx#Icon": Icon_e20afb1619f876d82bd54cc0fb774db5,
