@@ -9,6 +9,7 @@ import {
   Text as TextProps,
   Image as ImgProps,
   Video as VideoProps,
+  CodeBlock as CodeBlockProps,
 } from '@/payload-types'
 import { Fragment } from 'react'
 import {Section} from '@/blocks/Section/Component'
@@ -17,6 +18,7 @@ import {Column} from '@/blocks/Column/Component'
 import {Text} from '@/blocks/Text/Component'
 import {Img} from '@/blocks/Image/Component'
 import {Video} from '@/blocks/Video/Component'
+import {CodeBlock} from '@/blocks/Code/Component'
 
 const blockComponents = {
   tableOfContents: TableOfContents,
@@ -28,6 +30,7 @@ const blockComponents = {
   text: Text,
   image: Img,
   video: Video,
+  code: CodeBlock,
 }
 
 export const RenderBlocks: React.FC<{

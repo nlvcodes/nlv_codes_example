@@ -1,5 +1,6 @@
 import "../globals.css"
 import Script from 'next/script'
+import {Toaster} from 'sonner'
 
 export const metadata = {
   title: 'Next.js',
@@ -14,7 +15,9 @@ export default function RootLayout({
   return (
     <html lang="en">
     <Script id={'hs-script-loader'} async defer type={'text/javascript'} src={`//js.hs-scripts.com/${process.env.HS_PORTAL_ID}.js`} />
-      <body>{children}</body>
+      <body>{children}
+      <Toaster />
+      </body>
     </html>
   )
 }

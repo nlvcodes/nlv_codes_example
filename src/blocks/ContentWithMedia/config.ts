@@ -1,5 +1,6 @@
 import type { Block } from 'payload'
-import { lexicalEditor, LinkFeature } from '@payloadcms/richtext-lexical'
+import { BlocksFeature, lexicalEditor, LinkFeature } from '@payloadcms/richtext-lexical'
+import { Code } from '@/blocks/Code/config'
 
 export const ContentWithMedia: Block = {
   slug: 'contentWithMedia',
@@ -20,6 +21,9 @@ export const ContentWithMedia: Block = {
         features: ({ defaultFeatures }) => [
           ...defaultFeatures,
           LinkFeature({disableAutoLinks: true}),
+          BlocksFeature({
+            blocks: [Code]
+          })
         ],
       }),
     },
