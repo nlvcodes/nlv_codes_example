@@ -5,6 +5,7 @@ import editor from '@/collections/Users/access/editor'
 import admin from '@/collections/Users/access/admin'
 import { FormBlock } from '@/blocks/Form/config'
 import { Section } from '@/blocks/Section/config'
+import { Code } from '@/blocks/Code/config'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -42,6 +43,6 @@ export const Pages: CollectionConfig = {
   fields: [
     { name: 'slug', type: 'text' },
     { name: 'title', type: 'text' },
-    { name: 'content', type: 'blocks', blocks: [ContentWithMedia, TableOfContents, FormBlock, Section] },
+    { name: 'content', type: 'blocks', blocks: [ContentWithMedia, TableOfContents, FormBlock, Section, Code] },
   ],
 }
