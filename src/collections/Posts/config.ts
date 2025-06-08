@@ -1,6 +1,13 @@
 import { CollectionConfig } from 'payload'
 import { ContentWithMedia } from '@/blocks/ContentWithMedia/config'
-import { BlocksFeature, FixedToolbarFeature, lexicalEditor, lexicalHTMLField } from '@payloadcms/richtext-lexical'
+import {
+  BlocksFeature,
+  FixedToolbarFeature,
+  lexicalEditor,
+  lexicalHTMLField,
+  TextStateFeature,
+  defaultColors,
+} from '@payloadcms/richtext-lexical'
 import { TableOfContents } from '@/blocks/TableOfContents/config'
 import {
   MetaDescriptionField,
@@ -11,6 +18,7 @@ import {
 } from '@payloadcms/plugin-seo/fields'
 import { convertLexicalToHTML } from '@payloadcms/richtext-lexical/html'
 import type { Media } from '@/payload-types'
+import { strikethrough } from 'colorette'
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
@@ -235,6 +243,41 @@ export const Posts: CollectionConfig = {
                     blocks: [ContentWithMedia, TableOfContents],
                   }),
                   FixedToolbarFeature(),
+                  TextStateFeature({
+                    state: {
+                      color: {
+                        ...defaultColors.text,
+                      },
+                      background: {
+                        ...defaultColors.background,
+                        'bolder': {
+                          label: 'Bolder',
+                          css: {
+                            'font-weight': 'bolder',
+                          },
+                        },
+                        'solid': {
+                          label: 'Solid',
+                          css: { 'text-decoration': 'underline', 'text-underline-offset': '4px' },
+                        },
+                        'dashed': {
+                          label: 'Dashed',
+                          css: {
+                            'text-decoration': 'underline dashed',
+                            'text-underline-offset': '4px',
+                          },
+                        },
+                        'red-line-through': {
+                          label: 'Red Line Through',
+                          css: {
+                            'text-decoration': 'line-through',
+                            'text-decoration-style': 'dotted',
+                            'text-decoration-color': 'red',
+                          },
+                        },
+                      },
+                    },
+                  }),
                 ],
                 admin: {
                   hideInsertParagraphAtEnd: true,
@@ -249,7 +292,7 @@ export const Posts: CollectionConfig = {
               converters: ({ defaultConverters }) => ({
                 ...defaultConverters,
                 blocks: {
-                  contentWithMedia: ({ node }: {node: any}) => {
+                  contentWithMedia: ({ node }: { node: any }) => {
                     const richText = node.fields.content && convertLexicalToHTML({ data: node.fields.content })
                     const image = node.fields.image as Media
 

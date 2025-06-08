@@ -14,7 +14,7 @@ export const ContentWithMedia: React.FC<Props> = (block) => {
           data={block.content} />}
         {block.image && typeof block.image !== 'string' &&
           <Image id={'test'} className={`col-span-8 rounded-md aspect-video`}
-                 src={`${process.env.S3}/${block.image.filename}` || ``} alt={block.image.alt || ``}
+                 src={`${process.env.NEXT_PUBLIC_S3}/${block.image.filename}` || ``} alt={block.image.alt || ``}
                  width={block.image.width || 640} height={block.image.height || 360}
           />}
       </section>

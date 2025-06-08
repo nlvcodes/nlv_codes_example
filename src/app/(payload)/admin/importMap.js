@@ -29,6 +29,7 @@ import { CustomRowLabel as CustomRowLabel_1f88a3090285bda4fdea67dfe24a98d4 } fro
 import { Authors as Authors_598a767212b750bcca66c928bb89bb73 } from 'src/components/Admin/Fields/Authors.tsx'
 import { TitleCell as TitleCell_559dfedea2e7d9fa46e53803ce1f1091 } from 'src/components/Admin/Fields/Cell.tsx'
 import { TitleDescription as TitleDescription_eef29935ff1f42fb32c31b1497f508c6 } from 'src/components/Admin/Fields/Description.tsx'
+import { TextStateFeatureClient as TextStateFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { MetaTitleComponent as MetaTitleComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
 import { MetaDescriptionComponent as MetaDescriptionComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
 import { MetaImageComponent as MetaImageComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
@@ -88,6 +89,7 @@ export const importMap = {
   "src/components/Admin/Fields/Authors.tsx#Authors": Authors_598a767212b750bcca66c928bb89bb73,
   "src/components/Admin/Fields/Cell.tsx#TitleCell": TitleCell_559dfedea2e7d9fa46e53803ce1f1091,
   "src/components/Admin/Fields/Description.tsx#TitleDescription": TitleDescription_eef29935ff1f42fb32c31b1497f508c6,
+  "@payloadcms/richtext-lexical/client#TextStateFeatureClient": TextStateFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/plugin-seo/client#MetaTitleComponent": MetaTitleComponent_a8a977ebc872c5d5ea7ee689724c0860,
   "@payloadcms/plugin-seo/client#MetaDescriptionComponent": MetaDescriptionComponent_a8a977ebc872c5d5ea7ee689724c0860,
   "@payloadcms/plugin-seo/client#MetaImageComponent": MetaImageComponent_a8a977ebc872c5d5ea7ee689724c0860,
