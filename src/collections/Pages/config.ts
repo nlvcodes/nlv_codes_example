@@ -9,6 +9,7 @@ import { Code } from '@/blocks/Code/config'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
+  labels: {singular: 'Page', plural: 'Pages'},
   access: {
     readVersions: editor,
     read: ({ req }) => {

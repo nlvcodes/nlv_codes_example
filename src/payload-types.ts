@@ -39,6 +39,7 @@ export interface Config {
     documents: Document;
     customers: Customer;
     pages: Page;
+    'search-results': SearchResult;
     forms: Form;
     'form-submissions': FormSubmission;
     redirects: Redirect;
@@ -56,6 +57,7 @@ export interface Config {
     documents: DocumentsSelect<false> | DocumentsSelect<true>;
     customers: CustomersSelect<false> | CustomersSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
+    'search-results': SearchResultsSelect<false> | SearchResultsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
@@ -680,6 +682,29 @@ export interface CodeBlock {
   blockType: 'code';
 }
 /**
+ * This is a collection of automatically created search results. These results are used by the global site search and will be updated automatically as documents in the CMS are created or updated.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "search-results".
+ */
+export interface SearchResult {
+  id: string;
+  title?: string | null;
+  priority?: number | null;
+  doc:
+    | {
+        relationTo: 'posts';
+        value: string | Post;
+      }
+    | {
+        relationTo: 'pages';
+        value: string | Page;
+      };
+  excerpt?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "form-submissions".
  */
@@ -842,6 +867,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'pages';
         value: string | Page;
+      } | null)
+    | ({
+        relationTo: 'search-results';
+        value: string | SearchResult;
       } | null)
     | ({
         relationTo: 'forms';
@@ -1188,6 +1217,18 @@ export interface CodeBlockSelect<T extends boolean = true> {
   code?: T;
   id?: T;
   blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "search-results_select".
+ */
+export interface SearchResultsSelect<T extends boolean = true> {
+  title?: T;
+  priority?: T;
+  doc?: T;
+  excerpt?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

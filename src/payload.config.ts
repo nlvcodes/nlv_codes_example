@@ -15,6 +15,7 @@ import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
+import {searchPlugin} from '@payloadcms/plugin-search'
 
 import { Users } from './collections/Users/config'
 import { Media } from './collections/Media'
@@ -215,6 +216,35 @@ export default buildConfig({
   }),
   sharp,
   plugins: [
+    searchPlugin({
+      collections: ['posts', 'pages'],
+      localize: false,
+      defaultPriorities: {
+        pages: ({doc}) => (doc.slug === 'home' ? 1 : 10),
+        posts: 20
+      },
+      searchOverrides: {
+        slug: 'search-results',
+        labels: { singular: 'Search Result', plural:'Search Results' },
+        admin: {
+          group: 'Search'
+        },
+        fields: ({defaultFields}) => [
+          ...defaultFields,
+          {
+            name: 'excerpt',
+            type: 'textarea',
+          }
+        ]
+      },
+      beforeSync: ({originalDoc, searchDoc}) => ({
+        ...searchDoc,
+        excerpt: originalDoc?.excerpt || 'Fallback excerpt'
+      }),
+      syncDrafts: false,
+      deleteDrafts: true,
+      reindexBatchSize: 50,
+    }),
     formBuilderPlugin({
       fields: {
         radio: true,
