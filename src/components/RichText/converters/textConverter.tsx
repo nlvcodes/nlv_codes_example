@@ -10,14 +10,26 @@ const colorState: TextStateFeatureProps['state'] = {
   color: {
     ...defaultColors.text,
   },
-  background: {
-    ...defaultColors.background,
+  size: {
+    'large': {
+      label: 'Large Text',
+      css: {
+        'font-size': 'large',
+      },
+    },
+  },
+  fontWeight: {
     'bolder': {
       label: 'Bolder',
       css: {
         'font-weight': 'bolder',
       },
     },
+  },
+  background: {
+    ...defaultColors.background,
+  },
+  underline: {
     'solid': {
       label: 'Solid',
       css: { 'text-decoration': 'underline', 'text-underline-offset': '4px' },

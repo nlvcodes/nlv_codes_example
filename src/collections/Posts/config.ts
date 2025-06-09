@@ -248,14 +248,26 @@ export const Posts: CollectionConfig = {
                       color: {
                         ...defaultColors.text,
                       },
-                      background: {
-                        ...defaultColors.background,
+                      size: {
+                        'large': {
+                          label: 'Large Text',
+                          css: {
+                            'font-size': 'large'
+                          }
+                        }
+                      },
+                      fontWeight: {
                         'bolder': {
                           label: 'Bolder',
                           css: {
                             'font-weight': 'bolder',
                           },
                         },
+                      },
+                      background: {
+                        ...defaultColors.background,
+                      },
+                      underline: {
                         'solid': {
                           label: 'Solid',
                           css: { 'text-decoration': 'underline', 'text-underline-offset': '4px' },
@@ -275,7 +287,7 @@ export const Posts: CollectionConfig = {
                             'text-decoration-color': 'red',
                           },
                         },
-                      },
+                      }
                     },
                   }),
                 ],
