@@ -40,6 +40,7 @@ import { Img } from '@/blocks/Image/config'
 import { Column } from '@/blocks/Column/config'
 import { Row } from '@/blocks/Row/config'
 import { Section } from '@/blocks/Section/config'
+import { beforeSyncWithSearch } from '@/components/Search/beforeSync'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -237,10 +238,7 @@ export default buildConfig({
           }
         ]
       },
-      beforeSync: ({originalDoc, searchDoc}) => ({
-        ...searchDoc,
-        excerpt: originalDoc?.excerpt || 'Fallback excerpt'
-      }),
+      beforeSync: beforeSyncWithSearch,
       syncDrafts: false,
       deleteDrafts: true,
       reindexBatchSize: 50,
