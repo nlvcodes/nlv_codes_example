@@ -7,7 +7,7 @@ export const Avatar = ({ user }: { user: User }) => {
   if (avatar) {
     return <Image style={{
       borderRadius: '50%',
-    }} src={`${process.env.S3}/${avatar.filename}`} alt={avatar.alt} height={25} width={25} />
+    }} src={`${process.env.NEXT_PUBLIC_S3}/${avatar.filename}`} alt={avatar.alt} height={25} width={25} />
   } else {
     return <svg className="graphic-account" height="25" viewBox="0 0 25 25" width="25"
                 xmlns="http://www.w3.org/2000/svg">

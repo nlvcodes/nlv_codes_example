@@ -1,6 +1,6 @@
 import { CollectionConfig } from 'payload'
 import { ContentWithMedia } from '@/blocks/ContentWithMedia/config'
-import { BlocksFeature, FixedToolbarFeature, lexicalEditor, lexicalHTMLField } from '@payloadcms/richtext-lexical'
+import { BlocksFeature, FixedToolbarFeature, lexicalEditor, lexicalHTMLField, TextStateFeature, defaultColors } from '@payloadcms/richtext-lexical'
 import { TableOfContents } from '@/blocks/TableOfContents/config'
 import {
   MetaDescriptionField,
@@ -235,6 +235,55 @@ export const Posts: CollectionConfig = {
                     blocks: [ContentWithMedia, TableOfContents],
                   }),
                   FixedToolbarFeature(),
+                  TextStateFeature({
+                    state: {
+                      color: {
+                        ...defaultColors.text,
+                      },
+                      size: {
+                        'large': {
+                          label: 'Large Text',
+                          css: {
+                            'font-size': 'large',
+                          }
+                        }
+                      },
+                      background: {
+                        ...defaultColors.background
+                      },
+                      underline: {
+                        'solid': {
+                          label: 'Solid',
+                          css: {
+                            'text-decoration': 'underline', 'text-underline-offset': '4px',
+                          }
+                        },
+                        'dashed': {
+                          label: 'Dashed',
+                          css: {
+                            'text-decoration': 'underline dashed',
+                            'text-underline-offset': '4px'
+                          }
+                        },
+                        'red-line-through': {
+                          label: 'Red Line Through',
+                          css: {
+                            'text-decoration': 'line-through',
+                            'text-decoration-style': 'dotted',
+                            'text-decoration-color': 'red'
+                          }
+                        }
+                      },
+                      fontWeight: {
+                        'bolder': {
+                          label: 'Bolder',
+                          css: {
+                            'font-weight': 'bolder',
+                          }
+                        }
+                      }
+                    }
+                  })
                 ],
                 admin: {
                   hideInsertParagraphAtEnd: true,

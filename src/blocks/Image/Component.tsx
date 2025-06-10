@@ -6,7 +6,7 @@ export const Img = (props: ImgProps) => {
   const {filename, alt, width, height} = image as Media
 
   return <Image
-    src={`${process.env.S3}/${filename}`}
+    src={`${process.env.NEXT_PUBLIC_S3}/${filename}`}
     alt={alt}
     height={height || 360}
     width={width || 640}

@@ -48,12 +48,12 @@ export default async function Post({params: paramsPromise}: Args) {
     {/*  {JSON.stringify(schema)}*/}
     {/*</Script>*/}
     {/*<RenderBlocks blocks={post.blockTest} />*/}
-    {/*{post.content && <RichText data={post.content} />}*/}
+    {post.content && <RichText data={post.content} />}
 
     {/*{post.content && <RenderHTML data={post.content} />}*/}
     {/*{post.content_html && <div dangerouslySetInnerHTML={{__html: post.content_html}} />}*/}
 
-    {post.content && <GenerateHTML data={post.content} />}
+    {/*{post.content && <GenerateHTML data={post.content} />}*/}
 
     {/*{post.plaintext}*/}
   </>

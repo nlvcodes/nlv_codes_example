@@ -119,14 +119,14 @@ export default buildConfig({
       },
       icons: [
         {
-          url: `${process.env.S3}/Square-1 2.png`,
+          url: `${process.env.NEXT_PUBLIC_S3}/Square-1 2.png`,
           rel: 'icon',
           type: 'image/png',
           sizes: '16x16 32x32 64x64',
           fetchPriority: 'high'
         },
         {
-          url: `${process.env.S3}/Square-1.png`,
+          url: `${process.env.NEXT_PUBLIC_S3}/Square-1.png`,
           rel: 'icon',
           type: 'image/png',
           sizes: '16x16 32x32 64x64',
