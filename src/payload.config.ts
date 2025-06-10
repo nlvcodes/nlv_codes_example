@@ -235,6 +235,10 @@ export default buildConfig({
           {
             name: 'excerpt',
             type: 'textarea',
+          },
+          {
+            name: 'slug',
+            type: 'text',
           }
         ]
       },

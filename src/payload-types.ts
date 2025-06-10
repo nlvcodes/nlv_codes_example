@@ -701,6 +701,7 @@ export interface SearchResult {
         value: string | Page;
       };
   excerpt?: string | null;
+  slug?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1227,6 +1228,7 @@ export interface SearchResultsSelect<T extends boolean = true> {
   priority?: T;
   doc?: T;
   excerpt?: T;
+  slug?: T;
   updatedAt?: T;
   createdAt?: T;
 }
