@@ -318,7 +318,7 @@ export interface ContentWithMedia {
  */
 export interface Post {
   id: string;
-  _order?: string | null;
+  _order?: string;
   showBlocks?: boolean | null;
   blockTest?: (ContentWithMedia | TableOfContents)[] | null;
   date?: string | null;
@@ -485,6 +485,11 @@ export interface Page {
         | CodeBlock
       )[]
     | null;
+  tailwindExample?: {
+    buttonColor?: ('white' | 'red' | 'black') | null;
+    textColor?: ('white' | 'red' | 'black') | null;
+    backgroundColor?: ('white' | 'red' | 'black') | null;
+  };
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -952,10 +957,6 @@ export interface PayloadQueryPreset {
     | boolean
     | null;
   relatedCollection: 'posts';
-  /**
-   * This is a tempoary field used to determine if updating the preset would remove the user's access to it. When `true`, this record will be deleted after running the preset's `validate` function.
-   */
-  isTemp?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1177,6 +1178,13 @@ export interface PagesSelect<T extends boolean = true> {
               blockName?: T;
             };
         code?: T | CodeBlockSelect<T>;
+      };
+  tailwindExample?:
+    | T
+    | {
+        buttonColor?: T;
+        textColor?: T;
+        backgroundColor?: T;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -1456,7 +1464,6 @@ export interface PayloadQueryPresetsSelect<T extends boolean = true> {
   where?: T;
   columns?: T;
   relatedCollection?: T;
-  isTemp?: T;
   updatedAt?: T;
   createdAt?: T;
 }

@@ -44,5 +44,23 @@ export const Pages: CollectionConfig = {
     { name: 'slug', type: 'text' },
     { name: 'title', type: 'text' },
     { name: 'content', type: 'blocks', blocks: [ContentWithMedia, TableOfContents, FormBlock, Section, Code] },
+    // {
+    //   name: 'tailwindExample',
+    //   type: 'group',
+    //   fields: [
+    //     { name: 'buttonColor', type: 'text', },
+    //     { name: 'textColor', type: 'text' },
+    //     { name: 'backgroundColor', type: 'text' }
+    //   ]
+    // },
+    {
+      name: 'tailwindExample',
+      type: 'group',
+      fields: [
+        { name: 'buttonColor', type: 'select', options: ['white', 'red', 'black'], },
+        { name: 'textColor', type: 'select', options: ['white', 'red', 'black'] },
+        { name: 'backgroundColor', type: 'select', options: ['white', 'red', 'black'] }
+      ]
+    }
   ],
 }
