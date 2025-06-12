@@ -318,7 +318,7 @@ export interface ContentWithMedia {
  */
 export interface Post {
   id: string;
-  _order?: string;
+  _order?: string | null;
   showBlocks?: boolean | null;
   blockTest?: (ContentWithMedia | TableOfContents)[] | null;
   date?: string | null;
@@ -957,6 +957,10 @@ export interface PayloadQueryPreset {
     | boolean
     | null;
   relatedCollection: 'posts';
+  /**
+   * This is a tempoary field used to determine if updating the preset would remove the user's access to it. When `true`, this record will be deleted after running the preset's `validate` function.
+   */
+  isTemp?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1464,6 +1468,7 @@ export interface PayloadQueryPresetsSelect<T extends boolean = true> {
   where?: T;
   columns?: T;
   relatedCollection?: T;
+  isTemp?: T;
   updatedAt?: T;
   createdAt?: T;
 }

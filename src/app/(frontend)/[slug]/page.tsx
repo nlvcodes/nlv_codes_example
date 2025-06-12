@@ -27,22 +27,34 @@ export default async function Page({ params: paramsPromise }: Args) {
 
   const { tailwindExample } = page
   const { backgroundColor, textColor, buttonColor } = tailwindExample || {}
+  // const backgroundStyles = {
+  //   white: 'bg-white',
+  //   black: 'bg-black',
+  //   red: 'bg-red-500',
+  // }
+
   const backgroundStyles = {
-    white: 'bg-white',
-    black: 'bg-black',
-    red: 'bg-red-500',
+    [backgroundColor as string]: !['black', 'white'].includes(backgroundColor!) ? `bg-${backgroundColor}-500` : `bg-${backgroundColor}`,
   }
 
-  const textStyles = {
-    white: 'text-white',
-    black: 'text-black',
-    red: 'text-red-500',
+  // const textStyles = {
+  //   white: 'text-white',
+  //   black: 'text-black',
+  //   red: 'text-red-500',
+  // }
+
+    const textStyles = {
+    [textColor as string]: !['black', 'white'].includes(textColor!) ? `text-${textColor}-500` : `text-${textColor}`,
   }
 
-  const buttonStyles = {
-    white: 'bg-white',
-    black: 'bg-black',
-    red: 'bg-red-500',
+  // const buttonStyles = {
+  //   white: 'bg-white',
+  //   black: 'bg-black',
+  //   red: 'bg-red-500',
+  // }
+
+    const buttonStyles = {
+    [buttonColor as string]: !['black', 'white'].includes(buttonColor!) ? `bg-${buttonColor}-500` : `bg-${buttonColor}`,
   }
 
   // return <div style={{ backgroundColor: backgroundColor || '' }}>
