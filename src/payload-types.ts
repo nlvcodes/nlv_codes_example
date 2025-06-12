@@ -76,7 +76,7 @@ export interface Config {
     header: HeaderSelect<false> | HeaderSelect<true>;
     logos: LogosSelect<false> | LogosSelect<true>;
   };
-  locale: null;
+  locale: 'en' | 'es';
   user:
     | (User & {
         collection: 'users';

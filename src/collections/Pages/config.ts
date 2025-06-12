@@ -41,8 +41,8 @@ export const Pages: CollectionConfig = {
     },
   },
   fields: [
-    { name: 'slug', type: 'text' },
-    { name: 'title', type: 'text' },
+    { name: 'slug', type: 'text', localized: true, },
+    { name: 'title', type: 'text', localized: true, },
     { name: 'content', type: 'blocks', blocks: [ContentWithMedia, TableOfContents, FormBlock, Section, Code] },
   ],
 }
