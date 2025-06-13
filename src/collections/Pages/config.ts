@@ -9,6 +9,7 @@ import { Code } from '@/blocks/Code/config'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
+  labels: {singular: 'Page', plural: 'Pages'},
   access: {
     readVersions: editor,
     read: ({ req }) => {
@@ -44,5 +45,19 @@ export const Pages: CollectionConfig = {
     { name: 'slug', type: 'text' },
     { name: 'title', type: 'text' },
     { name: 'content', type: 'blocks', blocks: [ContentWithMedia, TableOfContents, FormBlock, Section, Code] },
+    {
+      name: 'tailwindExample', type: 'group',
+      fields: [
+        { name: 'buttonColor', type: 'select', options: [
+          'white', 'red', 'black', 'blue'
+          ] },
+        { name: 'textColor', type: 'select', options: [
+          'white', 'red', 'black', 'blue'
+          ] },
+        { name: 'backgroundColor', type: 'select', options: [
+          'white', 'red', 'black', 'blue'
+          ] },
+      ],
+    },
   ],
 }

@@ -39,6 +39,8 @@ import { Img } from '@/blocks/Image/config'
 import { Column } from '@/blocks/Column/config'
 import { Row } from '@/blocks/Row/config'
 import { Section } from '@/blocks/Section/config'
+import { searchPlugin } from '@payloadcms/plugin-search'
+import { beforeSyncWithSearch } from '@/components/Search/beforeSync'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -215,6 +217,36 @@ export default buildConfig({
   }),
   sharp,
   plugins: [
+    searchPlugin({
+      collections: ['posts', 'pages'],
+      localize: false,
+      defaultPriorities: {
+        posts: 20,
+        pages: ({doc}) => (doc.slug === 'home' ? 1 : 10),
+      },
+      searchOverrides: {
+        slug: 'search-results',
+        labels: { singular: 'Search Result', plural: 'Search Results' },
+        admin: {
+          group: 'Search'
+        },
+        fields: ({defaultFields}) => [
+          ...defaultFields,
+          {
+            name: 'excerpt',
+            type: 'textarea',
+          },
+          {
+            name: 'slug',
+            type: 'text'
+          }
+        ]
+      },
+      beforeSync: beforeSyncWithSearch,
+      syncDrafts: false,
+      deleteDrafts: true,
+      reindexBatchSize: 50
+    }),
     formBuilderPlugin({
       fields: {
         radio: true,

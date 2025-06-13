@@ -25,10 +25,11 @@ export default async function Page({params: paramsPromise}: Args) {
 
   if (!page) return notFound()
 
-  return <>
+  return <div>
     {user && <LivePreviewListener />}
     <h1>{page.title}</h1>
+    <div>button</div>
     <RenderBlocks blocks={page.content} />
-  </>
+  </div>
 
 }
