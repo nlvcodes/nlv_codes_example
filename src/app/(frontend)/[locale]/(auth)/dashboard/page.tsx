@@ -1,6 +1,6 @@
-import {getUser} from '@/app/(frontend)/(auth)/actions/getUser'
+import {getUser} from '@/app/(frontend)/[locale]/(auth)/actions/getUser'
 import type {Customer, TierProps} from '@/payload-types'
-import { ResetPasswordButton } from '@/app/(frontend)/(auth)/component/ResetPasswordButton'
+import { ResetPasswordButton } from '@/app/(frontend)/[locale]/(auth)/component/ResetPasswordButton'
 import {Customers} from '@/collections/Customers/config'
 import UpdateForm from '../component/UpdateForm'
 

@@ -1,6 +1,6 @@
 'use client'
 
-import {ForgotPassword} from '@/app/(frontend)/(account)/forgot-password/actions/forgotPassword'
+import {ForgotPassword} from '@/app/(frontend)/[locale]/(account)/forgot-password/actions/forgotPassword'
 import React, {useState} from 'react'
 import {Loader} from 'lucide-react'
 import {logout} from '../actions/logout'

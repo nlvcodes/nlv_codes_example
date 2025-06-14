@@ -1,6 +1,6 @@
 import React from 'react'
 import LoginForm from './components/loginForm'
-import { getUser } from '@/app/(frontend)/(auth)/actions/getUser'
+import { getUser } from '@/app/(frontend)/[locale]/(auth)/actions/getUser'
 import { redirect } from 'next/navigation'
 
 interface SearchParams {

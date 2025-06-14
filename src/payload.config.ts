@@ -12,7 +12,7 @@ import {
   UnderlineFeature,
 } from '@payloadcms/richtext-lexical'
 import path from 'path'
-import { buildConfig } from 'payload'
+import { buildConfig, LocalizationConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 
@@ -39,6 +39,9 @@ import { Img } from '@/blocks/Image/config'
 import { Column } from '@/blocks/Column/config'
 import { Row } from '@/blocks/Row/config'
 import { Section } from '@/blocks/Section/config'
+import { searchPlugin } from '@payloadcms/plugin-search'
+import { beforeSyncWithSearch } from '@/components/Search/beforeSync'
+import localization from '@/i18n/localization'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -99,7 +102,8 @@ export default buildConfig({
       url: ({
               collectionConfig,
               data,
-            }) => `/${collectionConfig?.slug === 'pages' ? data.slug !== 'home' ? data.slug : '' : ''}`,
+              locale
+            }) => `/${locale}/${collectionConfig?.slug === 'pages' ? data.slug !== 'home' ? data.slug : '' : ''}`,
     },
     meta: {
       titleSuffix: '- NLV Codes',
@@ -217,11 +221,40 @@ export default buildConfig({
     url: process.env.DATABASE_URI || '',
   }),
   sharp,
-  localization: {
-    defaultLocale: 'en',
-    locales: ['en', 'es'],
-  },
+  localization: localization as LocalizationConfig,
   plugins: [
+    searchPlugin({
+      collections: ['posts', 'pages'],
+      localize: true,
+      defaultPriorities: {
+        posts: 20,
+        pages: ({doc}) => (doc.slug === 'home' ? 1 : 10),
+      },
+      searchOverrides: {
+        slug: 'search-results',
+        labels: { singular: 'Search Result', plural: 'Search Results' },
+        admin: {
+          defaultColumns: ['title', 'slug'],
+          group: 'Search',
+        },
+        fields: ({defaultFields}) => [
+          ...defaultFields,
+          {
+            name: 'excerpt',
+            type: 'textarea',
+          },
+          {
+            name: 'slug',
+            type: 'text',
+            localized: true,
+          }
+        ]
+      },
+      beforeSync: beforeSyncWithSearch,
+      syncDrafts: false,
+      deleteDrafts: true,
+      reindexBatchSize: 50
+    }),
     formBuilderPlugin({
       fields: {
         radio: true,

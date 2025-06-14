@@ -27,7 +27,7 @@ export default async function Page({params: paramsPromise}: Args) {
   const page = await payload.find({
     collection: 'pages',
     locale,
-    where: {slug: {equals: slug}},
+    where: {slug: {equals: decodeURIComponent(slug)}},
     overrideAccess: Boolean(user),
     draft: Boolean(user),
   }).then(res => res.docs[0])

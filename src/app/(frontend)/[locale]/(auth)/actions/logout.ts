@@ -1,7 +1,7 @@
 'use server'
 
 import {cookies} from 'next/headers'
-import {Response} from '@/app/(frontend)/(account)/create-account/actions/create'
+import {Response} from '@/app/(frontend)/[locale]/(account)/create-account/actions/create'
 
 export async function logout(): Promise<Response> {
   try {
