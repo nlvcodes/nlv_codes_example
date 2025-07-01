@@ -1,5 +1,5 @@
 import configPromise from '@payload-config'
-import {getPayload} from 'payload'
+import {getPayload, TypedLocale} from 'payload'
 import React from 'react'
 import {Search} from '@/components/Search/Component'
 import Link from 'next/link'
@@ -10,13 +10,18 @@ type Args = {
   searchParams: Promise<{
     q: string
   }>
+  params: Promise<{
+    locale: TypedLocale
+  }>
 }
 
-export default async function Page({searchParams: searchParamsPromise}: Args) {
+export default async function Page({searchParams: searchParamsPromise, params}: Args) {
   const {q : query} = await searchParamsPromise
   const payload = await getPayload({config: configPromise})
+  const {locale} = await params
   const post = await payload.find({
     collection: 'search-results',
+    locale,
     depth: 1,
     limit: 6,
     select: {
@@ -41,7 +46,7 @@ export default async function Page({searchParams: searchParamsPromise}: Args) {
     <div className={`py-24`}>
       <div className={"mb-16"}>
         <div className={'text-center'}>
-          <h1 className={`mb-8 lg:mb-16 text-emerald-950`}>Search</h1>
+          <h1 className={`mb-8 lg:mb-16 text-emerald-950`}>{locale === 'en' ? 'Search': 'Buscar'}</h1>
           <div className={'mx-auto'}>
             <Search />
           </div>
@@ -49,12 +54,13 @@ export default async function Page({searchParams: searchParamsPromise}: Args) {
       </div>
       <div className={`flex gap-4 justify-center`}>
         {post.totalDocs > 0 ? (
-          post.docs.map((doc) => {
+          post.docs.filter(doc => locale === 'es' ? doc.doc.relationTo === 'pages' : true)
+            .map((doc) => {
             const relationTo = doc.doc.relationTo
-            const slug = doc.slug === 'home' ? '/' : relationTo === 'posts' ? `/posts/${doc.slug}` : `/${doc.slug}`
-            return <Link key={doc.id} href={slug!} className={`py-2 px-4 text-emerald-950 border border-emerald-950 rounded-md hover:text-emerald-50 hover:bg-emerald-950`}>{doc.title}</Link>
+            const slug = doc.slug === 'home' ? `/${locale}` : relationTo === 'posts' ? `/posts/${doc.slug}` : `/${locale}/${doc.slug}`
+            return <Link key={doc.id} href={slug!} className={`py-2 px-4 text-emerald-950 border border-emerald-950 rounded-md hover:text-emerald-50 hover:bg-emerald-950 grow shrink basis-0 min-w-0`}>{doc.title}</Link>
           })
-        ) : <div>No results found.</div>}
+        ) : <div>{locale === 'en' ? 'No results found.' : `No se encontraron resultados`}</div>}
       </div>
     </div>
   )

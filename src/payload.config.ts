@@ -12,7 +12,7 @@ import {
   UnderlineFeature,
 } from '@payloadcms/richtext-lexical'
 import path from 'path'
-import { buildConfig } from 'payload'
+import { buildConfig, LocalizationConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 
@@ -41,6 +41,7 @@ import { Row } from '@/blocks/Row/config'
 import { Section } from '@/blocks/Section/config'
 import { searchPlugin } from '@payloadcms/plugin-search'
 import { beforeSyncWithSearch } from '@/components/Search/beforeSync'
+import localization from '@/i18n/localization'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -98,7 +99,7 @@ export default buildConfig({
           height: 667,
         }
       ],
-      url: ({collectionConfig, data}) => `/${collectionConfig?.slug === 'pages' ? data.slug !== 'home' ? data.slug : '' : ''}`
+      url: ({collectionConfig, data, locale}) => `/${locale}/${collectionConfig?.slug === 'pages' ? data.slug !== 'home' ? data.slug : '' : ''}`
     },
     meta: {
       titleSuffix: '- NLV Codes',
@@ -205,6 +206,7 @@ export default buildConfig({
       fileSize: 5000000,
     },
   },
+  localization: localization as LocalizationConfig,
   globals: [Header, Logos],
   collections: [Users, Media, Posts, Documents, Customers, Pages],
   editor: lexicalEditor({}),
@@ -219,7 +221,7 @@ export default buildConfig({
   plugins: [
     searchPlugin({
       collections: ['posts', 'pages'],
-      localize: false,
+      localize: true,
       defaultPriorities: {
         posts: 20,
         pages: ({doc}) => (doc.slug === 'home' ? 1 : 10),
@@ -238,7 +240,8 @@ export default buildConfig({
           },
           {
             name: 'slug',
-            type: 'text'
+            type: 'text',
+            localized: true,
           }
         ]
       },

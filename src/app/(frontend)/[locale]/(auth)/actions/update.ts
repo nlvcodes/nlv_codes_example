@@ -2,7 +2,7 @@
 
 import {getPayload} from 'payload'
 import config from '@payload-config'
-import {getUser} from '../actions/getUser'
+import {getUser} from './getUser'
 import type {Customer} from '@/payload-types'
 import {Response} from '../../(account)/create-account/actions/create'
 
