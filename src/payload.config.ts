@@ -42,6 +42,7 @@ import { Section } from '@/blocks/Section/config'
 import { searchPlugin } from '@payloadcms/plugin-search'
 import { beforeSyncWithSearch } from '@/components/Search/beforeSync'
 import localization from '@/i18n/localization'
+// import { analyticsPlugin } from 'payload-analytics-plugin'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -56,32 +57,32 @@ const beforeEmail: BeforeEmail<FormSubmission> = (emails, beforeChangeParams) =>
 export default buildConfig({
   blocks: [Text, Video, Img, Column, Row, Section],
   graphQL: {
-    disable: true
+    disable: true,
   },
   routes: {
     admin: '/admin',
-    api: '/api'
+    api: '/api',
   },
   admin: {
     routes: {
       logout: '/log-me-out',
-      account: '/my-account'
+      account: '/my-account',
     },
     timezones: {
       defaultTimezone: 'America/Los_Angeles',
       supportedTimezones: [
-        {label: 'West Coast', value: 'America/Los_Angeles'},
-        {label: 'East Coast', value: 'America/New_York'},
+        { label: 'West Coast', value: 'America/Los_Angeles' },
+        { label: 'East Coast', value: 'America/New_York' },
       ],
     },
     avatar: {
       Component: {
         path: '/components/Admin/ui/avatar.tsx',
-      }
+      },
     },
     autoLogin: process.env.NEXT_PUBLIC_ENABLE_AUTOLOGIN === 'true' ? {
       email: 'nick+editor@midlowebdesign.com',
-      password: 'editor'
+      password: 'editor',
     } : false,
     livePreview: {
       collections: ['pages'],
@@ -97,9 +98,13 @@ export default buildConfig({
           name: 'mobile',
           width: 375,
           height: 667,
-        }
+        },
       ],
-      url: ({collectionConfig, data, locale}) => `/${locale}/${collectionConfig?.slug === 'pages' ? data.slug !== 'home' ? data.slug : '' : ''}`
+      url: ({
+              collectionConfig,
+              data,
+              locale,
+            }) => `/${locale}/${collectionConfig?.slug === 'pages' ? data.slug !== 'home' ? data.slug : '' : ''}`,
     },
     meta: {
       titleSuffix: '- NLV Codes',
@@ -116,9 +121,9 @@ export default buildConfig({
         siteName: 'Blank Payload Example',
         images: [
           {
-            url: ''
-          }
-        ]
+            url: '',
+          },
+        ],
       },
       icons: [
         {
@@ -126,7 +131,7 @@ export default buildConfig({
           rel: 'icon',
           type: 'image/png',
           sizes: '16x16 32x32 64x64',
-          fetchPriority: 'high'
+          fetchPriority: 'high',
         },
         {
           url: `${process.env.NEXT_PUBLIC_S3}/Square-1.png`,
@@ -134,7 +139,7 @@ export default buildConfig({
           type: 'image/png',
           sizes: '16x16 32x32 64x64',
           fetchPriority: 'high',
-          media: '(prefers-color-scheme: dark)'
+          media: '(prefers-color-scheme: dark)',
         },
       ],
     },
@@ -144,6 +149,12 @@ export default buildConfig({
     },
     dateFormat: 'MM/dd/yyyy',
     components: {
+      views: {
+        testView: {
+          Component: '/components/Admin/views/test.tsx#Test',
+          path: '/test',
+        },
+      },
       logout: {
         Button: {
           path: '/components/Admin/UI/logout.tsx#Logout',
@@ -161,42 +172,42 @@ export default buildConfig({
       ],
       beforeDashboard: [
         {
-          path: '/components/Admin/UI/beforeDashboard.tsx#Welcome'
-        }
+          path: '/components/Admin/UI/beforeDashboard.tsx#Welcome',
+        },
       ],
       afterDashboard: [
         {
-          path: '/components/Admin/UI/afterDashboard.tsx#Outro'
-        }
+          path: '/components/Admin/UI/afterDashboard.tsx#Outro',
+        },
       ],
       beforeLogin: [
         {
-          path: '/components/Admin/UI/beforeLogin.tsx#LinkToHome'
-        }
+          path: '/components/Admin/UI/beforeLogin.tsx#LinkToHome',
+        },
       ],
       afterLogin: [
         {
-          path: '/components/Admin/UI/afterLogin.tsx#LoginInstruction'
-        }
+          path: '/components/Admin/UI/afterLogin.tsx#LoginInstruction',
+        },
       ],
       actions: [
         {
           path: '/components/Admin/UI/logout.tsx#Logout',
-        }
+        },
       ],
       header: [
         {
-          path: '/components/Admin/UI/header.tsx#banner'
-        }
+          path: '/components/Admin/UI/header.tsx#banner',
+        },
       ],
       graphics: {
         Icon: {
-          path: '/components/Admin/UI/icon.tsx#Icon'
+          path: '/components/Admin/UI/icon.tsx#Icon',
         },
         Logo: {
-          path: '/components/Admin/UI/logo.tsx#Logo'
-        }
-      }
+          path: '/components/Admin/UI/logo.tsx#Logo',
+        },
+      },
     },
   },
   cors: ['http://localhost:3000', process.env.DOMAIN_NAME || ''],
@@ -219,20 +230,36 @@ export default buildConfig({
   }),
   sharp,
   plugins: [
+    // analyticsPlugin({
+    //   provider: 'plausible',
+    //   config: {
+    //     apiKey: process.env.PLAUSIBLE_API_KEY,
+    //     siteId: process.env.PLAUSIBLE_SITE_ID,
+    //     apiHost: 'https://analytics.nlvcodes.com',
+    //   },
+    //   dashboardWidget: {
+    //     enabled: true,
+    //     position: 'beforeDashboard'
+    //   },
+    //   analyticsView: {
+    //     enabled: true,
+    //     position: 'beforeNavLinks',
+    //   }
+    // }),
     searchPlugin({
       collections: ['posts', 'pages'],
       localize: true,
       defaultPriorities: {
         posts: 20,
-        pages: ({doc}) => (doc.slug === 'home' ? 1 : 10),
+        pages: ({ doc }) => (doc.slug === 'home' ? 1 : 10),
       },
       searchOverrides: {
         slug: 'search-results',
         labels: { singular: 'Search Result', plural: 'Search Results' },
         admin: {
-          group: 'Search'
+          group: 'Search',
         },
-        fields: ({defaultFields}) => [
+        fields: ({ defaultFields }) => [
           ...defaultFields,
           {
             name: 'excerpt',
@@ -242,62 +269,62 @@ export default buildConfig({
             name: 'slug',
             type: 'text',
             localized: true,
-          }
-        ]
+          },
+        ],
       },
       beforeSync: beforeSyncWithSearch,
       syncDrafts: false,
       deleteDrafts: true,
-      reindexBatchSize: 50
+      reindexBatchSize: 50,
     }),
     formBuilderPlugin({
       fields: {
         radio: true,
         phone: {
           fields: [
-            {type: 'row', fields: [name, label]},
-            {type: 'row', fields: [placeholder, defaultValue]},
-            {type: 'row', fields: [width]},
-            {type: 'row', fields: [required, hidden]},
+            { type: 'row', fields: [name, label] },
+            { type: 'row', fields: [placeholder, defaultValue] },
+            { type: 'row', fields: [width] },
+            { type: 'row', fields: [required, hidden] },
           ],
           // @ts-ignore
           slug: 'phone',
           labels: {
             singular: 'Phone Number',
             plural: 'Phone Numbers',
-          }
+          },
         },
         text: {
           labels: {
             singular: 'Single-line Text', plural: 'Single-line Text',
           },
           fields: [
-            {type: 'row', fields: [name, label]},
-            {type: 'row', fields: [placeholder, defaultValue]},
-            {type: 'row', fields: [width]},
-            {type: 'row', fields: [required, hidden]},
+            { type: 'row', fields: [name, label] },
+            { type: 'row', fields: [placeholder, defaultValue] },
+            { type: 'row', fields: [width] },
+            { type: 'row', fields: [required, hidden] },
           ],
         },
         textarea: {
           fields: [
-            {type: 'row', fields: [name, label]},
-            {type: 'row', fields: [placeholder]},
-            {type: 'row', fields: [required, hidden]},
+            { type: 'row', fields: [name, label] },
+            { type: 'row', fields: [placeholder] },
+            { type: 'row', fields: [required, hidden] },
           ],
         },
         email: {
           fields: [
-            {type: 'row', fields: [name, label]},
-            {type: 'row', fields: [placeholder, width]},
-            {type: 'row', fields: [required, hidden]},
+            { type: 'row', fields: [name, label] },
+            { type: 'row', fields: [placeholder, width] },
+            { type: 'row', fields: [required, hidden] },
           ],
         },
         number: true,
         checkbox: {
           fields: [
-            {type: 'row', fields: [name, label]},
-            {type: 'row', fields: [width]},
-            {type: 'row', fields: [required, hidden]},
+            { type: 'row', fields: [name, label] },
+            { type: 'row', fields: [width] },
+            { type: 'row', fields: [required, hidden] },
           ],
         },
         message: true,
@@ -312,12 +339,12 @@ export default buildConfig({
       formOverrides: {
         slug: 'forms',
         admin: {
-          group: 'Forms'
+          group: 'Forms',
         },
         access: {
-          update: editor
+          update: editor,
         },
-        fields: ({defaultFields}) => [
+        fields: ({ defaultFields }) => [
           ...defaultFields.map((field) => {
             if (field.type === 'radio' && field.name === 'confirmationType') {
               return {
@@ -332,67 +359,67 @@ export default buildConfig({
             type: 'text',
             label: 'HubSpot ID',
             admin: {
-              position: 'sidebar'
-            }
+              position: 'sidebar',
+            },
           },
           {
             type: 'checkbox',
             name: 'requireRecaptcha',
             label: 'Require reCAPTCHA?',
             admin: {
-              position: 'sidebar'
-            }
-          }
-        ]
+              position: 'sidebar',
+            },
+          },
+        ],
       },
       formSubmissionOverrides: {
         slug: 'form-submissions',
         admin: {
-          group: 'Forms'
+          group: 'Forms',
         },
         hooks: {
           afterChange: [
-            async ({doc, req}) => {
-            req.payload.logger.info('Form Submission Received')
+            async ({ doc, req }) => {
+              req.payload.logger.info('Form Submission Received')
               const body = req.json ? await req.json() : {}
               const sendSubmissionToHubSpot = async (): Promise<void> => {
-              const { form, submissionData} = doc
+                const { form, submissionData } = doc
                 const portalID = process.env.HS_PORTAL_ID
                 const data = {
-                context: {
-                  ...('hubspotCookie' in body && {
-                    hutk: body?.hubspotCookie
-                  }),
-                  pageName: 'pageName' in body ? body?.pageName : '',
-                  pageUri: 'pageUri' in body ? body?.pageUri : '',
-                },
-                fields: submissionData.map((key: any) => ({
-                  name: key.field,
-                  value: key.value,
-                })),
+                  context: {
+                    ...('hubspotCookie' in body && {
+                      hutk: body?.hubspotCookie,
+                    }),
+                    pageName: 'pageName' in body ? body?.pageName : '',
+                    pageUri: 'pageUri' in body ? body?.pageUri : '',
+                  },
+                  fields: submissionData.map((key: any) => ({
+                    name: key.field,
+                    value: key.value,
+                  })),
                 }
                 try {
-                await fetch(`https://api.hsforms.com/submissions/v3/integration/submit/${portalID}/${form.hubspotID}`, {
-                  body: JSON.stringify(data),
-                  headers: {
-                    'Content-Type': 'application/json',
-                  },
-                  method: 'POST',
-                })
+                  await fetch(`https://api.hsforms.com/submissions/v3/integration/submit/${portalID}/${form.hubspotID}`, {
+                    body: JSON.stringify(data),
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    method: 'POST',
+                  })
                 } catch (e: unknown) {
-                req.payload.logger.error({e, msg: 'Form submission not sent to HubSpot.'})
+                  req.payload.logger.error({ e, msg: 'Form submission not sent to HubSpot.' })
                 }
               }
               await sendSubmissionToHubSpot()
-            }
-          ]
+            },
+          ],
         },
-        fields: ({defaultFields}) => [
+        fields: ({ defaultFields }) => [
           ...defaultFields,
           {
             name: 'recaptcha',
             type: 'text',
-            validate: async(value: any, {req, siblingData}: any) => {
+            validate: async (value: any, { req, siblingData }: any) => {
               const form = await req.payload.findByID({
                 id: siblingData?.form,
                 collection: 'forms',
@@ -415,10 +442,10 @@ export default buildConfig({
               } else {
                 return true
               }
-            }
-          }
-        ]
-      }
+            },
+          },
+        ],
+      },
 
     }),
     seoPlugin({

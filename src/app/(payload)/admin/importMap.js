@@ -55,9 +55,13 @@ import { Logo as Logo_c8d086d2c9e9c13fa3e3e20117a55637 } from '../../../componen
 import { Outro as Outro_9c3d7d3c29c00074c36ae718e37d194c } from '../../../components/Admin/UI/afterDashboard.tsx'
 import { LoginInstruction as LoginInstruction_7ebba917fcd24b26e7bd66cc3b43022b } from '../../../components/Admin/UI/afterLogin.tsx'
 import { Welcome as Welcome_21625725f2fa2a03abba99acf3c0d1c2 } from '../../../components/Admin/UI/beforeDashboard.tsx'
+import { default as default_f9efd66dd10d63eec4e10ff62c939c5a } from 'payload-analytics-plugin/components/AnalyticsWidget'
 import { LinkToHome as LinkToHome_bd946e26f23bf880470376843f7aa84d } from '../../../components/Admin/UI/beforeLogin.tsx'
+import { default as default_8ea323f53b8768581f5c9497f8639989 } from 'payload-analytics-plugin/components/AfterNavLinks'
 import { S3ClientUploadHandler as S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24 } from '@payloadcms/storage-s3/client'
 import { UploadthingClientUploadHandler as UploadthingClientUploadHandler_749dcaa11bb61b873d113cb6c609bc10 } from '@payloadcms/storage-uploadthing/client'
+import { Test as Test_f4f250ec018eb08feafa0646c18d9121 } from '../../../components/Admin/views/test.tsx'
+import { default as default_08948bfed27e06c3bce0e223dd9c599a } from 'payload-analytics-plugin/components/AnalyticsView'
 
 export const importMap = {
   "@payloadcms/richtext-lexical/rsc#RscEntryLexicalCell": RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e,
@@ -117,7 +121,11 @@ export const importMap = {
   "/components/Admin/UI/afterDashboard.tsx#Outro": Outro_9c3d7d3c29c00074c36ae718e37d194c,
   "/components/Admin/UI/afterLogin.tsx#LoginInstruction": LoginInstruction_7ebba917fcd24b26e7bd66cc3b43022b,
   "/components/Admin/UI/beforeDashboard.tsx#Welcome": Welcome_21625725f2fa2a03abba99acf3c0d1c2,
+  "payload-analytics-plugin/components/AnalyticsWidget#default": default_f9efd66dd10d63eec4e10ff62c939c5a,
   "/components/Admin/UI/beforeLogin.tsx#LinkToHome": LinkToHome_bd946e26f23bf880470376843f7aa84d,
+  "payload-analytics-plugin/components/AfterNavLinks#default": default_8ea323f53b8768581f5c9497f8639989,
   "@payloadcms/storage-s3/client#S3ClientUploadHandler": S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24,
-  "@payloadcms/storage-uploadthing/client#UploadthingClientUploadHandler": UploadthingClientUploadHandler_749dcaa11bb61b873d113cb6c609bc10
+  "@payloadcms/storage-uploadthing/client#UploadthingClientUploadHandler": UploadthingClientUploadHandler_749dcaa11bb61b873d113cb6c609bc10,
+  "/components/Admin/views/test.tsx#Test": Test_f4f250ec018eb08feafa0646c18d9121,
+  "payload-analytics-plugin/components/AnalyticsView#default": default_08948bfed27e06c3bce0e223dd9c599a
 }
