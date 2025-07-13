@@ -1,9 +1,11 @@
 import {getPayload, TypedLocale} from 'payload'
 import configPromise from '@payload-config'
 import {RenderBlocks} from '@/blocks'
-import {notFound} from 'next/navigation'
+import { notFound } from 'next/navigation'
 import {headers as getHeaders} from 'next/headers'
 import {LivePreviewListener} from '@/components/LivePreviewListener'
+import {draftMode} from 'next/headers'
+import React, {cache} from 'react'
 
 type Args = {
   params: Promise<{
@@ -14,7 +16,6 @@ type Args = {
 
 export default async function Page({params: paramsPromise}: Args) {
   const headers = await getHeaders()
-
   const localeSlugs = {
     en: 'home',
     es: 'inicio',
@@ -24,13 +25,8 @@ export default async function Page({params: paramsPromise}: Args) {
 
   const payload = await getPayload({config: configPromise})
   const {user} = await payload.auth({headers})
-  const page = await payload.find({
-    collection: 'pages',
-    locale,
-    where: {slug: {equals: decodeURIComponent(slug)}},
-    overrideAccess: Boolean(user),
-    draft: Boolean(user),
-  }).then(res => res.docs[0])
+
+  const page = await queryPageBySlug({ slug, locale })
 
   if (!page) return notFound()
 
@@ -42,3 +38,18 @@ export default async function Page({params: paramsPromise}: Args) {
   </div>
 
 }
+
+const queryPageBySlug = cache(async ({ slug, locale }: { slug: string, locale: TypedLocale }) => {
+  const { isEnabled: draft } = await draftMode()
+
+  const payload = await getPayload({ config: configPromise })
+
+  const page = await payload.find({
+  collection: 'pages',
+  locale,
+  where: {slug: {equals: decodeURIComponent(slug)}},
+  overrideAccess: draft,
+  draft
+})
+  return page.docs?.[0] || null
+})

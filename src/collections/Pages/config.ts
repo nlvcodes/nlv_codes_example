@@ -1,4 +1,4 @@
-import { CollectionConfig } from 'payload'
+import { CollectionConfig, CollectionSlug, GeneratePreviewURL, TypedLocale } from 'payload'
 import { ContentWithMedia } from '@/blocks/ContentWithMedia/config'
 import { TableOfContents } from '@/blocks/TableOfContents/config'
 import editor from '@/collections/Users/access/editor'
@@ -6,10 +6,28 @@ import admin from '@/collections/Users/access/admin'
 import { FormBlock } from '@/blocks/Form/config'
 import { Section } from '@/blocks/Section/config'
 import { Code } from '@/blocks/Code/config'
+import { revalidateDelete, revalidatePage } from './hooks/revalidatePage'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
+  admin: {
+    preview: (doc, options) => {
+      const encodedParams = new URLSearchParams({
+        slug: doc?.slug as string,
+        path: doc?.slug === 'home' ? '/' : `/${doc.slug}`,
+        collection: 'pages',
+        previewSecret: process.env.PREVIEW_SECRET || '',
+        locale: options.locale,
+      })
+
+      return `${process.env.NEXT_PUBLIC_SERVER_URL}/draft/preview?${encodedParams.toString()}`
+    },
+  },
   labels: {singular: 'Page', plural: 'Pages'},
+  hooks: {
+    afterChange: [revalidatePage],
+    afterDelete: [revalidateDelete]
+  },
   access: {
     readVersions: editor,
     read: ({ req }) => {
