@@ -6,10 +6,29 @@ import admin from '@/collections/Users/access/admin'
 import { FormBlock } from '@/blocks/Form/config'
 import { Section } from '@/blocks/Section/config'
 import { Code } from '@/blocks/Code/config'
+import { revalidatePage, revalidatePageOnDelete } from '@/collections/Pages/hooks/revalidatePage'
+import { URLSearchParams } from 'whatwg-url'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
   labels: {singular: 'Page', plural: 'Pages'},
+  hooks: {
+    afterDelete: [revalidatePageOnDelete],
+    afterChange: [revalidatePage]
+  },
+  admin: {
+    preview: (doc, options) => {
+      const encodedParams = new URLSearchParams({
+        slug: doc?.slug as string,
+        path: doc?.slug === 'home' ? '/' : `/${doc.slug}`,
+        collection: 'pages',
+        previewSecret: process.env.PREVIEW_SECRET || '',
+        locale: options.locale,
+      })
+
+      return `${process.env.NEXT_PUBLIC_SERVER_URL}/draft/preview?${encodedParams.toString()}`
+    }
+  },
   access: {
     readVersions: editor,
     read: ({ req }) => {
