@@ -7,7 +7,6 @@ import { FormBlock } from '@/blocks/Form/config'
 import { Section } from '@/blocks/Section/config'
 import { Code } from '@/blocks/Code/config'
 import { revalidatePage, revalidatePageOnDelete } from '@/collections/Pages/hooks/revalidatePage'
-import { URLSearchParams } from 'whatwg-url'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
