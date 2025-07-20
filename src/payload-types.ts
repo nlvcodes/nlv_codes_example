@@ -397,29 +397,94 @@ export interface TableOfContents {
 export interface Document {
   id: string;
   alt: string;
-  _key?: string | null;
+  cloudinaryFolder?: string | null;
+  cloudinaryPublicId?: string | null;
+  cloudinaryUrl?: string | null;
+  cloudinaryResourceType?: string | null;
+  cloudinaryFormat?: string | null;
+  cloudinaryVersion?: number | null;
+  /**
+   * Direct URL to the original file without transformations
+   */
+  originalUrl?: string | null;
+  /**
+   * URL with applied transformations
+   */
+  transformedUrl?: string | null;
+  /**
+   * Select transformations to apply. Note: Only one preset from each category (Size, Effect, etc.) will be applied.
+   */
+  transformationPreset?:
+    | (
+        | 'thumbnail'
+        | 'card'
+        | 'banner'
+        | 'hero'
+        | 'feature'
+        | 'avatar'
+        | 'profile-header'
+        | 'og-image'
+        | 'twitter-card'
+        | 'instagram-square'
+        | 'instagram-story'
+        | 'square'
+        | 'landscape-16-9'
+        | 'landscape-4-3'
+        | 'portrait-9-16'
+        | 'blur'
+        | 'grayscale'
+        | 'sepia'
+        | 'pixelate'
+        | 'sharpen'
+        | 'vignette'
+        | 'auto-optimize'
+        | 'high-quality'
+        | 'balanced'
+        | 'eco-mode'
+        | 'progressive'
+        | 'productHero'
+      )[]
+    | null;
+  /**
+   * Private files require signed URLs to access
+   */
+  isPrivate?: boolean | null;
+  requiresSignedURL?: boolean | null;
+  /**
+   * Generate a public URL with transformations for this private file
+   */
+  enablePublicPreview?: boolean | null;
+  /**
+   * Choose the type of transformation for public preview
+   */
+  transformationType?: ('watermark' | 'blur') | null;
+  /**
+   * Text to display as watermark on public preview
+   */
+  watermarkText?: string | null;
+  /**
+   * Public URL with applied transformations
+   */
+  publicTransformationUrl?: string | null;
+  publicTransformationPublicId?: string | null;
+  /**
+   * Preview URL with selected transformation presets applied
+   */
+  previewUrl?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
   thumbnailURL?: string | null;
   filename?: string | null;
   mimeType?: string | null;
+  /**
+   * File size in bytes
+   */
   filesize?: number | null;
   width?: number | null;
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
-  sizes?: {
-    small?: {
-      _key?: string | null;
-      url?: string | null;
-      width?: number | null;
-      height?: number | null;
-      mimeType?: string | null;
-      filesize?: number | null;
-      filename?: string | null;
-    };
-  };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -449,6 +514,7 @@ export interface Customer {
  */
 export interface Page {
   id: string;
+  document?: (string | null) | Document;
   slug?: string | null;
   title?: string | null;
   content?:
@@ -1134,7 +1200,23 @@ export interface TableOfContentsSelect<T extends boolean = true> {
  */
 export interface DocumentsSelect<T extends boolean = true> {
   alt?: T;
-  _key?: T;
+  cloudinaryFolder?: T;
+  cloudinaryPublicId?: T;
+  cloudinaryUrl?: T;
+  cloudinaryResourceType?: T;
+  cloudinaryFormat?: T;
+  cloudinaryVersion?: T;
+  originalUrl?: T;
+  transformedUrl?: T;
+  transformationPreset?: T;
+  isPrivate?: T;
+  requiresSignedURL?: T;
+  enablePublicPreview?: T;
+  transformationType?: T;
+  watermarkText?: T;
+  publicTransformationUrl?: T;
+  publicTransformationPublicId?: T;
+  previewUrl?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -1146,21 +1228,6 @@ export interface DocumentsSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
-  sizes?:
-    | T
-    | {
-        small?:
-          | T
-          | {
-              _key?: T;
-              url?: T;
-              width?: T;
-              height?: T;
-              mimeType?: T;
-              filesize?: T;
-              filename?: T;
-            };
-      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1187,6 +1254,7 @@ export interface CustomersSelect<T extends boolean = true> {
  * via the `definition` "pages_select".
  */
 export interface PagesSelect<T extends boolean = true> {
+  document?: T;
   slug?: T;
   title?: T;
   content?:

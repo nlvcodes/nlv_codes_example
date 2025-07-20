@@ -60,6 +60,7 @@ export const Pages: CollectionConfig = {
     },
   },
   fields: [
+    { name: 'document', type: 'upload', relationTo: 'documents' },
     { name: 'slug', type: 'text', localized: true },
     { name: 'title', type: 'text', localized: true },
     { name: 'content', type: 'blocks', blocks: [ContentWithMedia, TableOfContents, FormBlock, Section, Code] },

@@ -80,6 +80,9 @@ importers:
       payload:
         specifier: 3.42.0
         version: 3.42.0(graphql@16.10.0)(typescript@5.7.2)
+      payload-storage-cloudinary:
+        specifier: 1.1.3
+        version: 1.1.3(@payloadcms/ui@3.42.0(@types/react@19.0.1)(monaco-editor@0.52.2)(next@15.3.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.4))(payload@3.42.0(graphql@16.10.0)(typescript@5.7.2))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.7.2))(@types/react@19.0.1)(monaco-editor@0.52.2)(next@15.3.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.4))(payload@3.42.0(graphql@16.10.0)(typescript@5.7.2))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.7.2)
       postcss:
         specifier: ^8.5.3
         version: 8.5.3
@@ -1954,6 +1957,10 @@ packages:
   client-only@0.0.1:
     resolution: {integrity: sha512-IV3Ou0jSMzZrd3pZ48nLkT9DA7Ag1pnPzaiQhpW7c3RbcqqzvzzVu+L8gfqMp/8IM2MQtSiqaCxrrcfu8I8rMA==}
 
+  cloudinary@2.7.0:
+    resolution: {integrity: sha512-qrqDn31+qkMCzKu1GfRpzPNAO86jchcNwEHCUiqvPHNSFqu7FTNF9FuAkBUyvM1CFFgFPu64NT0DyeREwLwK0w==}
+    engines: {node: '>=9'}
+
   clsx@2.1.1:
     resolution: {integrity: sha512-eYm0QWBtUrBWZWG0d386OGAw16Z995PiOVo2B7bjWSbHedGl5e0ZWaq65kOGgUSNesEIDkB9ISbTg/JK9dhCZA==}
     engines: {node: '>=6'}
@@ -3232,6 +3239,14 @@ packages:
     resolution: {integrity: sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==}
     engines: {node: '>=8'}
 
+  payload-storage-cloudinary@1.1.3:
+    resolution: {integrity: sha512-Y2mX/9/kYPXdzZP27hQTQjzsrqXwtfNnLqbpFjE4lS9VqHB2TY/Q8AILap2VbxotRAzu1N/DW7+lel29QPGwEQ==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      '@payloadcms/ui': ^3.0.0
+      payload: ^3.0.0
+      react: ^19.0.0 || ^18.0.0
+
   payload@3.42.0:
     resolution: {integrity: sha512-VWLAyCxwDQ4uzwtTa1yRzFKoKhQ8VCUFpEDpNi91+TA3Q6WCXWNPzQGnjYehUWiDA5bl3BgCddIygJxv7ttunw==}
     engines: {node: ^18.20.2 || >=20.9.0}
@@ -3326,6 +3341,14 @@ packages:
 
   pure-rand@6.1.0:
     resolution: {integrity: sha512-bVWawvoZoBYpp6yIoQtQXHZjmz35RSVHnUOTefl8Vcjr8snTPY1wnpSPMWekcFwbxI6gtmT7rSYPFvz71ldiOA==}
+
+  q@1.5.1:
+    resolution: {integrity: sha512-kV/CThkXo6xyFEZUugw/+pIOywXcDbFYgSct5cT3gqlbkBE1SJdwy6UQoZvodiWF/ckQLZyDE/Bu1M6gVu5lVw==}
+    engines: {node: '>=0.6.0', teleport: '>=0.2.0'}
+    deprecated: |-
+      You or someone you depend on is using Q, the JavaScript Promise library that gave JavaScript developers strong feelings about promises. They can almost certainly migrate to the native JavaScript promise now. Thank you literally everyone for joining me in this bet against the odds. Be excellent to each other.
+
+      (For a CapTP with native promises, see @endo/eventual-send and @endo/captp)
 
   qs-esm@7.0.2:
     resolution: {integrity: sha512-D8NAthKSD7SGn748v+GLaaO6k08Mvpoqroa35PqIQC4gtUa8/Pb/k+r0m0NnGBVbHDP1gKZ2nVywqfMisRhV5A==}
@@ -6434,6 +6457,11 @@ snapshots:
 
   client-only@0.0.1: {}
 
+  cloudinary@2.7.0:
+    dependencies:
+      lodash: 4.17.21
+      q: 1.5.1
+
   clsx@2.1.1: {}
 
   color-convert@2.0.1:
@@ -7963,6 +7991,21 @@ snapshots:
 
   path-type@4.0.0: {}
 
+  payload-storage-cloudinary@1.1.3(@payloadcms/ui@3.42.0(@types/react@19.0.1)(monaco-editor@0.52.2)(next@15.3.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.4))(payload@3.42.0(graphql@16.10.0)(typescript@5.7.2))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.7.2))(@types/react@19.0.1)(monaco-editor@0.52.2)(next@15.3.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.4))(payload@3.42.0(graphql@16.10.0)(typescript@5.7.2))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.7.2):
+    dependencies:
+      '@payloadcms/plugin-cloud-storage': 3.42.0(@types/react@19.0.1)(monaco-editor@0.52.2)(next@15.3.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.4))(payload@3.42.0(graphql@16.10.0)(typescript@5.7.2))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.7.2)
+      '@payloadcms/ui': 3.42.0(@types/react@19.0.1)(monaco-editor@0.52.2)(next@15.3.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.4))(payload@3.42.0(graphql@16.10.0)(typescript@5.7.2))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.7.2)
+      cloudinary: 2.7.0
+      payload: 3.42.0(graphql@16.10.0)(typescript@5.7.2)
+      react: 19.0.0
+    transitivePeerDependencies:
+      - '@types/react'
+      - monaco-editor
+      - next
+      - react-dom
+      - supports-color
+      - typescript
+
   payload@3.42.0(graphql@16.10.0)(typescript@5.7.2):
     dependencies:
       '@next/env': 15.3.2
@@ -8108,6 +8151,8 @@ snapshots:
   punycode@2.3.1: {}
 
   pure-rand@6.1.0: {}
+
+  q@1.5.1: {}
 
   qs-esm@7.0.2: {}
 

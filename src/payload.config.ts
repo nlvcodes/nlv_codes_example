@@ -5,11 +5,7 @@ import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import { s3Storage } from '@payloadcms/storage-s3'
 import { uploadthingStorage } from '@payloadcms/storage-uploadthing'
 import {
-  BoldFeature,
-  FixedToolbarFeature, HTMLConverterFeature,
-  ItalicFeature,
-  lexicalEditor, lexicalHTML,
-  UnderlineFeature,
+  lexicalEditor,
 } from '@payloadcms/richtext-lexical'
 import path from 'path'
 import { buildConfig, LocalizationConfig } from 'payload'
@@ -42,7 +38,7 @@ import { Section } from '@/blocks/Section/config'
 import { searchPlugin } from '@payloadcms/plugin-search'
 import { beforeSyncWithSearch } from '@/components/Search/beforeSync'
 import localization from '@/i18n/localization'
-// import { analyticsPlugin } from 'payload-analytics-plugin'
+import { cloudinaryStorage, commonPresets } from 'payload-storage-cloudinary'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -80,10 +76,10 @@ export default buildConfig({
         path: '/components/Admin/ui/avatar.tsx',
       },
     },
-    autoLogin: process.env.NEXT_PUBLIC_ENABLE_AUTOLOGIN === 'true' ? {
-      email: 'nick+editor@midlowebdesign.com',
-      password: 'editor',
-    } : false,
+    // autoLogin: process.env.NEXT_PUBLIC_ENABLE_AUTOLOGIN === 'true' ? {
+    //   email: 'nick+editor@midlowebdesign.com',
+    //   password: 'editor',
+    // } : false,
     livePreview: {
       collections: ['pages'],
       breakpoints: [
@@ -230,22 +226,88 @@ export default buildConfig({
   }),
   sharp,
   plugins: [
-    // analyticsPlugin({
-    //   provider: 'plausible',
-    //   config: {
-    //     apiKey: process.env.PLAUSIBLE_API_KEY,
-    //     siteId: process.env.PLAUSIBLE_SITE_ID,
-    //     apiHost: 'https://analytics.nlvcodes.com',
-    //   },
-    //   dashboardWidget: {
-    //     enabled: true,
-    //     position: 'beforeDashboard'
-    //   },
-    //   analyticsView: {
-    //     enabled: true,
-    //     position: 'beforeNavLinks',
-    //   }
-    // }),
+    cloudinaryStorage({
+      cloudConfig: {
+        cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+        api_key: process.env.CLOUDINARY_API_KEY,
+        api_secret: process.env.CLOUDINARY_API_SECRET,
+      },
+      collections: {
+        documents: {
+          folder: {
+            path: 'uploads',
+            enableDynamic: true,
+            fieldName: 'cloudinaryFolder',
+            skipFieldCreation: true,
+          },
+          deleteFromCloudinary: true,
+          transformations: {
+            default: {
+              quality: 'auto',
+              fetch_format: 'auto',
+            },
+            presets: [
+              ...commonPresets,
+              {
+                name: 'productHero',
+                label: 'Product Hero',
+                transformations: {
+                  width: 1920,
+                  height: 800,
+                  crop: 'fill',
+                  gravity: 'auto',
+                  quality: 'auto:best',
+                },
+              },
+              {
+                name: 'pixelate',
+                label: 'Pixelate',
+                transformations: {
+                  effect: 'pixelate:20',
+                },
+              },
+            ],
+            enablePresetSelection: true,
+            preserveOriginal: true,
+            // Add public transformation for watermarked previews
+            publicTransformation: {
+              enabled: true,
+              fieldName: 'enablePublicPreview',
+              typeFieldName: 'transformationType',
+              watermark: {
+                textFieldName: 'watermarkText',
+                defaultText: 'PREVIEW',
+                style: {
+                  fontFamily: 'Verdana',
+                  fontSize: 50,
+                  fontWeight: 'bold',
+                  letterSpacing: 15,
+                  color: 'rgb:808080',
+                  opacity: 50,
+                  angle: -45,
+                  position: 'center',
+                },
+              },
+              blur: {
+                effect: 'blur:2000',
+                quality: 30,
+                width: 600,
+                height: 600,
+              },
+            },
+          },
+          privateFiles: {
+            enabled: true,
+            expiresIn: 7200,
+            authTypes: ['upload', 'authenticated'],
+            includeTransformations: true,
+            customAuthCheck: (req) => {
+              return !!req.user
+            },
+          },
+        },
+      },
+    }),
     searchPlugin({
       collections: ['posts', 'pages'],
       localize: true,
@@ -475,13 +537,6 @@ export default buildConfig({
         admin: { description: 'Choose the type of redirect to use.' },
       },
     }),
-    // vercelBlobStorage({
-    //   enabled: true,
-    //   collections: {
-    //     media: true,
-    //   },
-    //   token: process.env.BLOB_READ_WRITE_TOKEN
-    // })
     s3Storage({
       collections: {
         media: true,
@@ -494,14 +549,6 @@ export default buildConfig({
         },
         region: 'auto',
         endpoint: process.env.S3_ENDPOINT || '',
-      },
-    }),
-    uploadthingStorage({
-      collections: {
-        documents: true,
-      },
-      options: {
-        token: process.env.UPLOADTHING_TOKEN || '',
       },
     }),
   ],

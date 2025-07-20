@@ -40,6 +40,7 @@ import { BeforeListContent as BeforeListContent_ad27bbf9b31f076b30430795dbfa0b6c
 import { PostsByStatus as PostsByStatus_c35ae567a207f873a10007fa5c35a220 } from 'src/collections/Posts/components/PostsByStatus.tsx'
 import { Description as Description_35a551235dfba0e3c4138d9fa5318fbb } from 'src/collections/Posts/components/description.tsx'
 import { Logout as Logout_fd8c17baee90f35276c01ab59a85a0d4 } from '../../../components/Admin/UI/logout.tsx'
+import { selectField as selectField_60ce14e26cf5ba9eed7e6668ddd772dd } from 'src/components/Cloudinary/field.tsx'
 import { LinkToDoc as LinkToDoc_aead06e4cbf6b2620c5c51c9ab283634 } from '@payloadcms/plugin-search/client'
 import { ReindexButton as ReindexButton_aead06e4cbf6b2620c5c51c9ab283634 } from '@payloadcms/plugin-search/client'
 import { QueryPresetsAccessCell as QueryPresetsAccessCell_3817bf644402e67bfe6577f60ef982de } from '@payloadcms/ui'
@@ -57,7 +58,6 @@ import { LoginInstruction as LoginInstruction_7ebba917fcd24b26e7bd66cc3b43022b }
 import { Welcome as Welcome_21625725f2fa2a03abba99acf3c0d1c2 } from '../../../components/Admin/UI/beforeDashboard.tsx'
 import { LinkToHome as LinkToHome_bd946e26f23bf880470376843f7aa84d } from '../../../components/Admin/UI/beforeLogin.tsx'
 import { S3ClientUploadHandler as S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24 } from '@payloadcms/storage-s3/client'
-import { UploadthingClientUploadHandler as UploadthingClientUploadHandler_749dcaa11bb61b873d113cb6c609bc10 } from '@payloadcms/storage-uploadthing/client'
 import { Test as Test_f4f250ec018eb08feafa0646c18d9121 } from '../../../components/Admin/views/test.tsx'
 
 export const importMap = {
@@ -103,6 +103,7 @@ export const importMap = {
   "src/collections/Posts/components/PostsByStatus.tsx#PostsByStatus": PostsByStatus_c35ae567a207f873a10007fa5c35a220,
   "src/collections/Posts/components/description.tsx#Description": Description_35a551235dfba0e3c4138d9fa5318fbb,
   "/components/Admin/UI/logout.tsx#Logout": Logout_fd8c17baee90f35276c01ab59a85a0d4,
+  "src/components/Cloudinary/field.tsx#selectField": selectField_60ce14e26cf5ba9eed7e6668ddd772dd,
   "@payloadcms/plugin-search/client#LinkToDoc": LinkToDoc_aead06e4cbf6b2620c5c51c9ab283634,
   "@payloadcms/plugin-search/client#ReindexButton": ReindexButton_aead06e4cbf6b2620c5c51c9ab283634,
   "@payloadcms/ui#QueryPresetsAccessCell": QueryPresetsAccessCell_3817bf644402e67bfe6577f60ef982de,
@@ -120,6 +121,5 @@ export const importMap = {
   "/components/Admin/UI/beforeDashboard.tsx#Welcome": Welcome_21625725f2fa2a03abba99acf3c0d1c2,
   "/components/Admin/UI/beforeLogin.tsx#LinkToHome": LinkToHome_bd946e26f23bf880470376843f7aa84d,
   "@payloadcms/storage-s3/client#S3ClientUploadHandler": S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24,
-  "@payloadcms/storage-uploadthing/client#UploadthingClientUploadHandler": UploadthingClientUploadHandler_749dcaa11bb61b873d113cb6c609bc10,
   "/components/Admin/views/test.tsx#Test": Test_f4f250ec018eb08feafa0646c18d9121
 }
