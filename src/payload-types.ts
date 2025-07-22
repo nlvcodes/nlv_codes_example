@@ -397,7 +397,6 @@ export interface TableOfContents {
 export interface Document {
   id: string;
   alt: string;
-  _key?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -411,7 +410,6 @@ export interface Document {
   focalY?: number | null;
   sizes?: {
     small?: {
-      _key?: string | null;
       url?: string | null;
       width?: number | null;
       height?: number | null;
@@ -1134,7 +1132,6 @@ export interface TableOfContentsSelect<T extends boolean = true> {
  */
 export interface DocumentsSelect<T extends boolean = true> {
   alt?: T;
-  _key?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -1152,7 +1149,6 @@ export interface DocumentsSelect<T extends boolean = true> {
         small?:
           | T
           | {
-              _key?: T;
               url?: T;
               width?: T;
               height?: T;

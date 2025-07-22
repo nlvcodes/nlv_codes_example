@@ -230,22 +230,7 @@ export default buildConfig({
   }),
   sharp,
   plugins: [
-    // analyticsPlugin({
-    //   provider: 'plausible',
-    //   config: {
-    //     apiKey: process.env.PLAUSIBLE_API_KEY,
-    //     siteId: process.env.PLAUSIBLE_SITE_ID,
-    //     apiHost: 'https://analytics.nlvcodes.com',
-    //   },
-    //   dashboardWidget: {
-    //     enabled: true,
-    //     position: 'beforeDashboard'
-    //   },
-    //   analyticsView: {
-    //     enabled: true,
-    //     position: 'beforeNavLinks',
-    //   }
-    // }),
+
     searchPlugin({
       collections: ['posts', 'pages'],
       localize: true,
@@ -475,13 +460,6 @@ export default buildConfig({
         admin: { description: 'Choose the type of redirect to use.' },
       },
     }),
-    // vercelBlobStorage({
-    //   enabled: true,
-    //   collections: {
-    //     media: true,
-    //   },
-    //   token: process.env.BLOB_READ_WRITE_TOKEN
-    // })
     s3Storage({
       collections: {
         media: true,
@@ -494,14 +472,6 @@ export default buildConfig({
         },
         region: 'auto',
         endpoint: process.env.S3_ENDPOINT || '',
-      },
-    }),
-    uploadthingStorage({
-      collections: {
-        documents: true,
-      },
-      options: {
-        token: process.env.UPLOADTHING_TOKEN || '',
       },
     }),
   ],

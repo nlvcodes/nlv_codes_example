@@ -57,7 +57,6 @@ import { LoginInstruction as LoginInstruction_7ebba917fcd24b26e7bd66cc3b43022b }
 import { Welcome as Welcome_21625725f2fa2a03abba99acf3c0d1c2 } from '../../../components/Admin/UI/beforeDashboard.tsx'
 import { LinkToHome as LinkToHome_bd946e26f23bf880470376843f7aa84d } from '../../../components/Admin/UI/beforeLogin.tsx'
 import { S3ClientUploadHandler as S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24 } from '@payloadcms/storage-s3/client'
-import { UploadthingClientUploadHandler as UploadthingClientUploadHandler_749dcaa11bb61b873d113cb6c609bc10 } from '@payloadcms/storage-uploadthing/client'
 import { Test as Test_f4f250ec018eb08feafa0646c18d9121 } from '../../../components/Admin/views/test.tsx'
 
 export const importMap = {
@@ -120,6 +119,5 @@ export const importMap = {
   "/components/Admin/UI/beforeDashboard.tsx#Welcome": Welcome_21625725f2fa2a03abba99acf3c0d1c2,
   "/components/Admin/UI/beforeLogin.tsx#LinkToHome": LinkToHome_bd946e26f23bf880470376843f7aa84d,
   "@payloadcms/storage-s3/client#S3ClientUploadHandler": S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24,
-  "@payloadcms/storage-uploadthing/client#UploadthingClientUploadHandler": UploadthingClientUploadHandler_749dcaa11bb61b873d113cb6c609bc10,
   "/components/Admin/views/test.tsx#Test": Test_f4f250ec018eb08feafa0646c18d9121
 }
