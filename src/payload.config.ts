@@ -43,6 +43,7 @@ import { searchPlugin } from '@payloadcms/plugin-search'
 import { beforeSyncWithSearch } from '@/components/Search/beforeSync'
 import localization from '@/i18n/localization'
 // import { analyticsPlugin } from 'payload-analytics-plugin'
+import { cloudinaryStorage, commonPresets } from 'payload-storage-cloudinary'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -230,22 +231,69 @@ export default buildConfig({
   }),
   sharp,
   plugins: [
-    // analyticsPlugin({
-    //   provider: 'plausible',
-    //   config: {
-    //     apiKey: process.env.PLAUSIBLE_API_KEY,
-    //     siteId: process.env.PLAUSIBLE_SITE_ID,
-    //     apiHost: 'https://analytics.nlvcodes.com',
-    //   },
-    //   dashboardWidget: {
-    //     enabled: true,
-    //     position: 'beforeDashboard'
-    //   },
-    //   analyticsView: {
-    //     enabled: true,
-    //     position: 'beforeNavLinks',
-    //   }
-    // }),
+    cloudinaryStorage({
+      cloudConfig: {
+        cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+        api_key: process.env.CLOUDINARY_API_KEY,
+        api_secret: process.env.CLOUDINARY_API_SECRET
+      },
+      collections: {
+        documents: {
+          privateFiles: {
+            enabled: true,
+            expiresIn: 7200,
+            authTypes: ['upload', 'authenticated'],
+            includeTransformations: true,
+            customAuthCheck: async (req, doc) => {
+              return !!req.user
+            }
+          },
+          folder: {
+            path: 'payload/documents',
+            enableDynamic: true,
+            fieldName: 'cloudinaryFolder',
+            skipFieldCreation: true,
+          },
+          deleteFromCloudinary: true,
+          transformations: {
+            default: {
+              quality: 'auto',
+              fetch_format: 'auto',
+            },
+            presets: [
+              ...commonPresets,
+              {
+                name: 'productHero',
+                label: 'Product Hero',
+                transformations: {
+                  width: 1920,
+                  height: 800,
+                  crop: 'fill',
+                  gravity: 'auto',
+                  quality: 'auto:best',
+                }
+              },
+              {
+                name: 'pixelated',
+                label: 'Pixelated',
+                transformations: {
+                  effect: 'pixelate:20',
+                }
+              }
+            ],
+            enablePresetSelection: true,
+            preserveOriginal: true,
+          }
+          // uploadQueue: {
+          //   enabled: true,
+          //   maxConcurrentUploads: 3,
+          //   enableChunkedUploads: true,
+          //   chunkSize: 20,
+          //   largeFileThreshold: 100
+          // }
+        },
+      }
+    }),
     searchPlugin({
       collections: ['posts', 'pages'],
       localize: true,
