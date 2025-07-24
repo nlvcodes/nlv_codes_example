@@ -6,3 +6,7 @@ blank
 
 - **Database**: mongodb
 - **Storage Adapter**: localDisk
+
+## Deployment
+
+This project is deployed on Vercel.
