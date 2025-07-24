@@ -13,7 +13,7 @@ import {
   generateSignedURL,
   getPremiumImageURL
 } from 'payload-storage-cloudinary'
-import { BasicImage, PremiumImage, ProtectedImage } from '@/components/ProtectedImage'
+import { ProtectedImage } from '@/components/Cloudinary/ProtectedImage'
 
 type Args = {
   params: Promise<{
@@ -87,7 +87,7 @@ export default async function Page({ params: paramsPromise }: Args) {
     <h1>{page.title}</h1>
     {/*<PrivateImage doc={document} collection={'documents'} />*/}
     {/*<ResponsiveImage doc={document} />*/}
-    <BasicImage document={document} />
+    {/*<BasicImage document={document} />*/}
     {/*{isPreview && <div>Upgrade to view this image</div>}*/}
     {/* eslint-disable-next-line @next/next/no-img-element */}
     {/*<img src={url!} alt={document.alt} style={{ width: '100%', height: 'auto'}} />*/}

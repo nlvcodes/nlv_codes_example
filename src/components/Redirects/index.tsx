@@ -27,11 +27,11 @@ export const Redirects: React.FC<Props> = async ({disableNotFound, url}) => {
 
       const document = (await getCachedDocument(collection, id)()) as Post
 
-      redirectUrl = `${redirectItem.to?.reference?.relationTo !== 'pages' ? `/${redirectItem.to?.reference?.relationTo}` 
+      redirectUrl = `${redirectItem.to?.reference?.relationTo === 'posts' ? `/${redirectItem.to?.reference?.relationTo}` 
         : `${document?.slug}`}`
     } else {
       redirectUrl = `${
-        redirectItem.to?.reference?.relationTo !== 'pages' 
+        redirectItem.to?.reference?.relationTo === 'posts' 
           ? `/${redirectItem.to?.reference?.relationTo}` 
           : '' 
       }/${

@@ -6,7 +6,7 @@ interface SearchParams {
   [key: string]: string;
 }
 
-export const Page = async ({ searchParams }: { searchParams: SearchParams }) => {
+const Page = async ({ searchParams }: { searchParams: Promise<SearchParams> }) => {
   const { token } = await searchParams
   const payload = await getPayload({ config })
 

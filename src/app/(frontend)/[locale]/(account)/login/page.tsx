@@ -7,7 +7,7 @@ interface SearchParams {
   [key: string]: string | undefined
 }
 
-export default async function Page({ searchParams }: { searchParams: SearchParams }): Promise<React.ReactElement> {
+export default async function Page({ searchParams }: { searchParams: Promise<SearchParams> }): Promise<React.ReactElement> {
 
   const user = await getUser()
   if (user) {

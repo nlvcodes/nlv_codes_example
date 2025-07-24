@@ -123,7 +123,7 @@ export const FormBlock: React.FC<{
       }
     }
     void submitForm()
-  }, [formID, requireRecaptcha])
+  }, [formID, requireRecaptcha, pathname])
 
   return (
     <section className={`md:grid md:grid-cols-12 gap-4 m-4 p-4 text-emerald-950 rounded-md`}>
