@@ -27,14 +27,9 @@ export const Redirects: React.FC<Props> = async ({disableNotFound, url}) => {
 
       const document = (await getCachedDocument(collection, id)()) as Post
 
-      redirectUrl = `${redirectItem.to?.reference?.relationTo !== 'pages' ? `/${redirectItem.to?.reference?.relationTo}` 
-        : `${document?.slug}`}`
+      redirectUrl = `/posts/${document?.slug}`
     } else {
-      redirectUrl = `${
-        redirectItem.to?.reference?.relationTo !== 'pages' 
-          ? `/${redirectItem.to?.reference?.relationTo}` 
-          : '' 
-      }/${
+      redirectUrl = `/posts/${
         typeof redirectItem.to?.reference?.value === 'object' 
           ? redirectItem.to?.reference?.value?.slug : ''
       }`

@@ -8,7 +8,7 @@ export default function Page() {
       <p className={`hidden md:text-right md:block`}>Then add prefixes to build for bigger screen sizes</p>
     </div>
     <div className={`p-2`}>
-      <p className={`sm:max-lg:font-bold`}>This won't be bold at the smallest or the largest sizes</p>
+      <p className={`sm:max-lg:font-bold`}>This won&apos;t be bold at the smallest or the largest sizes</p>
       <p className={`sm:max-md:text-red-700`}>This will only be red at the small breakpoint</p>
     </div>
     <div className={`p-2`}>
@@ -25,10 +25,10 @@ export default function Page() {
     </div>
     <div className={`p-2`}>
       <p className={`bg-indigo-950 h-16 xl:text-white`}>This is set outside a container and will switch much later
-        because it's relative to the viewport.</p>
+        because it&apos;s relative to the viewport.</p>
       <div className={`@container bg-emerald-950 h-auto w-full`}>
         <p className={`text-black @xl:text-amber-50`}>This is set within a container and will switch much earlier
-          because it's relative to its container.</p>
+          because it&apos;s relative to its container.</p>
         <p className={`@max-xl:text-amber-50`}>This is set to be this color until it reaches the max-xl container</p>
         <p className={`@lg:@max-xl:font-bold text-white`}>We can still use ranges here.</p>
         <div className={`@container/internal`}>

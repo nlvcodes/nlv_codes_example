@@ -23,4 +23,5 @@ export const getClientSideURL = () => {
     return `${protocol}//${hostname}${port ? `:${port}` : ''}`
   }
 
+  return getServerSideURL()
 }

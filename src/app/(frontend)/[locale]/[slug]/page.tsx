@@ -40,7 +40,7 @@ export default async function Page({params: paramsPromise}: Args) {
     return dbPage.docs
   })
 
-  console.log(await getCachedPages())
+  // console.log(await getCachedPages())
 
   const {user} = await payload.auth({headers})
 
