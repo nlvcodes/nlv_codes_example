@@ -504,7 +504,7 @@ export default buildConfig({
     access: {
       run: ({req}: {req: PayloadRequest}) => {
         if (req.user) return true
-        return process.env.CRON_SECRET === req.headers.get('x-cron-secret')
+        return `Bearer ${process.env.CRON_SECRET}` === req.headers.get('Authorization')
       }
     },
     tasks: [

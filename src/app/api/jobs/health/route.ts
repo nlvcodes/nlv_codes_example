@@ -5,9 +5,10 @@ import config from '@payload-config'
 export async function GET(req: NextRequest) {
   const payload = await getPayload({ config })
   try {
-    const authHeader = req.headers.get('x-cron-secret')
+    const authHeader = req.headers.get('Authorization')
+    console.log(req.headers)
     const cronSecret = process.env.CRON_SECRET
-    if (authHeader !== cronSecret) {
+    if (authHeader !== `Bearer ${cronSecret}`) {
       return NextResponse.json(
         { error: 'Unauthorized' },
         { status: 401 },
