@@ -90,7 +90,7 @@ export default buildConfig({
     },
     // autoLogin: process.env.NEXT_PUBLIC_ENABLE_AUTOLOGIN === 'true' ? {
     //   email: 'nick+editor@midlowebdesign.com',
-    //   password: 'editor',
+    //   password: process.env.AUTOLOGIN_PASSWORD,
     // } : false,
     livePreview: {
       collections: ['pages'],
