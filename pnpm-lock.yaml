@@ -935,8 +935,8 @@ packages:
   '@next/env@15.3.2':
     resolution: {integrity: sha512-xURk++7P7qR9JG1jJtLzPzf0qEvqCN0A/T3DXf8IPMKo9/6FfjxtEffRJIIew/bIL4T3C2jLLqBor8B/zVlx6g==}
 
-  '@next/env@15.4.3':
-    resolution: {integrity: sha512-lKJ9KJAvaWzqurIsz6NWdQOLj96mdhuDMusLSYHw9HBe2On7BjUwU1WeRvq19x7NrEK3iOgMeSBV5qEhVH1cMw==}
+  '@next/env@15.4.4':
+    resolution: {integrity: sha512-SJKOOkULKENyHSYXE5+KiFU6itcIb6wSBjgM92meK0HVKpo94dNOLZVdLLuS7/BxImROkGoPsjR4EnuDucqiiA==}
 
   '@next/eslint-plugin-next@15.0.4':
     resolution: {integrity: sha512-rbsF17XGzHtR7SDWzWpavSfum3/UdnF8bAaisnKwP//si3KWPTedVUsflAdjyK1zW3rweBjbALfKcavFneLGvg==}
@@ -5169,7 +5169,7 @@ snapshots:
 
   '@next/env@15.3.2': {}
 
-  '@next/env@15.4.3': {}
+  '@next/env@15.4.4': {}
 
   '@next/eslint-plugin-next@15.0.4':
     dependencies:
@@ -8051,7 +8051,7 @@ snapshots:
 
   payload@3.42.0(graphql@16.11.0)(typescript@5.7.2):
     dependencies:
-      '@next/env': 15.4.3
+      '@next/env': 15.4.4
       '@payloadcms/translations': 3.42.0
       '@types/busboy': 1.5.4
       ajv: 8.17.1
