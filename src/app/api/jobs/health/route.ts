@@ -6,7 +6,6 @@ export async function GET(req: NextRequest) {
   const payload = await getPayload({ config })
   try {
     const authHeader = req.headers.get('Authorization')
-    console.log(req.headers)
     const cronSecret = process.env.CRON_SECRET
     if (authHeader !== `Bearer ${cronSecret}`) {
       return NextResponse.json(
