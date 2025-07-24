@@ -2,7 +2,7 @@
   "crons": [
     {
       "path": "/api/jobs/health",
-      "schedule": "* */6 * * * *"
+      "schedule": "* */6 * * * "
     },
     {
       "path": "/api/jobs/run",
