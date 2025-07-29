@@ -12,6 +12,17 @@ const nextConfig = {
         hostname: 'pub-bd030be048334ccb85b400876a5cab94.r2.dev',
         pathname: '/test-storage/**'
       },
+      {
+        protocol: 'https',
+        hostname: 'pub-026ef14ddd9f4accbb73db5607cd7043.r2.dev',
+        pathname: '/**',
+        port: '',
+      },
+      {
+        protocol: 'https',
+        hostname: '**',
+        pathname: '/**',
+      }
     ],
   },
 }
