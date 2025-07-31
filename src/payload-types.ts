@@ -88,6 +88,7 @@ export interface Config {
       });
   jobs: {
     tasks: {
+      healthCheck: TaskHealthCheck;
       schedulePublish: TaskSchedulePublish;
       inline: {
         input: unknown;
@@ -284,13 +285,6 @@ export interface User {
   hash?: string | null;
   loginAttempts?: number | null;
   lockUntil?: string | null;
-  sessions?:
-    | {
-        id: string;
-        createdAt?: string | null;
-        expiresAt: string;
-      }[]
-    | null;
   password?: string | null;
 }
 /**
@@ -350,6 +344,8 @@ export interface Post {
         id?: string | null;
       }[]
     | null;
+  noOption1?: boolean | null;
+  select?: ('one' | 'two' | 'three') | null;
   content?: {
     root: {
       type: string;
@@ -450,7 +446,6 @@ export interface Document {
         | 'eco-mode'
         | 'progressive'
         | 'productHero'
-        | 'pixelated'
       )[]
     | null;
   /**
@@ -458,7 +453,27 @@ export interface Document {
    */
   isPrivate?: boolean | null;
   requiresSignedURL?: boolean | null;
-  _key?: string | null;
+  /**
+   * Generate a public URL with transformations for this private file
+   */
+  enablePublicPreview?: boolean | null;
+  /**
+   * Choose the type of transformation for public preview
+   */
+  transformationType?: ('watermark' | 'blur') | null;
+  /**
+   * Text to display as watermark on public preview
+   */
+  watermarkText?: string | null;
+  /**
+   * Public URL with applied transformations
+   */
+  publicTransformationUrl?: string | null;
+  publicTransformationPublicId?: string | null;
+  /**
+   * Preview URL with selected transformation presets applied
+   */
+  previewUrl?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -494,13 +509,6 @@ export interface Customer {
   _verificationToken?: string | null;
   loginAttempts?: number | null;
   lockUntil?: string | null;
-  sessions?:
-    | {
-        id: string;
-        createdAt?: string | null;
-        expiresAt: string;
-      }[]
-    | null;
   password?: string | null;
 }
 /**
@@ -864,7 +872,7 @@ export interface PayloadJob {
     | {
         executedAt: string;
         completedAt: string;
-        taskSlug: 'inline' | 'schedulePublish';
+        taskSlug: 'inline' | 'healthCheck' | 'schedulePublish';
         taskID: string;
         input?:
           | {
@@ -897,7 +905,7 @@ export interface PayloadJob {
         id?: string | null;
       }[]
     | null;
-  taskSlug?: ('inline' | 'schedulePublish') | null;
+  taskSlug?: ('inline' | 'healthCheck' | 'schedulePublish') | null;
   queue?: string | null;
   waitUntil?: string | null;
   processing?: boolean | null;
@@ -1080,13 +1088,6 @@ export interface UsersSelect<T extends boolean = true> {
   hash?: T;
   loginAttempts?: T;
   lockUntil?: T;
-  sessions?:
-    | T
-    | {
-        id?: T;
-        createdAt?: T;
-        expiresAt?: T;
-      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1165,6 +1166,8 @@ export interface PostsSelect<T extends boolean = true> {
         arrayText?: T;
         id?: T;
       };
+  noOption1?: T;
+  select?: T;
   content?: T;
   content_html?: T;
   plaintext?: T;
@@ -1213,7 +1216,12 @@ export interface DocumentsSelect<T extends boolean = true> {
   transformationPreset?: T;
   isPrivate?: T;
   requiresSignedURL?: T;
-  _key?: T;
+  enablePublicPreview?: T;
+  transformationType?: T;
+  watermarkText?: T;
+  publicTransformationUrl?: T;
+  publicTransformationPublicId?: T;
+  previewUrl?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -1245,13 +1253,6 @@ export interface CustomersSelect<T extends boolean = true> {
   _verificationToken?: T;
   loginAttempts?: T;
   lockUntil?: T;
-  sessions?:
-    | T
-    | {
-        id?: T;
-        createdAt?: T;
-        expiresAt?: T;
-      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1646,6 +1647,14 @@ export interface LogosSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TaskHealthCheck".
+ */
+export interface TaskHealthCheck {
+  input?: unknown;
+  output?: unknown;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

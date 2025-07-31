@@ -1,6 +1,13 @@
-import { CollectionConfig } from 'payload'
+import { CollectionConfig, TextFieldValidation } from 'payload'
 import { ContentWithMedia } from '@/blocks/ContentWithMedia/config'
-import { BlocksFeature, FixedToolbarFeature, lexicalEditor, lexicalHTMLField, TextStateFeature, defaultColors } from '@payloadcms/richtext-lexical'
+import {
+  BlocksFeature,
+  FixedToolbarFeature,
+  lexicalEditor,
+  lexicalHTMLField,
+  TextStateFeature,
+  defaultColors,
+} from '@payloadcms/richtext-lexical'
 import { TableOfContents } from '@/blocks/TableOfContents/config'
 import {
   MetaDescriptionField,
@@ -11,6 +18,7 @@ import {
 } from '@payloadcms/plugin-seo/fields'
 import { convertLexicalToHTML } from '@payloadcms/richtext-lexical/html'
 import type { Media } from '@/payload-types'
+import { CustomIcon } from '@/components/Admin/ui/CustomIcon'
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
@@ -31,11 +39,11 @@ export const Posts: CollectionConfig = {
     useAsTitle: 'title',
     description: 'This is a blog collection.',
     components: {
-      edit: {
-        beforeDocumentControls: [
-          { path: '/components/Admin/UI/logout.tsx#Logout' },
-        ],
-      },
+      // edit: {
+      //   beforeDocumentControls: [
+      //     { path: '/components/Admin/UI/logout.tsx#Logout' },
+      //   ],
+      // },
       beforeList: [
         {
           path: 'src/collections/Posts/components/beforeList.tsx#BeforeListContent',
@@ -226,6 +234,34 @@ export const Posts: CollectionConfig = {
               ],
             },
             {
+              type: 'checkbox',
+              name: 'noOption1',
+            },
+            {
+              name: 'select',
+              type: 'select',
+              options: [
+                {
+                  label: 'One',
+                  value: 'one',
+                },
+                {
+                  label: 'Two',
+                  value: 'two',
+                },
+                {
+                  label: 'Three',
+                  value: 'three',
+                },
+              ],
+              filterOptions: ({ options, data, siblingData, req: {user, payload} }) =>
+                siblingData.noOption1
+                  ? options.filter(
+                    (option) => (typeof option === 'string' ? options : option.value) !== 'one',
+                  )
+                  : options,
+            },
+            {
               name: 'content',
               type: 'richText',
               editor: lexicalEditor({
@@ -234,7 +270,14 @@ export const Posts: CollectionConfig = {
                   BlocksFeature({
                     blocks: [ContentWithMedia, TableOfContents],
                   }),
-                  FixedToolbarFeature(),
+                  FixedToolbarFeature({
+                    customGroups: {
+                      'text': {
+                        order: 10,
+                        ChildComponent: CustomIcon,
+                      },
+                    },
+                  }),
                   TextStateFeature({
                     state: {
                       color: {
@@ -245,45 +288,45 @@ export const Posts: CollectionConfig = {
                           label: 'Large Text',
                           css: {
                             'font-size': 'large',
-                          }
-                        }
+                          },
+                        },
                       },
                       background: {
-                        ...defaultColors.background
+                        ...defaultColors.background,
                       },
                       underline: {
                         'solid': {
                           label: 'Solid',
                           css: {
                             'text-decoration': 'underline', 'text-underline-offset': '4px',
-                          }
+                          },
                         },
                         'dashed': {
                           label: 'Dashed',
                           css: {
                             'text-decoration': 'underline dashed',
-                            'text-underline-offset': '4px'
-                          }
+                            'text-underline-offset': '4px',
+                          },
                         },
                         'red-line-through': {
                           label: 'Red Line Through',
                           css: {
                             'text-decoration': 'line-through',
                             'text-decoration-style': 'dotted',
-                            'text-decoration-color': 'red'
-                          }
-                        }
+                            'text-decoration-color': 'red',
+                          },
+                        },
                       },
                       fontWeight: {
                         'bolder': {
                           label: 'Bolder',
                           css: {
                             'font-weight': 'bolder',
-                          }
-                        }
-                      }
-                    }
-                  })
+                          },
+                        },
+                      },
+                    },
+                  }),
                 ],
                 admin: {
                   hideInsertParagraphAtEnd: true,
@@ -298,7 +341,7 @@ export const Posts: CollectionConfig = {
               converters: ({ defaultConverters }) => ({
                 ...defaultConverters,
                 blocks: {
-                  contentWithMedia: ({ node }: {node: any}) => {
+                  contentWithMedia: ({ node }: { node: any }) => {
                     const richText = node.fields.content && convertLexicalToHTML({ data: node.fields.content })
                     const image = node.fields.image as Media
 

@@ -1,0 +1,12 @@
+{
+  "crons": [
+    {
+      "path": "/api/jobs/health",
+      "schedule": "0 */6 * * *"
+    },
+    {
+      "path": "/api/payload-jobs/run",
+      "schedule": "*/5 * * * *"
+    }
+  ]
+}

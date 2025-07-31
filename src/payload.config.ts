@@ -8,7 +8,7 @@ import {
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
 import path from 'path'
-import { buildConfig, LocalizationConfig } from 'payload'
+import { buildConfig, LocalizationConfig, PayloadRequest, TaskConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 
@@ -39,6 +39,7 @@ import { searchPlugin } from '@payloadcms/plugin-search'
 import { beforeSyncWithSearch } from '@/components/Search/beforeSync'
 import localization from '@/i18n/localization'
 import { cloudinaryStorage, commonPresets } from 'payload-storage-cloudinary'
+import { schedulePublish } from '@/utilities/jobs/schedulePublish'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -151,59 +152,59 @@ export default buildConfig({
           path: '/test',
         },
       },
-      logout: {
-        Button: {
-          path: '/components/Admin/UI/logout.tsx#Logout',
-        },
-      },
-      beforeNavLinks: [
-        {
-          path: '/components/Admin/UI/logout.tsx#Logout',
-        },
-      ],
-      afterNavLinks: [
-        {
-          path: '/components/Admin/UI/logout.tsx#Logout',
-        },
-      ],
-      beforeDashboard: [
-        {
-          path: '/components/Admin/UI/beforeDashboard.tsx#Welcome',
-        },
-      ],
-      afterDashboard: [
-        {
-          path: '/components/Admin/UI/afterDashboard.tsx#Outro',
-        },
-      ],
-      beforeLogin: [
-        {
-          path: '/components/Admin/UI/beforeLogin.tsx#LinkToHome',
-        },
-      ],
-      afterLogin: [
-        {
-          path: '/components/Admin/UI/afterLogin.tsx#LoginInstruction',
-        },
-      ],
-      actions: [
-        {
-          path: '/components/Admin/UI/logout.tsx#Logout',
-        },
-      ],
-      header: [
-        {
-          path: '/components/Admin/UI/header.tsx#banner',
-        },
-      ],
-      graphics: {
-        Icon: {
-          path: '/components/Admin/UI/icon.tsx#Icon',
-        },
-        Logo: {
-          path: '/components/Admin/UI/logo.tsx#Logo',
-        },
-      },
+      // logout: {
+      //   Button: {
+      //     path: '/components/Admin/UI/logout.tsx#Logout',
+      //   },
+      // },
+      // beforeNavLinks: [
+      //   {
+      //     path: '/components/Admin/UI/logout.tsx#Logout',
+      //   },
+      // ],
+      // afterNavLinks: [
+      //   {
+      //     path: '/components/Admin/UI/logout.tsx#Logout',
+      //   },
+      // ],
+      // beforeDashboard: [
+      //   {
+      //     path: '/components/Admin/UI/beforeDashboard.tsx#Welcome',
+      //   },
+      // ],
+      // afterDashboard: [
+      //   {
+      //     path: '/components/Admin/UI/afterDashboard.tsx#Outro',
+      //   },
+      // ],
+      // beforeLogin: [
+      //   {
+      //     path: '/components/Admin/UI/beforeLogin.tsx#LinkToHome',
+      //   },
+      // ],
+      // afterLogin: [
+      //   {
+      //     path: '/components/Admin/UI/afterLogin.tsx#LoginInstruction',
+      //   },
+      // ],
+      // actions: [
+      //   {
+      //     path: '/components/Admin/UI/logout.tsx#Logout',
+      //   },
+      // ],
+      // header: [
+      //   {
+      //     path: '/components/Admin/UI/header.tsx#banner',
+      //   },
+      // ],
+      // graphics: {
+      //   Icon: {
+      //     path: '/components/Admin/UI/icon.tsx#Icon',
+      //   },
+      //   Logo: {
+      //     path: '/components/Admin/UI/logo.tsx#Logo',
+      //   },
+      // },
     },
   },
   cors: ['http://localhost:3000', process.env.DOMAIN_NAME || ''],
@@ -560,11 +561,74 @@ export default buildConfig({
     defaultFromName: 'Nick',
     apiKey: process.env.RESEND_API || '',
   }),
-  // onInit: async (payload) => {
-  //   await payload.update({
-  //     collection: 'pages',
-  //     where: {},
-  //     data: {_status: 'published'}
-  //   })
-  // }
+  jobs: {
+    access: {
+      run: ({req}: {req: PayloadRequest}) => {
+        if (req.user) return true
+        return `Bearer ${process.env.CRON_SECRET}` === req.headers.get('Authorization')
+      }
+    },
+    tasks: [
+      {
+        slug: 'healthCheck',
+        handler: async ({req}) => {
+          const results = {
+            timestamp: new Date().toISOString(),
+            errors: [] as string[],
+            checks: {
+              database: false,
+              api: false,
+            }
+          }
+          try {
+            try {
+              await req.payload.find({
+                collection: 'users',
+                limit: 1,
+              })
+              results.checks.database = true
+            } catch (e) {
+              await req.payload.sendEmail({
+                to: 'nick@nlvogel.com',
+                html: `Health check failed: ${e instanceof Error ? e.message : 'Unknown error'}`
+              })
+              results.errors.push('Database check failed.')
+            }
+
+            try {
+              const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'
+
+              const response = await fetch(`${serverUrl}/api/health`)
+              if (response.ok) {
+                results.checks.api = true
+              } else {
+                results.errors.push(`API health check returned ${response.status}`)
+              }
+
+            } catch (e) {
+              results.errors.push('API check failed')
+            }
+
+            const allHealthy = Object.values(results.checks).every(check => check)
+            if (!allHealthy) {
+              req.payload.logger.error('Health check failed')
+              await req.payload.sendEmail({
+                to: 'nick@nlvogel.com',
+                html: `<h2>Health check failed</h2>`
+              })
+            } else {
+              req.payload.logger.info('All systems healthy')
+            }
+
+            return {output: results}
+          } catch (e) {
+            req.payload.logger.error('Health check error')
+            throw e
+          }
+        },
+        retries: 1,
+      } as TaskConfig<'healthCheck'>,
+      schedulePublish as TaskConfig<'schedulePublish'>,
+    ]
+  }
 })

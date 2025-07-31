@@ -1,0 +1,9 @@
+[services.jobs_health]
+source.image = "curlimages/curl:8.8.0"
+start = "curl -sf -H 'Authorization: Bearer ${CRON_SECRET}' http://${{ web.RAILWAY_PRIVATE_DOMAIN }}:${{web.PORT}}/api/jobs/health"
+cron = "0 */6 * * *"
+
+[services.jobs_run]
+source.image = "curlimages/curl:8.8.0"
+start = "curl -sf -H 'Authorization: Bearer ${CRON_SECRET}' http://${{ web.RAILWAY_PRIVATE_DOMAIN }}:${{web.PORT}}/api/payload-jobs/run?allQueues=true"
+cron = "*/5 * * * *"
